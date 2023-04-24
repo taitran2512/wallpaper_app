@@ -1,7 +1,6 @@
 import 'react-native-gesture-handler';
-
-import { Loading, ToastDebug, withCodePush } from 'component';
-import { Navigator, NotificationHelper } from 'core';
+import { Loading, ToastDebug } from 'component';
+import { Navigator } from 'core';
 import AppStack from 'navigation';
 import React, { useEffect } from 'react';
 import { StatusBar, UIManager } from 'react-native';
@@ -17,9 +16,8 @@ const App: React.FC = () => {
 				UIManager.setLayoutAnimationEnabledExperimental(true);
 			}
 		}
-		NotificationHelper.init();
 	}, []);
-	
+
 	return (
 		<Provider store={store}>
 			<StatusBar
@@ -37,4 +35,4 @@ const App: React.FC = () => {
 	);
 };
 
-export default withCodePush(App);
+export default App;

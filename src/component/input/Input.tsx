@@ -1,7 +1,6 @@
 import { images } from 'assets';
 import Icon from 'component/image/Icon';
 import { colors, sizes, Style, Navigator } from 'core';
-import { format } from 'date-fns';
 import { InputProps, InputState } from 'model';
 import React, { Component } from 'react';
 import { StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
@@ -69,18 +68,6 @@ export default class Input extends Component<InputProps, InputState> {
 		this.inputRef.current.focus();
 	};
 
-	showDatePicker = () => {
-		Navigator.showDatePicker({
-			onChange: (date) => {
-				this.props?.onChangeDate?.({
-					date,
-					dateString: format(date, 'dd/MM/yyyy'),
-				});
-			},
-			...this.props.datePickerProps
-		});
-	};
-
 	render() {
 		const {
 			style,
@@ -91,7 +78,6 @@ export default class Input extends Component<InputProps, InputState> {
 			isPassword,
 			isPicker,
 			onPress,
-			isDatePicker,
 			inputContainerStyle,
 		} = this.props || {};
 		const { isHidePassword } = this.state;
@@ -101,7 +87,7 @@ export default class Input extends Component<InputProps, InputState> {
 			<TouchableOpacity
 				activeOpacity={1}
 				style={[styles.container, style]}
-				onPress={isPicker ? onPress : isDatePicker ? this.showDatePicker : this.onPressInput}>
+				onPress={isPicker ? onPress : this.onPressInput}>
 				{this.renderLabel()}
 				<View style={[styles.inputContainer, { borderColor }, inputContainerStyle]}>
 					{this.renderIcon(iconLeft, onPressIconLeft, styles.iconLeft)}
@@ -114,12 +100,6 @@ export default class Input extends Component<InputProps, InputState> {
 						  )
 						: isPicker
 						? this.renderIcon(iconRight || images.ic_down, onPress, styles.iconRight)
-						: isDatePicker
-						? this.renderIcon(
-								iconRight || images.ic_calendar,
-								this.showDatePicker,
-								styles.iconRight
-						  )
 						: this.renderIcon(iconRight, onPressIconRight, styles.iconRight)}
 				</View>
 			</TouchableOpacity>

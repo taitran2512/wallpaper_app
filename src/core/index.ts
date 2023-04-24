@@ -4,7 +4,6 @@ import { colors } from './style/colors';
 import { fonts } from './style/fonts';
 import Navigator from './navigator/Navigator';
 import { strings } from './localization';
-import NotificationHelper from './notification/NotificationHelper';
 
 export {
 	Style,
@@ -17,5 +16,4 @@ export {
 	fonts,
 	Navigator,
 	strings,
-	NotificationHelper,
 };

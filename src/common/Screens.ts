@@ -1,6 +1,5 @@
-import * as AuthenticationScreen from 'screen/authentication';
 import * as HomeScreen from 'screen/home';
-export const objScreen = { ...AuthenticationScreen, ...HomeScreen };
+export const objScreen = { ...HomeScreen };
 
 type Keys = typeof objScreen;
 

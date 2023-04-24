@@ -23,4 +23,3 @@ export { default as Checkbox } from './checkbox/Checkbox';
 export { default as ItemCheckbox } from './checkbox/ItemCheckbox';
 export { default as Input } from './input/Input';
 export { default as Separator } from './separator/Separator';
-export { default as withCodePush } from './codePush/CodePush';

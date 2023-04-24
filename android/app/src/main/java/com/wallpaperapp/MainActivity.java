@@ -1,4 +1,4 @@
-package com.wallpaperapp;
+package com.wallpaper4k.wallpapers.backgroundhd.phonebackground;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
