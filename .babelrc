@@ -1,0 +1,28 @@
+{
+	"plugins": [
+		[
+			"module-resolver",
+			{
+				"root": ["./src/"],
+				"alias": {
+					"api": "./src/api",
+					"assets": "./src/assets",
+					"screen": "./src/screen",
+					"component": "./src/component",
+					"navigation": "./src/navigation",
+					"model": "./src/model",
+					"action": "./src/redux/action",
+					"saga": "./src/redux/saga",
+					"reducer": "./src/redux/reducer",
+					"store": "./src/redux/store",
+					"selector": "./src/redux/selector",
+					"utils": "./src/utils",
+					"config": "./src/config",
+					"hook": "./src/hook",
+					"core": "./src/core",
+					"common": "./src/common"
+				}
+			}
+		]
+	]
+}
