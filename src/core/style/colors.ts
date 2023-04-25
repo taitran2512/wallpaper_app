@@ -1,6 +1,7 @@
 export const colors = {
 	white: '#FFFFFF',
 	black: '#0A0919',
+	background_black: '#333333',
 	tranparent: 'transparent',
 	bgTransparent: '#00000030',
 
