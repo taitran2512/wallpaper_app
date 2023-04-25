@@ -7,7 +7,7 @@ import { FlatList, ImageBackground, StyleSheet, Text, TouchableOpacity } from 'r
 
 const Category = () => {
 	const detailCategory = () => {
-		Navigator.replace(Screens.DetailCategory, {});
+		Navigator.navigate(Screens.DetailCategory);
 	};
 
 	const renderItem = ({ item }: any) => {

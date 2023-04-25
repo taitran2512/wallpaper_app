@@ -4,7 +4,7 @@ import { Navigator } from 'core';
 import React, { memo, useCallback } from 'react';
 import { enableScreens } from 'react-native-screens';
 import * as HomeScreen from 'screen/home';
-import BottomTab from './BottomTab';
+import TopTab from './TopTab';
 
 enableScreens();
 const Stack = createStackNavigator();
@@ -23,7 +23,7 @@ const HomeStack: React.FC = () => {
 
 	return (
 		<Stack.Navigator screenOptions={screenOptionsStack}>
-			<Stack.Screen options={{ headerShown: false }} name={'HomeTab'} component={BottomTab} />
+			<Stack.Screen options={{ headerShown: false }} name={'HomeTab'} component={TopTab} />
 			{renderStackScreen()}
 		</Stack.Navigator>
 	);
