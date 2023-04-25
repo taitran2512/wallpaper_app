@@ -6,13 +6,13 @@ import React, { memo } from 'react';
 import { FlatList, ImageBackground, StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 const Category = () => {
-	const detailCategory = () => {
-		Navigator.navigate(Screens.DetailCategory);
+	const detailCategory = (item: any) => {
+		Navigator.navigate(Screens.DetailCategory, { title: item.name || '' });
 	};
 
 	const renderItem = ({ item }: any) => {
 		return (
-			<TouchableOpacity activeOpacity={0.8} onPress={detailCategory}>
+			<TouchableOpacity activeOpacity={0.8} onPress={() => detailCategory(item)}>
 				<ImageBackground
 					source={item.background}
 					style={styles.itemCategory}

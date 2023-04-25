@@ -46,3 +46,26 @@ export const categoryData = [
 		background: images.image_category,
 	},
 ];
+export const dataDetailCategory = [
+	{
+		background: images.banner,
+	},
+	{
+		background: images.banner,
+	},
+	{
+		background: images.banner,
+	},
+	{
+		background: images.banner,
+	},
+	{
+		background: images.banner,
+	},
+	{
+		background: images.banner,
+	},
+	{
+		background: images.banner,
+	},
+];

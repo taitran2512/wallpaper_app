@@ -1,8 +1,7 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import React from 'react';
-import FastImage from 'react-native-fast-image';
-import { Style, colors, sizes } from 'core/index';
 import { BlurView } from '@react-native-community/blur';
+import { colors, sizes } from 'core/index';
+import React from 'react';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 interface Props {
 	title?: string;
@@ -18,7 +17,7 @@ const Buttons: React.FC<Props> = ({ title, onPress, children }) => {
 			</TouchableOpacity>
 		</BlurView>
 	);
-};   
+};
 
 export default Buttons;
 

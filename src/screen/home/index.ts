@@ -1,4 +1,5 @@
 export { default as DetailCategory } from '../category/DetailCategory';
+export { default as Detail } from '../detail/Detail';
 export { default as Category } from './Category';
 export { default as New } from './New';
 export { default as Popular } from './Popular';
