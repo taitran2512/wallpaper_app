@@ -10,7 +10,7 @@ type ScreensType<T> = {
 export const Screens: ScreensType<Keys> = {};
 
 export const Stacks = {
-	AuthenStack: 'AuthenStack',
+	Onboarding: 'Onboarding',
 	HomeStack: 'HomeStack',
 	Modals: 'Modals',
 	Dialog: 'Dialog',

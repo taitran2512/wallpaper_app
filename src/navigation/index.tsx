@@ -14,8 +14,9 @@ import { enableScreens } from 'react-native-screens';
 import { Dialog, Modals } from 'screen/modal';
 import { Storage } from 'utils';
 import Device from 'utils/Device';
-import AuthenStack from './authenStack/AuthenStack';
 import HomeStack from './homeStack/HomeStack';
+import { Onboarding } from 'screen/onboard';
+import TopTab from './homeStack/TopTab';
 
 const Stack = createNativeStackNavigator();
 enableScreens();
@@ -54,7 +55,8 @@ const AppStack: React.FC = () => {
 	return (
 		<NavigationContainer ref={(ref) => Navigator.setNavigationRef(ref)}>
 			<Stack.Navigator screenOptions={screenOptionsNativeStack}>
-				<Stack.Screen name={Stacks.HomeStack} component={HomeStack} />
+				<Stack.Screen name={Stacks.Onboarding} component={Onboarding} />
+				<Stack.Screen name={Stacks.HomeStack} component={TopTab} />
 				<Stack.Screen
 					name={Stacks.Modals}
 					component={Modals}
