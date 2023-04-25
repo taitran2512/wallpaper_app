@@ -151,7 +151,10 @@ android {
 dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
-
+    // ADD GOOGLE ADS MOD
+    implementation project(':react-native-google-mobile-ads')
+    implementation 'com.google.android.gms:play-services-ads:20.5.0'
+    
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.0.0")
     implementation 'com.android.support:multidex:2.0.1' //enter the latest multidex version
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}")

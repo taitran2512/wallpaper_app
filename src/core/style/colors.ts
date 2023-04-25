@@ -25,7 +25,7 @@ export const colors = {
 	secondary_text: '#8D8D8D',
 	separator: '#F7F7F7',
 	linghtGray: '#E8E8E8',
-	darkGray:'#E3E3E3',
+	darkGray: '#E3E3E3',
 
 	primary_text: '#3B3A47',
 	disable_text: '#B6B6BF',
@@ -37,4 +37,6 @@ export const colors = {
 	table_header: '#F5F5F6',
 
 	input_background: '#F8FAFC',
+
+	backgroundApp: '#333333',
 };

@@ -1,7 +1,6 @@
-import { images } from 'assets';
 import { throttle } from 'lodash';
 import { Alert, LayoutAnimation } from 'react-native';
-import { BASE_URL as URL } from './https';
+import { BASE_URL as URL } from './Https';
 
 export const showAlert = (
 	message = 'Something went wrong, please try again later.',
@@ -14,7 +13,7 @@ export const showAlert = (
 
 export const avatarUri = (avatar?: string) => {
 	if (!avatar) {
-		return images.ic_avatar;
+		return '';
 	}
 	if (avatar?.includes('https://') || avatar?.includes('file://')) {
 		return { uri: avatar };
@@ -27,7 +26,7 @@ export const imageSource = (image?: string) => {
 		return image;
 	}
 	if (!image) {
-		return { uri: images.no_img };
+		return { uri: '' };
 	}
 	if (image?.includes('https://') || image?.includes('http://') || image?.includes('file://')) {
 		return { uri: image };
@@ -44,5 +43,3 @@ export const layoutAnimation = throttle(() => {
 		)
 	);
 }, 1500);
-
-

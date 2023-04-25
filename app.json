@@ -1,4 +1,8 @@
 {
 	"name": "WallpaperApp",
-	"displayName": "WallpaperApp"
+	"displayName": "WallpaperApp",
+	"react-native-google-mobile-ads": {
+    "android_app_id": "ca-app-pub-9921225892389634~4768419407",
+    "ios_app_id": "ca-app-pub-9921225892389634~6472668725"
+  }
 }

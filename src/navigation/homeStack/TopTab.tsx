@@ -1,10 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react/no-unstable-nested-components */
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { images } from 'assets';
 import { NavigationButton } from 'component';
 import { colors, sizes } from 'core/index';
 import { ScreenProps } from 'model';
-import React, { useEffect } from 'react';
-import { StyleSheet } from 'react-native';
+import React, { memo, useEffect } from 'react';
 import { Category, New, Popular, Premium } from 'screen/home';
 
 const Tab = createMaterialTopTabNavigator();
@@ -32,15 +33,28 @@ const TopTab = ({ navigation }: ScreenProps) => {
 	useEffect(() => {
 		navigation.setOptions({
 			headerShown: true,
-			headerRight: () => <NavigationButton icon={images.ic_search} tintColor="white" />,
-			headerLeft: () => <NavigationButton icon={images.ic_back} tintColor="white" />,
+			headerLeft: () => (
+				<NavigationButton
+					icon={images.ic_menu_left}
+					tintColor="white"
+					style={{ width: sizes.s24, height: sizes.s24 }}
+				/>
+			),
+			headerRight: () => (
+				<NavigationButton
+					icon={images.ic_search}
+					tintColor="white"
+					style={{ width: sizes.s20, height: sizes.s20 }}
+				/>
+			),
+
 			headerTitleAlign: 'center',
 			headerShadowVisible: false,
 			headerTitleStyle: {
 				color: 'white',
 			},
 			headerStyle: {
-				backgroundColor: '#333333',
+				backgroundColor: colors.backgroundApp,
 			},
 		});
 	}, []);
@@ -49,7 +63,7 @@ const TopTab = ({ navigation }: ScreenProps) => {
 		<Tab.Navigator
 			screenOptions={{
 				tabBarStyle: {
-					backgroundColor: '#333333',
+					backgroundColor: colors.backgroundApp,
 					elevation: 0,
 					shadowOpacity: 0,
 				},
@@ -76,6 +90,4 @@ const TopTab = ({ navigation }: ScreenProps) => {
 	);
 };
 
-export default TopTab;
-
-const styles = StyleSheet.create({});
+export default memo(TopTab);

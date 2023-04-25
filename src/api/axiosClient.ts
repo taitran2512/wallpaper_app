@@ -1,7 +1,7 @@
 import { logOutAction } from 'action/authenAction';
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import store from 'store';
-import { BASE_URL } from 'utils/https';
+import { BASE_URL } from 'utils/Https';
 import InternetHelper from 'utils/InternetHelper';
 import LogUtil from 'utils/LogUtil';
 

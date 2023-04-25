@@ -11,7 +11,7 @@ import {
 	ViewStyle,
 } from 'react-native';
 import { ImageStyle } from 'react-native-fast-image';
-import { URL } from 'utils/https';
+import { URL } from 'utils/Https';
 import AutoFastImage from './AutoFastImage';
 import Icon from './Icon';
 
