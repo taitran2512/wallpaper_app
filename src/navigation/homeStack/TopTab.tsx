@@ -1,5 +1,6 @@
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { images } from 'assets';
+import { screenOptionsStack } from 'common/nagivationOption';
 import { NavigationButton } from 'component';
 import { colors, sizes } from 'core/index';
 import { ScreenProps } from 'model';
@@ -14,24 +15,25 @@ const TopTab = ({ navigation }: ScreenProps) => {
 		{
 			name: 'New',
 			compopnent: New,
+			title: 'All',
 		},
 		{
 			name: 'Category',
 			compopnent: Category,
+			title: 'Category',
 		},
 		{
 			name: 'Popular',
 			compopnent: Popular,
-		},
-		{
-			name: 'Premium',
-			compopnent: Premium,
+			title: 'Popular',
 		},
 	];
 
 	useEffect(() => {
 		navigation.setOptions({
+			...screenOptionsStack,
 			headerShown: true,
+			title: DATA[0].title,
 			headerRight: () => <NavigationButton icon={images.ic_search} tintColor="white" />,
 			headerLeft: () => <NavigationButton icon={images.ic_back} tintColor="white" />,
 			headerTitleAlign: 'center',
@@ -40,7 +42,7 @@ const TopTab = ({ navigation }: ScreenProps) => {
 				color: 'white',
 			},
 			headerStyle: {
-				backgroundColor: '#333333',
+				backgroundColor: colors.background_black,
 			},
 		});
 	}, []);
@@ -49,7 +51,7 @@ const TopTab = ({ navigation }: ScreenProps) => {
 		<Tab.Navigator
 			screenOptions={{
 				tabBarStyle: {
-					backgroundColor: '#333333',
+					backgroundColor: colors.background_black,
 					elevation: 0,
 					shadowOpacity: 0,
 				},
@@ -69,7 +71,9 @@ const TopTab = ({ navigation }: ScreenProps) => {
 					key={String(index)}
 					name={item.name}
 					component={item.compopnent}
-					options={{}}
+					listeners={{
+						tabPress: () => navigation.setOptions({ title: item.title }),
+					}}
 				/>
 			))}
 		</Tab.Navigator>

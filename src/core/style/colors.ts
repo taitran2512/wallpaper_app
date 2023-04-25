@@ -1,6 +1,7 @@
 export const colors = {
 	white: '#FFFFFF',
 	black: '#0A0919',
+	background_black: '#333333',
 	tranparent: 'transparent',
 	bgTransparent: '#00000030',
 
@@ -25,7 +26,7 @@ export const colors = {
 	secondary_text: '#8D8D8D',
 	separator: '#F7F7F7',
 	linghtGray: '#E8E8E8',
-	darkGray:'#E3E3E3',
+	darkGray: '#E3E3E3',
 
 	primary_text: '#3B3A47',
 	disable_text: '#B6B6BF',
