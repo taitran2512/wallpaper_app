@@ -21,7 +21,7 @@ const App: React.FC = () => {
 	return (
 		<Provider store={store}>
 			<StatusBar
-				barStyle="dark-content"
+				barStyle="light-content"
 				backgroundColor={'transparent'}
 				hidden={false}
 				translucent={true}
