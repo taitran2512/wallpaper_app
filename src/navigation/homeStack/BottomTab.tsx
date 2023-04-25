@@ -3,8 +3,8 @@ import { images } from 'assets';
 import { colors, fonts, Navigator, sizes, strings, Style } from 'core';
 import React, { memo } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Device } from 'utils';
 import { Home } from 'screen/home';
+import { Device } from 'utils';
 
 const Tab = createBottomTabNavigator();
 

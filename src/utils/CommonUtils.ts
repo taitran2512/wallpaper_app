@@ -1,6 +1,5 @@
 import { throttle } from 'lodash';
 import { Alert, LayoutAnimation } from 'react-native';
-import { BASE_URL as URL } from './Https';
 
 export const showAlert = (
 	message = 'Something went wrong, please try again later.',

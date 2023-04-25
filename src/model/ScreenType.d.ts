@@ -6,7 +6,9 @@ import { SelectCountryProps } from 'component/customView/SelectCountry';
 import { StyleProp, ViewStyle } from 'react-native';
 import { BottomSheetProps, BottomSheetSwipeProps } from './Component';
 
-export interface ScreenProps extends StackScreenProps<any> {}
+export interface ScreenProps extends StackScreenProps<any> {
+	setOptions: any;
+}
 export interface TabScreenProps extends BottomTabScreenProps<any> {}
 
 export interface ScreenParams extends NavigateParams<any> {

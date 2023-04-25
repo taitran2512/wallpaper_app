@@ -12,10 +12,9 @@ import { ActivityIndicator, Platform, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { enableScreens } from 'react-native-screens';
 import { Dialog, Modals } from 'screen/modal';
+import { Onboarding } from 'screen/onboard';
 import { Storage } from 'utils';
 import Device from 'utils/Device';
-import HomeStack from './homeStack/HomeStack';
-import { Onboarding } from 'screen/onboard';
 import TopTab from './homeStack/TopTab';
 
 const Stack = createNativeStackNavigator();

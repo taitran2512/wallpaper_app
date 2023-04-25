@@ -2,15 +2,17 @@ import { NavigationContainerRef, StackActions, TabActions } from '@react-navigat
 import { StackNavigationOptions } from '@react-navigation/stack';
 import { Stacks } from 'common';
 import { headerDefaultOptions } from 'common/nagivationOption';
+import { NavigationBackButton } from 'component';
+import {
+	AlertParams,
+	BottomSheetProps,
+	BottomSheetSwipeProps,
+	DialogProps,
+	ModalsParams,
+	ScreenParams,
+} from 'model';
 import { Keyboard } from 'react-native';
 import { colors } from '../style/colors';
-import { NavigationBackButton } from 'component';
-import { AlertParams } from 'model';
-import { BottomSheetProps } from 'model';
-import { BottomSheetSwipeProps } from 'model';
-import { ModalsParams } from 'model';
-import { DialogProps } from 'model';
-import { ScreenParams } from 'model';
 
 export default class Navigator {
 	static navigationRef: NavigationContainerRef<ReactNavigation.RootParamList> | any;
@@ -157,6 +159,6 @@ export default class Navigator {
 	}
 
 	static goLogin() {
-		this.reset(Stacks.AuthenStack);
+		// this.reset(Stacks.AuthenStack);
 	}
 }
