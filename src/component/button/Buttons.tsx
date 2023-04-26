@@ -1,7 +1,7 @@
 import { BlurView } from '@react-native-community/blur';
 import { colors, sizes } from 'core/index';
 import React from 'react';
-import { StyleProp, StyleSheet, Text, TouchableOpacity, View, ViewStyle } from 'react-native';
+import { StyleProp, StyleSheet, Text, TouchableOpacity, ViewStyle } from 'react-native';
 
 interface Props {
 	title?: string;
