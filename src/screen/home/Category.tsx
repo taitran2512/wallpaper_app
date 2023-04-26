@@ -52,6 +52,8 @@ const styles = StyleSheet.create({
 	itemTitle: {
 		fontSize: sizes.s30,
 		marginBottom: sizes.s4,
+		fontWeight: '500',
+		color: colors.white,
 	},
 	itemSubTitle: {
 		fontSize: sizes.s18,
