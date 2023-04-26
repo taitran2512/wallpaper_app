@@ -13,4 +13,6 @@ export const images = {
 	ic_lock_selected: require('./images/ic_lock_selected.png'),
 	onboarding: require('./images/onboarding.png'),
 	ic_success: require('./images/ic_success.png'),
+	ic_checkbox: require('./images/ic_checkbox.png'),
+	ic_checkbox_checked: require('./images/ic_checkbox_checked.png'),
 };

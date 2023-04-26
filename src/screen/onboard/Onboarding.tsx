@@ -1,17 +1,11 @@
-import {
-	NativeScrollEvent,
-	NativeSyntheticEvent,
-	ScrollView,
-	StyleSheet,
-	Text,
-	View,
-} from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import React, { useRef, useState } from 'react';
 import FastImage from 'react-native-fast-image';
-import { Buttons, Flex } from 'component';
-import { Navigator, Style, colors, screenHeight, screenWidth, sizes } from 'core/index';
+import { Buttons, Flex, Icon } from 'component';
+import { Navigator, Style, colors, screenHeight, screenWidth, sizes, strings } from 'core/index';
 import { images } from 'assets';
 import LinearGradient from 'react-native-linear-gradient';
+import { Device, Storage } from 'utils';
 
 const WelcomArr = [
 	{
@@ -30,12 +24,19 @@ const WelcomArr = [
 
 const Onboarding = () => {
 	const [idx, setIdx] = useState<number>(0);
+	const [language, setLanguage] = useState<string>('vi');
 	const scrollRef = useRef<any>();
+
+	const setAppLanguage = (lan: string) => {
+		setLanguage(lan);
+		strings.setLanguage(lan);
+		Storage.setData(Storage.key.language, lan);
+	};
 
 	const onPressNext = () => {
 		const page = idx + 1;
 		setIdx(page);
-		if (page === WelcomArr.length) {
+		if (page === WelcomArr.length + 1) {
 			Navigator.goHome();
 		} else {
 			scrollRef.current.scrollTo({ x: screenWidth * page });
@@ -84,8 +85,41 @@ const Onboarding = () => {
 						scrollEventThrottle={16}
 						scrollEnabled={false}>
 						{renderPage()}
+						<View
+							style={{
+								width: screenWidth,
+								paddingHorizontal: sizes.s16,
+								paddingTop: Device.setHeaderHeight(sizes.s24),
+							}}>
+							<Buttons
+								onPress={() => setAppLanguage('vi')}
+								style={[Style.row_between, Style.top16, Style.ph16]}>
+								<Text style={[Style.h6, { color: 'white' }]}>Tiếng Việt</Text>
+								<Icon
+									source={
+										language === 'vi' ? images.ic_checkbox_checked : images.ic_checkbox
+									}
+									size={sizes.s24}
+								/>
+							</Buttons>
+							<Buttons
+								onPress={() => setAppLanguage('en')}
+								style={[Style.row_between, Style.top16, Style.ph16]}>
+								<Text style={[Style.h6, { color: 'white' }]}>English</Text>
+								<Icon
+									source={
+										language === 'en' ? images.ic_checkbox_checked : images.ic_checkbox
+									}
+									size={sizes.s24}
+								/>
+							</Buttons>
+						</View>
 					</ScrollView>
-					<Buttons title="Next" onPress={onPressNext} style={Style.mh16} />
+					<Buttons
+						title={idx === WelcomArr.length ? 'Save and continue' : 'Next'}
+						onPress={onPressNext}
+						style={[Style.mh16]}
+					/>
 					<View
 						style={[
 							Style.row_center,
