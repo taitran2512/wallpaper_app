@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Style, colors, sizes } from 'core/index';
+import { colors, sizes, Style } from 'core/index';
 import React, { forwardRef, memo, useImperativeHandle, useState } from 'react';
 import { Modal, StyleSheet, Text, View } from 'react-native';
 
@@ -8,6 +8,7 @@ interface Props {
 	onPress?: () => void;
 	content: string;
 	title: string;
+	children?: any;
 }
 const ModalConfirm: React.FC<Props> = forwardRef((props: Props, ref: any) => {
 	const [show, setShow] = useState<boolean>(false);
@@ -32,7 +33,8 @@ const ModalConfirm: React.FC<Props> = forwardRef((props: Props, ref: any) => {
 			<View style={styles.container}>
 				<View style={styles.modal}>
 					<Text style={styles.title}>{props?.title}</Text>
-					<Text style={styles.subTitle}>{props?.content}</Text>
+					{props?.content ? <Text style={styles.subTitle}>{props?.content}</Text> : null}
+					{props?.children}
 				</View>
 			</View>
 		</Modal>
@@ -43,19 +45,19 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		justifyContent: 'center',
-		backgroundColor: 'rgba(0, 0, 0, 0.9)',
+		backgroundColor: 'rgba(0, 0, 0, 0.6)',
 		paddingHorizontal: sizes.s24,
 	},
 	modal: {
-		backgroundColor: colors.white,
+		backgroundColor: colors.gradient,
 		borderRadius: sizes.s16,
 		paddingVertical: sizes.s16,
 		paddingHorizontal: sizes.s16,
 	},
 	title: {
-		fontSize: sizes.s24,
+		fontSize: sizes.s14,
 		textAlign: 'center',
-		color: colors.black,
+		color: colors.white,
 	},
 	subTitle: {
 		...Style.txt16_secondary,

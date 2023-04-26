@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { images } from 'assets';
 import { Flex, Icon, ModalConfirm } from 'component';
-import { Navigator, Style, colors, screenHeight, screenWidth, sizes } from 'core/index';
+import { colors, Navigator, screenHeight, screenWidth, sizes, Style } from 'core/index';
 import { ScreenProps } from 'model';
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import {
@@ -75,15 +76,16 @@ const Detail: React.FC<ScreenProps> = ({ navigation }) => {
 	useEffect(() => {
 		hideToast();
 	}, [showToast]);
+
 	const renderButtonBottom = () => {
 		return (
 			<View style={styles.viewGradient}>
 				<TouchableOpacity
 					style={styles.item}
 					activeOpacity={0.8}
-					onPress={() => setType('HOME')}>
+					onPress={() => setType('home')}>
 					<Icon
-						source={type === 'HOME' ? images.ic_home_selected : images.ic_home}
+						source={type === 'home' ? images.ic_home_selected : images.ic_home}
 						size={sizes.s24}
 					/>
 					<Text style={[Style.txt14_white, Style.top4]}>Homescreen</Text>
@@ -91,9 +93,9 @@ const Detail: React.FC<ScreenProps> = ({ navigation }) => {
 				<TouchableOpacity
 					style={styles.item}
 					activeOpacity={0.8}
-					onPress={() => setType('LOCK')}>
+					onPress={() => setType('lock')}>
 					<Icon
-						source={type === 'LOCK' ? images.ic_lock_selected : images.ic_lock}
+						source={type === 'lock' ? images.ic_lock_selected : images.ic_lock}
 						size={sizes.s24}
 					/>
 					<Text style={[Style.txt14_white, Style.top4]}>Lockscreen</Text>
@@ -105,7 +107,29 @@ const Detail: React.FC<ScreenProps> = ({ navigation }) => {
 			</View>
 		);
 	};
+	const onHandleWallpaper = (screen?: string) => {};
+	const setBackgroundHomeScreen = (type: string) => {
+		onHandleWallpaper(type);
+	};
+	const setBackgroundLockScreen = (type: string) => {
+		onHandleWallpaper(type);
+	};
+	const setBackgroundBothScreen = (type: string) => {
+		onHandleWallpaper(type);
+	};
 
+	const onHandleSetWallpaper = (type: string) => {
+		try {
+			const handleOption: any = {
+				home: setBackgroundHomeScreen,
+				lock: setBackgroundLockScreen,
+				both: setBackgroundBothScreen,
+			};
+			const handler = handleOption[type];
+
+			return handler();
+		} catch {}
+	};
 	return (
 		<Flex style={styles.container}>
 			<FastImage
@@ -116,15 +140,52 @@ const Detail: React.FC<ScreenProps> = ({ navigation }) => {
 				{renderButtonBottom()}
 				<ModalConfirm
 					ref={modalRef}
-					title="Alert"
-					content="Please upload one or more documents to verify that the bank account listed matches the name mentioned"
-				/>
+					title="Do you want to use this wallpaper for which screen?"
+					content="">
+					<View style={[Style.line, styles.line2]} />
+					<ItemOption onPress={onHandleSetWallpaper} cancel={() => modalRef.current.close()} />
+				</ModalConfirm>
 			</FastImage>
 		</Flex>
 	);
 };
 
 export default Detail;
+const ItemOption = ({ onPress, cancel }: any) => {
+	const options = [
+		{
+			type: 'both',
+			title: 'Both Homescreen & Lockscreen',
+		},
+		{
+			type: 'home',
+			title: 'Set as Homescreen',
+		},
+		{
+			type: 'lock',
+			title: 'Set as Lockscreen',
+		},
+	];
+	const handlePress = (type: string) => {
+		onPress && onPress(type);
+	};
+	return (
+		<>
+			{options.map((item, index) => (
+				<TouchableOpacity
+					style={styles.itemOption}
+					onPress={() => handlePress(item.type)}
+					key={index}>
+					<Text style={styles.txtOption}>{item.title}</Text>
+					<View style={[Style.line, styles.line2]} />
+				</TouchableOpacity>
+			))}
+			<TouchableOpacity style={styles.itemOption} onPress={cancel}>
+				<Text style={styles.txtCancel}>Cancel</Text>
+			</TouchableOpacity>
+		</>
+	);
+};
 
 const styles = StyleSheet.create({
 	container: {
@@ -147,7 +208,7 @@ const styles = StyleSheet.create({
 		marginTop: Device.setHeaderHeight(sizes.s16),
 	},
 	button: {
-		backgroundColor: 'rgba(255, 255, 255, 0.3)',
+		backgroundColor: colors.gradient,
 		height: sizes.s36,
 		width: sizes.s36,
 		borderRadius: sizes.s8,
@@ -166,7 +227,7 @@ const styles = StyleSheet.create({
 		paddingVertical: sizes.s16,
 		marginHorizontal: sizes.s16,
 		marginBottom: sizes.s70,
-		backgroundColor: 'rgba(255, 255, 255, 0.5)',
+		backgroundColor: colors.gradient5,
 		borderRadius: sizes.s8,
 	},
 	viewGradientToast: {
@@ -176,7 +237,7 @@ const styles = StyleSheet.create({
 		paddingVertical: sizes.s16,
 		marginHorizontal: sizes.s16,
 		marginBottom: sizes.s70,
-		backgroundColor: 'rgba(255, 255, 255, 0.5)',
+		backgroundColor: colors.gradient5,
 		borderRadius: sizes.s8,
 	},
 	line: {
@@ -187,5 +248,22 @@ const styles = StyleSheet.create({
 	txtSuccess: {
 		fontSize: sizes.s18,
 		marginLeft: sizes.s34,
+	},
+	line2: {
+		marginVertical: sizes.s16,
+	},
+	itemOption: {
+		paddingVertical: sizes.s2,
+	},
+	txtOption: {
+		fontWeight: 'bold',
+		color: colors.white,
+		fontSize: sizes.s16,
+		textAlign: 'center',
+	},
+	txtCancel: {
+		color: colors.white,
+		fontSize: sizes.s16,
+		textAlign: 'center',
 	},
 });

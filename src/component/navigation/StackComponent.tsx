@@ -1,5 +1,4 @@
-import isEmpty from 'lodash/isEmpty'
-import React, { useEffect } from 'react'
+import React from 'react';
 
 const StackComponent: React.FC<any> = ({ Component, ...navigatorProps }) => {
 	// const { navigation, params } = navigatorProps
@@ -10,7 +9,7 @@ const StackComponent: React.FC<any> = ({ Component, ...navigatorProps }) => {
 	// 		})
 	// 	}
 	// }, [params?.options])
-	return <Component {...navigatorProps} />
-}
+	return <Component {...navigatorProps} />;
+};
 
-export default StackComponent
+export default StackComponent;

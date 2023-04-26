@@ -9,15 +9,15 @@ import { Device, Storage } from 'utils';
 
 const WelcomArr = [
 	{
-		title: 'Wellcome to SuretDope Wallpapers',
+		title: 'Welcome to Sunret Dope Wallpapers',
 		content: 'Corem ipsum dolor sit amet, Nunc vulputate libero et amet',
 	},
 	{
-		title: 'Wellcome to SuretDope Wallpapers',
+		title: 'Welcome to Sunret Dope Wallpapers',
 		content: 'Corem ipsum dolor sit amet, Nunc vulputate libero et amet',
 	},
 	{
-		title: 'Wellcome to SuretDope Wallpapers',
+		title: 'Welcome to Sunret Dope Wallpapers',
 		content: 'Corem ipsum dolor sit amet, Nunc vulputate libero et amet',
 	},
 ];

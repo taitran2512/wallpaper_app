@@ -40,4 +40,6 @@ export const colors = {
 	input_background: '#F8FAFC',
 
 	backgroundApp: '#333333',
+	gradient: 'rgba(255, 255, 255, 0.3)',
+	gradient5: 'rgba(255, 255, 255, 0.5)',
 };
