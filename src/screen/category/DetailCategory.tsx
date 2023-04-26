@@ -3,16 +3,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
 import { images } from 'assets';
-import { Screens } from 'common';
 import { dataDetailCategory } from 'common/data';
-import { Flex, NavigationButton } from 'component';
+import { Flex, GridImageView, NavigationButton } from 'component';
 import { colors, screenWidth, sizes } from 'core/index';
 import { ScreenProps } from 'model';
 import React, { useLayoutEffect } from 'react';
-import { FlatList, StyleSheet, TouchableOpacity } from 'react-native';
-import FastImage from 'react-native-fast-image';
-const numColumns = 3;
-const imageWidth = (screenWidth - sizes.s4) / numColumns;
+import { StyleSheet } from 'react-native';
 
 const DetailCategory: React.FC<ScreenProps> = ({ navigation, route }) => {
 	const cateogry: any = route?.params || {};
@@ -20,7 +16,7 @@ const DetailCategory: React.FC<ScreenProps> = ({ navigation, route }) => {
 	const iniScreen = () => {
 		navigation.setOptions({
 			headerShown: true,
-			title: cateogry.title,
+			title: cateogry?.title,
 			headerLeft: () => (
 				<NavigationButton
 					icon={images.ic_back_arrow}
@@ -43,31 +39,10 @@ const DetailCategory: React.FC<ScreenProps> = ({ navigation, route }) => {
 	useLayoutEffect(() => {
 		iniScreen();
 	}, []);
-	const detailScreen = () => {
-		navigation.navigate(Screens.Detail);
-	};
-	const renderItem = ({ item, index }: any) => {
-		return (
-			<TouchableOpacity
-				style={{ flex: index === dataDetailCategory.length - 1 ? numColumns - 1 : 1 }}
-				onPress={detailScreen}
-				activeOpacity={0.8}>
-				<FastImage style={styles.image} source={item.background} />
-			</TouchableOpacity>
-		);
-	};
-
-	const keyExtractor = (item: any, index: number) => index.toString();
 
 	return (
 		<Flex style={styles.container}>
-			<FlatList
-				data={dataDetailCategory}
-				renderItem={renderItem}
-				keyExtractor={keyExtractor}
-				numColumns={numColumns}
-				style={styles.container}
-			/>
+			<GridImageView data={dataDetailCategory} />
 		</Flex>
 	);
 };
@@ -83,10 +58,5 @@ const styles = StyleSheet.create({
 		width: sizes.s24,
 		height: sizes.s24,
 		marginLeft: sizes.s16,
-	},
-	image: {
-		width: imageWidth,
-		height: (imageWidth / 9) * 16,
-		marginBottom: sizes.s2,
 	},
 });

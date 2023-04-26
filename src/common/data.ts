@@ -47,25 +47,17 @@ export const categoryData = [
 	},
 ];
 export const dataDetailCategory = [
-	{
-		background: images.banner,
-	},
-	{
-		background: images.banner,
-	},
-	{
-		background: images.banner,
-	},
-	{
-		background: images.banner,
-	},
-	{
-		background: images.banner,
-	},
-	{
-		background: images.banner,
-	},
-	{
-		background: images.banner,
-	},
+	images.banner,
+	images.banner,
+	images.banner,
+	images.banner,
+	images.banner,
+	images.banner,
+	images.banner,
+	images.banner,
+	images.banner,
+	images.banner,
+	images.banner,
+	images.banner,
+	images.banner,
 ];
