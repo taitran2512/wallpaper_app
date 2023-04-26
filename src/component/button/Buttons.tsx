@@ -14,7 +14,7 @@ interface Props {
 const Buttons: React.FC<Props> = ({ title, onPress, children, blurStyle, style }) => {
 	return (
 		<TouchableOpacity
-			activeOpacity={children ? 1 : 0.7}
+			activeOpacity={children ? 1 : 0.8}
 			onPress={onPress}
 			style={[styles.container, style]}>
 			<BlurView
@@ -30,8 +30,8 @@ const Buttons: React.FC<Props> = ({ title, onPress, children, blurStyle, style }
 					blurStyle,
 				]}
 				blurType="light"
-				blurAmount={3}
-				blurRadius={3}
+				blurAmount={20}
+				blurRadius={20}
 				overlayColor="transparent"
 			/>
 			{children || <Text style={styles.title}>{title}</Text>}

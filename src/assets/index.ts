@@ -11,4 +11,5 @@ export const images = {
 	ic_home_selected: require('./images/ic_home_selected.png'),
 	ic_lock: require('./images/ic_lock.png'),
 	ic_lock_selected: require('./images/ic_lock_selected.png'),
+	onboarding: require('./images/onboarding.png'),
 };
