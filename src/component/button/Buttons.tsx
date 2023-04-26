@@ -1,21 +1,41 @@
 import { BlurView } from '@react-native-community/blur';
 import { colors, sizes } from 'core/index';
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { StyleProp, StyleSheet, Text, TouchableOpacity, View, ViewStyle } from 'react-native';
 
 interface Props {
 	title?: string;
 	onPress?: () => void;
 	children?: any;
+	style?: StyleProp<ViewStyle>;
+	blurStyle?: StyleProp<ViewStyle>;
 }
 
-const Buttons: React.FC<Props> = ({ title, onPress, children }) => {
+const Buttons: React.FC<Props> = ({ title, onPress, children, blurStyle, style }) => {
 	return (
-		<BlurView blurType="light" blurAmount={3} reducedTransparencyFallbackColor="white">
-			<TouchableOpacity activeOpacity={0.7} onPress={onPress} style={styles.container}>
-				{children || <Text style={styles.title}>{title}</Text>}
-			</TouchableOpacity>
-		</BlurView>
+		<TouchableOpacity
+			activeOpacity={children ? 1 : 0.7}
+			onPress={onPress}
+			style={[styles.container, style]}>
+			<BlurView
+				style={[
+					{
+						overflow: 'hidden',
+						position: 'absolute',
+						top: 0,
+						left: 0,
+						right: 0,
+						bottom: 0,
+					},
+					blurStyle,
+				]}
+				blurType="light"
+				blurAmount={3}
+				blurRadius={3}
+				overlayColor="transparent"
+			/>
+			{children || <Text style={styles.title}>{title}</Text>}
+		</TouchableOpacity>
 	);
 };
 
@@ -27,7 +47,8 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		backgroundColor: 'rgba(255, 255, 255, 0.3)',
 		height: sizes.s50,
-		borderRadius: sizes.s16,
+		borderRadius: 16,
+		overflow: 'hidden',
 	},
 	title: {
 		color: colors.white,
