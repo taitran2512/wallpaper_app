@@ -38,14 +38,14 @@ const TopTab = ({ navigation }: ScreenProps) => {
 				<NavigationButton
 					icon={images.ic_menu_left}
 					tintColor="white"
-					style={{ width: sizes.s24, height: sizes.s24 }}
+					style={{ width: sizes.s24, height: sizes.s24, marginLeft: sizes.s16 }}
 				/>
 			),
 			headerRight: () => (
 				<NavigationButton
 					icon={images.ic_search}
 					tintColor="white"
-					style={{ width: sizes.s20, height: sizes.s20 }}
+					style={{ width: sizes.s20, height: sizes.s20, marginRight: sizes.s16 }}
 				/>
 			),
 

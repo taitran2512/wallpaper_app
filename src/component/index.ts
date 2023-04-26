@@ -20,3 +20,4 @@ export { default as PinInput } from './pinInput/index';
 export { default as Separator } from './separator/Separator';
 export { default as Switch } from './switch/Switch';
 export { default as ToastDebug } from './toast/ToastDebug';
+export { default as GridImageView } from './image/GridImageView';
