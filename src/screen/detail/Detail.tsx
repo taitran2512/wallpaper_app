@@ -17,11 +17,14 @@ import {
 	View,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import { Device } from 'utils';
+import { Device, Storage, imageSource } from 'utils';
 console.log(NativeModules, 'NativeModules');
 const { WallpaperManageModule } = NativeModules || {};
 
-const Detail: React.FC<ScreenProps> = ({ navigation }) => {
+const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
+	const image = route?.params?.image;
+	const [like, setLike] = useState<boolean>(false);
+
 	if (Platform.OS === 'android') {
 		if (UIManager.setLayoutAnimationEnabledExperimental) {
 			UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -94,14 +97,24 @@ const Detail: React.FC<ScreenProps> = ({ navigation }) => {
 		hideToast();
 	}, [showToast]);
 
+	const onPressLike = async () => {
+		const newValue = !like;
+		setLike(newValue);
+		const data = await Storage.getData(Storage.key.likedImageArray);
+		console.log(data, 'dadadadad');
+		if (newValue) {
+			Storage.setData(Storage.key.likedImageArray, image);
+		} else {
+		}
+	};
+
 	const setHeader = () => (
 		<View style={styles.header}>
 			<TouchableOpacity style={styles.button} onPress={() => Navigator.goBack()}>
 				<Image source={images.ic_back_arrow} style={Style.icon16} />
 			</TouchableOpacity>
-
-			<TouchableOpacity>
-				<Image source={images.ic_like} style={Style.icon24} />
+			<TouchableOpacity onPress={onPressLike}>
+				<Image source={like ? images.ic_liked : images.ic_like} style={Style.icon24} />
 			</TouchableOpacity>
 		</View>
 	);
@@ -149,7 +162,7 @@ const Detail: React.FC<ScreenProps> = ({ navigation }) => {
 	return (
 		<Flex style={styles.container}>
 			<FastImage
-				source={images.banner_default}
+				source={imageSource(image)}
 				style={[StyleSheet.absoluteFill, styles.background]}>
 				{setHeader()}
 				{showToast ? renderToastNotify() : null}

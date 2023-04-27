@@ -1,19 +1,10 @@
 import { images } from 'assets';
+import { dataDetailCategory } from 'common/data';
 import { GridImageView } from 'component';
 import React from 'react';
 
-const DATA = [
-	images.banner,
-	images.banner,
-	images.banner,
-	images.banner,
-	images.banner,
-	images.banner,
-	images.banner,
-	images.banner,
-];
 const New = () => {
-	return <GridImageView data={DATA} />;
+	return <GridImageView data={dataDetailCategory} />;
 };
 
 export default New;

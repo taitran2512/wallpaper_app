@@ -6,10 +6,8 @@ import { parseJson } from './ValueUtils';
 export default class Storage {
 	static key = {
 		language: 'language',
-		accountLogin: 'accountLogin',
-		profile: 'profile',
-		authToken: 'authToken',
 		onboarding: 'onboarding',
+		likedImageArray: 'likedImageArray',
 	};
 
 	static setData = async (key: string, value: any) => {
