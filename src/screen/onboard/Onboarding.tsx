@@ -1,5 +1,5 @@
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import React, { useRef, useState } from 'react';
+import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from 'react-native';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import FastImage from 'react-native-fast-image';
 import { Buttons, Flex, Icon } from 'component';
 import { Navigator, Style, colors, screenHeight, screenWidth, sizes, strings } from 'core/index';
@@ -24,8 +24,20 @@ const WelcomArr = [
 
 const Onboarding = () => {
 	const [idx, setIdx] = useState<number>(0);
-	const [language, setLanguage] = useState<string>('vi');
+	const [language, setLanguage] = useState<string>('');
 	const scrollRef = useRef<any>();
+
+	useLayoutEffect(() => {
+		Storage.getMultiData([Storage.key.language, Storage.key.onboarding]).then((data) => {
+			const [lang, onboard] = data;
+			const appLanguage = lang || 'vi';
+			strings.setLanguage(appLanguage);
+			setLanguage(appLanguage);
+			if (onboard) {
+				Navigator.goHome();
+			}
+		});
+	}, []);
 
 	const setAppLanguage = (lan: string) => {
 		setLanguage(lan);
@@ -35,11 +47,11 @@ const Onboarding = () => {
 
 	const onPressNext = () => {
 		const page = idx + 1;
-		setIdx(page);
 		if (page === WelcomArr.length + 1) {
 			Navigator.goHome();
 			Storage.setData(Storage.key.onboarding, 'true');
 		} else {
+			setIdx(page);
 			scrollRef.current.scrollTo({ x: screenWidth * page });
 		}
 	};
@@ -61,6 +73,14 @@ const Onboarding = () => {
 			/>
 		));
 	};
+
+	if (!language) {
+		return (
+			<View style={[Style.flex, Style.column_center, { backgroundColor: colors.backgroundApp }]}>
+				<ActivityIndicator color={colors.blue} size="large" />
+			</View>
+		);
+	}
 
 	return (
 		<Flex style={styles.container}>

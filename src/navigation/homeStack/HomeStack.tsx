@@ -24,9 +24,11 @@ const HomeStack: React.FC = () => {
 
 	return (
 		<Stack.Navigator
-			screenOptions={{
-				animation: 'slide_from_right',
-			}}>
+			screenOptions={
+				{
+					// animation: 'slide_from_right',
+				}
+			}>
 			<Stack.Screen options={{ headerShown: false }} name={'HomeTab'} component={TopTab} />
 			{renderStackScreen()}
 		</Stack.Navigator>
