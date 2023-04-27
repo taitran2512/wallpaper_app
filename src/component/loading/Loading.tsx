@@ -1,40 +1,40 @@
-import { colors, sizes } from 'core'
-import React, { PureComponent } from 'react'
-import { Animated, StyleSheet, View } from 'react-native'
+import { colors, sizes } from 'core';
+import React, { PureComponent } from 'react';
+import { Animated, StyleSheet, View } from 'react-native';
 
-import LoadingDots from './LoadingDots'
+import LoadingDots from './LoadingDots';
 
 interface Props {}
 
 interface States {
-	visible: boolean
-	text: string
+	visible: boolean;
+	text: string;
 }
 
 export default class Loading extends PureComponent<Props, States> {
-	private animate: any
+	private animate: any;
 	constructor(props: Props) {
-		super(props)
+		super(props);
 		this.state = {
 			visible: false,
 			text: '',
-		}
-		this.animate = new Animated.Value(0)
+		};
+		this.animate = new Animated.Value(0);
 	}
 
 	show(text: string = '') {
-		this.setState({ visible: true, text: text }, this.fadeIn)
+		this.setState({ visible: true, text: text }, this.fadeIn);
 	}
 
 	hide() {
-		this.faseOut()
+		this.faseOut();
 		setTimeout(() => {
-			this.setState({ visible: false, text: '' })
-		}, 250)
+			this.setState({ visible: false, text: '' });
+		}, 250);
 	}
 
 	isLoading() {
-		return this.state.visible
+		return this.state.visible;
 	}
 
 	fadeIn() {
@@ -42,7 +42,7 @@ export default class Loading extends PureComponent<Props, States> {
 			toValue: 1,
 			duration: 250,
 			useNativeDriver: true,
-		}).start()
+		}).start();
 	}
 
 	faseOut() {
@@ -50,7 +50,7 @@ export default class Loading extends PureComponent<Props, States> {
 			toValue: 0,
 			duration: 250,
 			useNativeDriver: true,
-		}).start()
+		}).start();
 	}
 
 	//*********************** */
@@ -67,7 +67,7 @@ export default class Loading extends PureComponent<Props, States> {
 					</Animated.View>
 				)}
 			</>
-		)
+		);
 	}
 }
 const styles = StyleSheet.create({
@@ -78,10 +78,10 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 	},
 	child: {
-		backgroundColor: colors.white,
+		backgroundColor: colors.gradient5,
 		borderRadius: sizes.s16,
 		padding: sizes.s36,
 		justifyContent: 'center',
 		alignItems: 'center',
 	},
-})
+});

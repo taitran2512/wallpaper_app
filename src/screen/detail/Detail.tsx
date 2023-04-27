@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { images } from 'assets';
-import { Flex, Icon, ModalConfirm } from 'component';
-import { Navigator, Style, colors, screenHeight, screenWidth, sizes } from 'core/index';
+import { ExampleScreen, Flex, Icon, ModalConfirm } from 'component';
+import { colors, Navigator, screenHeight, screenWidth, sizes, Style } from 'core/index';
 import { ScreenProps } from 'model';
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import {
+	Alert,
 	Image,
 	LayoutAnimation,
 	NativeModules,
@@ -17,8 +18,7 @@ import {
 	View,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import { Device, Storage, imageSource } from 'utils';
-console.log(NativeModules, 'NativeModules');
+import { Device, imageSource } from 'utils';
 const { WallpaperManageModule } = NativeModules || {};
 
 const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
@@ -42,6 +42,10 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 
 	const onApplyWallpaper = () => {
 		modalRef.current.open();
+	};
+	const showToastSuccess = () => {
+		setShowToast(true);
+		setType('');
 		LayoutAnimation.configureNext(
 			LayoutAnimation.create(
 				300,
@@ -50,9 +54,9 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 			)
 		);
 	};
-
 	const hideToast = () => {
 		if (showToast) {
+			setType('');
 			setTimeout(() => {
 				setShowToast(false);
 			}, 2000);
@@ -62,6 +66,8 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 
 	const onHandleWallpaper = (type: string) => {
 		try {
+			Navigator.showLoading();
+			modalRef.current.close();
 			WallpaperManageModule.setWallpaper(
 				{
 					uri: 'https://lh3.googleusercontent.com/a-/ACB-R5RNd8d1199_In0k7IAeTslQI_mKerHw_Gwf3yiF=s888',
@@ -69,23 +75,18 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 				type,
 				(res?: any) => {
 					if (res.status === 'success') {
-						modalRef.current.close();
-						setShowToast(true);
-						LayoutAnimation.configureNext(
-							LayoutAnimation.create(
-								300,
-								LayoutAnimation.Types.easeInEaseOut,
-								LayoutAnimation.Properties.opacity
-							)
-						);
+						showToastSuccess();
 					} else {
-						return null;
+						hideToast();
 					}
 				}
 			);
-		} catch (error) {
-			setShowToast(false);
-			console.log(error);
+		} catch (error: any) {
+			Navigator.hideLoading();
+			hideToast();
+			Alert.alert('Alert', error);
+		} finally {
+			Navigator.hideLoading();
 		}
 	};
 
@@ -100,12 +101,11 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 	const onPressLike = async () => {
 		const newValue = !like;
 		setLike(newValue);
-		const data = await Storage.getData(Storage.key.likedImageArray);
-		console.log(data, 'dadadadad');
-		if (newValue) {
-			Storage.setData(Storage.key.likedImageArray, image);
-		} else {
-		}
+		// const data = await Storage.getData(Storage.key.likedImageArray);
+		// if (newValue) {
+		// 	Storage.setData(Storage.key.likedImageArray, image);
+		// } else {
+		// }
 	};
 
 	const setHeader = () => (
@@ -166,6 +166,7 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 				style={[StyleSheet.absoluteFill, styles.background]}>
 				{setHeader()}
 				{showToast ? renderToastNotify() : null}
+				<ExampleScreen type={type} />
 				{renderButtonBottom()}
 				<ModalConfirm
 					ref={modalRef}
@@ -267,9 +268,12 @@ const styles = StyleSheet.create({
 		paddingHorizontal: sizes.s24,
 		paddingVertical: sizes.s16,
 		marginHorizontal: sizes.s16,
-		marginBottom: sizes.s70,
 		backgroundColor: colors.gradient5,
 		borderRadius: sizes.s8,
+		position: 'absolute',
+		left: 0,
+		right: 0,
+		bottom: screenHeight * 0.25,
 	},
 	line: {
 		width: 1,
@@ -279,6 +283,7 @@ const styles = StyleSheet.create({
 	txtSuccess: {
 		fontSize: sizes.s18,
 		marginLeft: sizes.s34,
+		color: colors.white,
 	},
 	line2: {
 		marginVertical: sizes.s16,

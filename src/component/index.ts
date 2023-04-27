@@ -1,6 +1,7 @@
 export { default as BottomSheet } from './bottomSheet/BottomSheet';
 export { default as BottomSheetSwipe } from './bottomSheet/BottomSheetSwipe';
 export { default as Buttons } from './button/Buttons';
+export { default as ExampleScreen } from './example/ExampleScreen';
 export { default as Flex } from './flex/Flex';
 export { default as StatusBarView } from './header/StatusBarView';
 export { default as AutoFastImage } from './image/AutoFastImage';

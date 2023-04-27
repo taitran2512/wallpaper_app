@@ -42,4 +42,5 @@ export const colors = {
 	backgroundApp: '#333333',
 	gradient: 'rgba(255, 255, 255, 0.3)',
 	gradient5: 'rgba(255, 255, 255, 0.5)',
+	gradient4: 'rgba(255, 255, 255, 0.4)',
 };
