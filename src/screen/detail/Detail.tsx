@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { images } from 'assets';
 import { Flex, Icon, ModalConfirm } from 'component';
-import { colors, Navigator, screenHeight, screenWidth, sizes, Style } from 'core/index';
+import { Navigator, Style, colors, screenHeight, screenWidth, sizes } from 'core/index';
 import { ScreenProps } from 'model';
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import {
@@ -43,6 +43,7 @@ const Detail: React.FC<ScreenProps> = ({ navigation }) => {
 			)
 		);
 	};
+
 	const hideToast = () => {
 		if (showToast) {
 			setTimeout(() => {
@@ -70,9 +71,15 @@ const Detail: React.FC<ScreenProps> = ({ navigation }) => {
 			</View>
 		);
 	};
+	const onHandleWallpaper = (type: string) => {
+		console.log(type);
+		onApplyWallpaper();
+	};
+
 	useLayoutEffect(() => {
 		initScreen();
 	}, []);
+
 	useEffect(() => {
 		hideToast();
 	}, [showToast]);
@@ -107,29 +114,7 @@ const Detail: React.FC<ScreenProps> = ({ navigation }) => {
 			</View>
 		);
 	};
-	const onHandleWallpaper = (screen?: string) => {};
-	const setBackgroundHomeScreen = (type: string) => {
-		onHandleWallpaper(type);
-	};
-	const setBackgroundLockScreen = (type: string) => {
-		onHandleWallpaper(type);
-	};
-	const setBackgroundBothScreen = (type: string) => {
-		onHandleWallpaper(type);
-	};
 
-	const onHandleSetWallpaper = (type: string) => {
-		try {
-			const handleOption: any = {
-				home: setBackgroundHomeScreen,
-				lock: setBackgroundLockScreen,
-				both: setBackgroundBothScreen,
-			};
-			const handler = handleOption[type];
-
-			return handler();
-		} catch {}
-	};
 	return (
 		<Flex style={styles.container}>
 			<FastImage
@@ -143,7 +128,10 @@ const Detail: React.FC<ScreenProps> = ({ navigation }) => {
 					title="Do you want to use this wallpaper for which screen?"
 					content="">
 					<View style={[Style.line, styles.line2]} />
-					<ItemOption onPress={onHandleSetWallpaper} cancel={() => modalRef.current.close()} />
+					<ItemOption
+						onPress={(type: string) => onHandleWallpaper(type)}
+						cancel={() => modalRef.current.close()}
+					/>
 				</ModalConfirm>
 			</FastImage>
 		</Flex>
@@ -151,6 +139,7 @@ const Detail: React.FC<ScreenProps> = ({ navigation }) => {
 };
 
 export default Detail;
+
 const ItemOption = ({ onPress, cancel }: any) => {
 	const options = [
 		{
