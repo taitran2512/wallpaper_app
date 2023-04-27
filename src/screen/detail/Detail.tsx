@@ -8,6 +8,7 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import {
 	Image,
 	LayoutAnimation,
+	NativeModules,
 	Platform,
 	StyleSheet,
 	Text,
@@ -17,6 +18,8 @@ import {
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { Device } from 'utils';
+console.log(NativeModules, 'NativeModules');
+const { WallpaperManageModule } = NativeModules || {};
 
 const Detail: React.FC<ScreenProps> = ({ navigation }) => {
 	if (Platform.OS === 'android') {
@@ -27,13 +30,14 @@ const Detail: React.FC<ScreenProps> = ({ navigation }) => {
 	const [type, setType] = useState<string>('');
 	const [showToast, setShowToast] = useState<boolean>(false);
 	const modalRef = useRef<any>();
+
 	const initScreen = () => {
 		navigation.setOptions({
 			headerShown: false,
 		});
 	};
+
 	const onApplyWallpaper = () => {
-		setShowToast(true);
 		modalRef.current.open();
 		LayoutAnimation.configureNext(
 			LayoutAnimation.create(
@@ -52,6 +56,44 @@ const Detail: React.FC<ScreenProps> = ({ navigation }) => {
 		}
 		return;
 	};
+
+	const onHandleWallpaper = (type: string) => {
+		try {
+			WallpaperManageModule.setWallpaper(
+				{
+					uri: 'https://lh3.googleusercontent.com/a-/ACB-R5RNd8d1199_In0k7IAeTslQI_mKerHw_Gwf3yiF=s888',
+				},
+				type,
+				(res?: any) => {
+					if (res.status === 'success') {
+						modalRef.current.close();
+						setShowToast(true);
+						LayoutAnimation.configureNext(
+							LayoutAnimation.create(
+								300,
+								LayoutAnimation.Types.easeInEaseOut,
+								LayoutAnimation.Properties.opacity
+							)
+						);
+					} else {
+						return null;
+					}
+				}
+			);
+		} catch (error) {
+			setShowToast(false);
+			console.log(error);
+		}
+	};
+
+	useLayoutEffect(() => {
+		initScreen();
+	}, []);
+
+	useEffect(() => {
+		hideToast();
+	}, [showToast]);
+
 	const setHeader = () => (
 		<View style={styles.header}>
 			<TouchableOpacity style={styles.button} onPress={() => Navigator.goBack()}>
@@ -63,6 +105,7 @@ const Detail: React.FC<ScreenProps> = ({ navigation }) => {
 			</TouchableOpacity>
 		</View>
 	);
+
 	const renderToastNotify = () => {
 		return (
 			<View style={styles.viewGradientToast}>
@@ -71,18 +114,6 @@ const Detail: React.FC<ScreenProps> = ({ navigation }) => {
 			</View>
 		);
 	};
-	const onHandleWallpaper = (type: string) => {
-		console.log(type);
-		onApplyWallpaper();
-	};
-
-	useLayoutEffect(() => {
-		initScreen();
-	}, []);
-
-	useEffect(() => {
-		hideToast();
-	}, [showToast]);
 
 	const renderButtonBottom = () => {
 		return (
@@ -139,7 +170,6 @@ const Detail: React.FC<ScreenProps> = ({ navigation }) => {
 };
 
 export default Detail;
-
 const ItemOption = ({ onPress, cancel }: any) => {
 	const options = [
 		{
@@ -175,7 +205,6 @@ const ItemOption = ({ onPress, cancel }: any) => {
 		</>
 	);
 };
-
 const styles = StyleSheet.create({
 	container: {
 		justifyContent: 'flex-start',
