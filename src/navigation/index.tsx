@@ -33,14 +33,18 @@ const screenOptionsNativeStack: NativeStackNavigationOptions = {
 
 const AppStack: React.FC = () => {
 	const [language, setLanguage] = useState<string>('');
+	const [firstRoute, setFirstRoute] = useState<string>();
+	Stacks.Onboarding;
 	const insets = useSafeAreaInsets();
 	Device.setDeviceInset(insets);
 
 	useLayoutEffect(() => {
-		Storage.getData(Storage.key.language).then((data) => {
-			const appLanguage = data || 'vi';
+		Storage.getMultiData([Storage.key.language, Storage.key.onboarding]).then((data) => {
+			const [lang, onboard] = data;
+			const appLanguage = lang || 'vi';
 			strings.setLanguage(appLanguage);
 			setLanguage(appLanguage);
+			setFirstRoute(onboard === 'true' ? Stacks.HomeStack : Stacks.Onboarding);
 		});
 	}, []);
 
@@ -54,7 +58,7 @@ const AppStack: React.FC = () => {
 
 	return (
 		<NavigationContainer ref={(ref) => Navigator.setNavigationRef(ref)}>
-			<Stack.Navigator screenOptions={screenOptionsNativeStack}>
+			<Stack.Navigator screenOptions={screenOptionsNativeStack} initialRouteName={firstRoute}>
 				<Stack.Screen name={Stacks.Onboarding} component={Onboarding} />
 				<Stack.Screen name={Stacks.HomeStack} component={HomeStack} />
 				<Stack.Screen

@@ -38,6 +38,7 @@ const Onboarding = () => {
 		setIdx(page);
 		if (page === WelcomArr.length + 1) {
 			Navigator.goHome();
+			Storage.setData(Storage.key.onboarding, 'true');
 		} else {
 			scrollRef.current.scrollTo({ x: screenWidth * page });
 		}

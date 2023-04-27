@@ -9,6 +9,7 @@ export default class Storage {
 		accountLogin: 'accountLogin',
 		profile: 'profile',
 		authToken: 'authToken',
+		onboarding: 'onboarding',
 	};
 
 	static setData = async (key: string, value: any) => {
