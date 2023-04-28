@@ -1,1 +1,1 @@
-export { default as WallpaperManageModule } from './wallpaper/WallpaperManager';
+export * from './wallpaper/WallpaperManager';

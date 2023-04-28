@@ -2,7 +2,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { images } from 'assets';
 import { ExampleScreen, Flex, Icon, ModalConfirm } from 'component';
-import { colors, Navigator, screenHeight, screenWidth, sizes, strings, Style } from 'core/index';
+import { Navigator, Style, colors, screenHeight, screenWidth, sizes, strings } from 'core/index';
+import { format } from 'date-fns';
+import { enUS, vi } from 'date-fns/locale';
 import { ScreenProps } from 'model';
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import {
@@ -19,8 +21,6 @@ import {
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { Device, imageSource } from 'utils';
-import { format } from 'date-fns';
-import { enUS, vi } from 'date-fns/locale';
 
 const { WallpaperManageModule } = NativeModules || {};
 

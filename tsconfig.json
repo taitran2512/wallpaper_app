@@ -34,7 +34,9 @@
 			"model": ["model/"],
 			"core/*": ["core/*"],
 			"core/": ["core/"],
-			"common": ["common/"]
+			"common": ["common/"],
+			"library": ["library/"],
+			"library/*": ["library/*"]
 		},
 		"resolveJsonModule": true,
 		"noImplicitAny": true

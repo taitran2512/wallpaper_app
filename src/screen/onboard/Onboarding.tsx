@@ -1,10 +1,11 @@
-import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from 'react-native';
-import React, { useLayoutEffect, useRef, useState } from 'react';
-import FastImage from 'react-native-fast-image';
+import { images } from 'assets';
 import { Buttons, Flex, Icon } from 'component';
 import { Navigator, Style, colors, screenHeight, screenWidth, sizes, strings } from 'core/index';
-import { images } from 'assets';
+import React, { useLayoutEffect, useRef, useState } from 'react';
+import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import LinearGradient from 'react-native-linear-gradient';
+import SplashScreen from 'react-native-splash-screen';
 import { Device, Storage } from 'utils';
 
 const WelcomArr = [
@@ -28,15 +29,21 @@ const Onboarding = () => {
 	const scrollRef = useRef<any>();
 
 	useLayoutEffect(() => {
-		Storage.getMultiData([Storage.key.language, Storage.key.onboarding]).then((data) => {
-			const [lang, onboard] = data;
-			const appLanguage = lang || 'vi';
-			strings.setLanguage(appLanguage);
-			setLanguage(appLanguage);
-			if (onboard) {
-				Navigator.goHome();
-			}
-		});
+		Storage.getMultiData([Storage.key.language, Storage.key.onboarding])
+			.then((data) => {
+				const [lang, onboard] = data;
+				const appLanguage = lang || 'vi';
+				strings.setLanguage(appLanguage);
+				setLanguage(appLanguage);
+				if (onboard) {
+					Navigator.goHome();
+				}
+			})
+			.finally(() => {
+				setTimeout(() => {
+					SplashScreen.hide();
+				}, 500);
+			});
 	}, []);
 
 	const setAppLanguage = (lan: string) => {
