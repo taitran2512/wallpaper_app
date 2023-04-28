@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { images } from 'assets';
 import { ExampleScreen, Flex, Icon, ModalConfirm } from 'component';
-import { colors, Navigator, screenHeight, screenWidth, sizes, Style } from 'core/index';
+import { colors, Navigator, screenHeight, screenWidth, sizes, strings, Style } from 'core/index';
 import { ScreenProps } from 'model';
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import {
@@ -19,6 +19,9 @@ import {
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { Device, imageSource } from 'utils';
+import { format } from 'date-fns';
+import { enUS, vi } from 'date-fns/locale';
+
 const { WallpaperManageModule } = NativeModules || {};
 
 const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
@@ -43,6 +46,7 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 	const onApplyWallpaper = () => {
 		modalRef.current.open();
 	};
+
 	const showToastSuccess = () => {
 		setShowToast(true);
 		setType('');
@@ -159,12 +163,36 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 		);
 	};
 
+	const renderTime = () => {
+		const time = format(new Date(), 'kk:mm');
+		const date = format(new Date(), 'PPPP', {
+			locale: strings.getLanguage() === 'vi' ? vi : enUS,
+		});
+		return (
+			<View style={{ alignSelf: 'center' }}>
+				<Text style={[Style.h2, Style.txtCenter, { color: 'white', fontWeight: 'bold' }]}>
+					{time}
+				</Text>
+				<Text
+					style={[
+						Style.h6,
+						Style.top4,
+						Style.txtCenter,
+						{ color: 'white', fontWeight: 'bold' },
+					]}>
+					{date}
+				</Text>
+			</View>
+		);
+	};
+
 	return (
 		<Flex style={styles.container}>
 			<FastImage
 				source={imageSource(image)}
 				style={[StyleSheet.absoluteFill, styles.background]}>
 				{setHeader()}
+				{renderTime()}
 				{showToast ? renderToastNotify() : null}
 				<ExampleScreen type={type} />
 				{renderButtonBottom()}
