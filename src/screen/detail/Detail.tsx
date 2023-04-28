@@ -2,9 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { images } from 'assets';
 import { ExampleScreen, Flex, Icon, ModalConfirm } from 'component';
-import { Navigator, Style, colors, screenHeight, screenWidth, sizes, strings } from 'core/index';
-import { format } from 'date-fns';
-import { enUS, vi } from 'date-fns/locale';
+import { Navigator, Style, colors, screenHeight, screenWidth, sizes } from 'core/index';
 import { ScreenProps } from 'model';
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import {
@@ -163,36 +161,12 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 		);
 	};
 
-	const renderTime = () => {
-		const time = format(new Date(), 'kk:mm');
-		const date = format(new Date(), 'PPPP', {
-			locale: strings.getLanguage() === 'vi' ? vi : enUS,
-		});
-		return (
-			<View style={{ alignSelf: 'center' }}>
-				<Text style={[Style.h2, Style.txtCenter, { color: 'white', fontWeight: 'bold' }]}>
-					{time}
-				</Text>
-				<Text
-					style={[
-						Style.h6,
-						Style.top4,
-						Style.txtCenter,
-						{ color: 'white', fontWeight: 'bold' },
-					]}>
-					{date}
-				</Text>
-			</View>
-		);
-	};
-
 	return (
 		<Flex style={styles.container}>
 			<FastImage
 				source={imageSource(image)}
 				style={[StyleSheet.absoluteFill, styles.background]}>
 				{setHeader()}
-				{renderTime()}
 				{showToast ? renderToastNotify() : null}
 				<ExampleScreen type={type} />
 				{renderButtonBottom()}

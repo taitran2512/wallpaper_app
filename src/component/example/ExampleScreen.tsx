@@ -1,5 +1,7 @@
-import { colors, screenWidth, sizes } from 'core/index';
-import React from 'react';
+import { Style, colors, screenWidth, sizes, strings } from 'core/index';
+import { format } from 'date-fns';
+import { enUS, vi } from 'date-fns/locale';
+import React, { memo } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 
 interface Props {
@@ -10,12 +12,23 @@ const ExampleScreen = (props: Props) => {
 	const { type } = props || {};
 	const renderItem = ({ index }: any) => {
 		return (
-			<View style={{ flex: 1, alignSelf: 'center', alignItems: 'center' }}>
+			<View style={styles.viewItemExample}>
 				<View key={index} style={styles.itemExample} />
 			</View>
 		);
 	};
-
+	const renderTime = () => {
+		const time = format(new Date(), 'kk:mm');
+		const date = format(new Date(), 'PPPP', {
+			locale: strings.getLanguage() === 'vi' ? vi : enUS,
+		});
+		return (
+			<View style={styles.viewDateTime}>
+				<Text style={[Style.h2, Style.txtCenter, styles.txtBoldWhite]}>{time}</Text>
+				<Text style={[Style.h6, Style.top4, Style.txtCenter, styles.txtBoldWhite]}>{date}</Text>
+			</View>
+		);
+	};
 	const renderType = () => {
 		if (type === 'home') {
 			return (
@@ -30,8 +43,7 @@ const ExampleScreen = (props: Props) => {
 		} else if (type === 'lock') {
 			return (
 				<View style={styles.container}>
-					<Text style={styles.textTime}>12:34</Text>
-					<Text style={styles.textDay}>Ngày 24, tháng 4, năm 2023</Text>
+					{renderTime()}
 					{Array(3)
 						.fill(0)
 						.map((item, index) => (
@@ -47,11 +59,18 @@ const ExampleScreen = (props: Props) => {
 	return <>{renderType()}</>;
 };
 
-export default ExampleScreen;
+export default memo(ExampleScreen);
+
 const itemWidth = screenWidth / 8;
+
 const styles = StyleSheet.create({
 	container: {
 		paddingHorizontal: sizes.s24,
+	},
+	viewItemExample: {
+		flex: 1,
+		alignSelf: 'center',
+		alignItems: 'center',
 	},
 	itemExample: {
 		backgroundColor: colors.gradient4,
@@ -80,5 +99,12 @@ const styles = StyleSheet.create({
 		fontSize: sizes.s18,
 		color: colors.white,
 		marginBottom: sizes.s20,
+	},
+	txtBoldWhite: {
+		color: colors.white,
+		fontWeight: 'bold',
+	},
+	viewDateTime: {
+		alignItems: 'center',
 	},
 });
