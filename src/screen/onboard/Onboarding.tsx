@@ -1,12 +1,29 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react-native/no-inline-styles */
 import { images } from 'assets';
 import { Buttons, Flex, Icon } from 'component';
-import { Navigator, Style, colors, screenHeight, screenWidth, sizes, strings } from 'core/index';
-import React, { useLayoutEffect, useRef, useState } from 'react';
-import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { colors, Navigator, screenHeight, screenWidth, sizes, strings, Style } from 'core/index';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import {
+	ActivityIndicator,
+	AppState,
+	ScrollView,
+	StatusBar,
+	StyleSheet,
+	Text,
+	View,
+} from 'react-native';
 import FastImage from 'react-native-fast-image';
+import MobileAds, {
+	BannerAd,
+	BannerAdSize,
+	useInterstitialAd,
+} from 'react-native-google-mobile-ads';
 import LinearGradient from 'react-native-linear-gradient';
 import SplashScreen from 'react-native-splash-screen';
 import { Device, Storage } from 'utils';
+import { keyBanner_onboarding, keyInterstitialSplash } from 'utils/GoogleAds';
 
 const WelcomArr = [
 	{
@@ -22,12 +39,15 @@ const WelcomArr = [
 		content: 'Corem ipsum dolor sit amet, Nunc vulputate libero et amet',
 	},
 ];
-
+const requestOptions = {};
 const Onboarding = () => {
 	const [idx, setIdx] = useState<number>(0);
 	const [language, setLanguage] = useState<string>('');
 	const scrollRef = useRef<any>();
-
+	const { isLoaded, isClosed, load, show } = useInterstitialAd(
+		keyInterstitialSplash,
+		requestOptions
+	);
 	useLayoutEffect(() => {
 		Storage.getMultiData([Storage.key.language, Storage.key.onboarding])
 			.then((data) => {
@@ -45,6 +65,43 @@ const Onboarding = () => {
 				}, 500);
 			});
 	}, []);
+
+	const appState = useRef(AppState.currentState);
+
+	const handleAppStateChange = async (nextAppState: any) => {
+		if (appState.current.match(/inactive|background/) && nextAppState === 'active') {
+			console.log('App has come to the foreground! Showing ad...');
+			show();
+			console.log('Ad should have been shown.');
+		} else if (nextAppState === 'background') {
+			show();
+			console.log('App is going to the background');
+		} else {
+			console.log('inactive-state transition (iOS)');
+		}
+		appState.current = nextAppState;
+	};
+
+	const initApp = async () => {
+		StatusBar.setBarStyle('light-content');
+		await MobileAds().initialize();
+		load();
+	};
+
+	useEffect(() => {
+		initApp();
+		const sub = AppState.addEventListener('change', handleAppStateChange);
+		return () => {
+			sub.remove();
+		};
+	}, []);
+
+	useEffect(() => {
+		if (isClosed) {
+			console.log('Reloading ad...');
+			load();
+		}
+	}, [isClosed]);
 
 	const setAppLanguage = (lan: string) => {
 		setLanguage(lan);
@@ -122,7 +179,7 @@ const Onboarding = () => {
 							<Buttons
 								onPress={() => setAppLanguage('vi')}
 								style={[Style.row_between, Style.top16, Style.ph16]}>
-								<Text style={[Style.h6, { color: 'white' }]}>Tiếng Việt</Text>
+								<Text style={[Style.h6, { color: colors.white }]}>Tiếng Việt</Text>
 								<Icon
 									source={
 										language === 'vi' ? images.ic_checkbox_checked : images.ic_checkbox
@@ -133,7 +190,7 @@ const Onboarding = () => {
 							<Buttons
 								onPress={() => setAppLanguage('en')}
 								style={[Style.row_between, Style.top16, Style.ph16]}>
-								<Text style={[Style.h6, { color: 'white' }]}>English</Text>
+								<Text style={[Style.h6, { color: colors.white }]}>English</Text>
 								<Icon
 									source={
 										language === 'en' ? images.ic_checkbox_checked : images.ic_checkbox
@@ -143,6 +200,21 @@ const Onboarding = () => {
 							</Buttons>
 						</View>
 					</ScrollView>
+					<View style={styles.viewBanner}>
+						<BannerAd
+							unitId={keyBanner_onboarding}
+							size={BannerAdSize.BANNER}
+							requestOptions={{
+								requestNonPersonalizedAdsOnly: true,
+							}}
+							onAdLoaded={() => {
+								console.log('Advert loaded');
+							}}
+							onAdFailedToLoad={(error) => {
+								console.error('Advert failed to load: ', error);
+							}}
+						/>
+					</View>
 					<Buttons
 						title={idx === WelcomArr.length ? 'Save and continue' : 'Next'}
 						onPress={onPressNext}
@@ -206,5 +278,10 @@ const styles = StyleSheet.create({
 		height: sizes.s6,
 		borderRadius: sizes.s4,
 		backgroundColor: colors.white,
+	},
+	viewBanner: {
+		marginHorizontal: sizes.s16,
+		marginBottom: sizes.s16,
+		alignItems: 'center',
 	},
 });

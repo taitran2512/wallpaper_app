@@ -3,7 +3,9 @@ import { categoryData } from 'common/data';
 import { Flex } from 'component';
 import { colors, Navigator, sizes } from 'core/index';
 import React, { memo } from 'react';
-import { FlatList, ImageBackground, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { FlatList, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
+import { keyBanner_home } from 'utils/GoogleAds';
 
 const Category = () => {
 	const detailCategory = (item: any) => {
@@ -33,6 +35,21 @@ const Category = () => {
 				showsVerticalScrollIndicator={false}
 				keyExtractor={(e, index) => String(e?.id || index)}
 			/>
+			<View style={styles.viewBanner}>
+				<BannerAd
+					unitId={keyBanner_home}
+					size={BannerAdSize.BANNER}
+					requestOptions={{
+						requestNonPersonalizedAdsOnly: true,
+					}}
+					onAdLoaded={() => {
+						console.log('Advert loaded');
+					}}
+					onAdFailedToLoad={(error) => {
+						console.error('Advert failed to load: ', error);
+					}}
+				/>
+			</View>
 		</Flex>
 	);
 };
@@ -58,5 +75,8 @@ const styles = StyleSheet.create({
 	itemSubTitle: {
 		fontSize: sizes.s18,
 		color: colors.white,
+	},
+	viewBanner: {
+		alignItems: 'center',
 	},
 });

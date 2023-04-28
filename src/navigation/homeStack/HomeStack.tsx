@@ -1,11 +1,9 @@
-import { createStackNavigator } from '@react-navigation/stack';
-import { screenOptionsStack } from 'common/nagivationOption';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Navigator } from 'core';
 import React, { memo, useCallback } from 'react';
 import { enableScreens } from 'react-native-screens';
 import * as HomeScreen from 'screen/home';
 import TopTab from './TopTab';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 enableScreens();
 const Stack = createNativeStackNavigator();
@@ -23,12 +21,7 @@ const HomeStack: React.FC = () => {
 	}, []);
 
 	return (
-		<Stack.Navigator
-			screenOptions={
-				{
-					// animation: 'slide_from_right',
-				}
-			}>
+		<Stack.Navigator>
 			<Stack.Screen options={{ headerShown: false }} name={'HomeTab'} component={TopTab} />
 			{renderStackScreen()}
 		</Stack.Navigator>

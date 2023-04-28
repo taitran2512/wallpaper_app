@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { images } from 'assets';
 import { ExampleScreen, Flex, Icon, ModalConfirm } from 'component';
-import { Navigator, Style, colors, screenHeight, screenWidth, sizes } from 'core/index';
+import { colors, Navigator, screenHeight, screenWidth, sizes, Style } from 'core/index';
 import { ScreenProps } from 'model';
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import {
@@ -18,11 +18,16 @@ import {
 	View,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
+import { useInterstitialAd } from 'react-native-google-mobile-ads';
 import { Device, imageSource } from 'utils';
+import { keyInterstitialApplyWallpaper } from 'utils/GoogleAds';
 
 const { WallpaperManageModule } = NativeModules || {};
 
 const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
+	const { isClosed, load, show } = useInterstitialAd(keyInterstitialApplyWallpaper, {
+		requestNonPersonalizedAdsOnly: true,
+	});
 	const image = route?.params?.image;
 	const [like, setLike] = useState<boolean>(false);
 
@@ -77,7 +82,7 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 				type,
 				(res?: any) => {
 					if (res.status === 'success') {
-						showToastSuccess();
+						show();
 					} else {
 						hideToast();
 					}
@@ -99,6 +104,17 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 	useEffect(() => {
 		hideToast();
 	}, [showToast]);
+
+	useEffect(() => {
+		// Start loading the interstitial straight away
+		load();
+	}, [load]);
+
+	useEffect(() => {
+		if (isClosed) {
+			showToastSuccess();
+		}
+	}, [isClosed]);
 
 	const onPressLike = async () => {
 		const newValue = !like;
