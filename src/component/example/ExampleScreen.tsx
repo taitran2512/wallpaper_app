@@ -9,7 +9,11 @@ interface Props {
 const ExampleScreen = (props: Props) => {
 	const { type } = props || {};
 	const renderItem = ({ index }: any) => {
-		return <View key={index} style={styles.itemExample} />;
+		return (
+			<View style={{ flex: 1, alignSelf: 'center', alignItems: 'center' }}>
+				<View key={index} style={styles.itemExample} />
+			</View>
+		);
 	};
 
 	const renderType = () => {
@@ -44,17 +48,17 @@ const ExampleScreen = (props: Props) => {
 };
 
 export default ExampleScreen;
+const itemWidth = screenWidth / 8;
 const styles = StyleSheet.create({
 	container: {
 		paddingHorizontal: sizes.s24,
 	},
 	itemExample: {
 		backgroundColor: colors.gradient4,
-		width: sizes.s60,
-		height: sizes.s60,
+		width: itemWidth,
+		height: itemWidth,
 		borderRadius: sizes.s8,
 		marginVertical: sizes.s16,
-		marginHorizontal: sizes.s16,
 	},
 	itemExample2: {
 		backgroundColor: colors.gradient4,
