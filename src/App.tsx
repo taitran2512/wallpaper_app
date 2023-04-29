@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Loading, ToastDebug } from 'component';
 import { Navigator } from 'core';
@@ -37,6 +36,7 @@ const App: React.FC = () => {
 			show();
 			console.log('App is going to the background');
 		} else {
+			show();
 			console.log('inactive-state transition (iOS)');
 		}
 		appState.current = nextAppState;
@@ -62,6 +62,13 @@ const App: React.FC = () => {
 			load();
 		}
 	}, [isClosed]);
+
+	useEffect(() => {
+		if (isLoaded) {
+			console.log('Show ad...');
+			show();
+		}
+	}, [isLoaded]);
 
 	return (
 		<Provider store={store}>

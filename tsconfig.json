@@ -10,6 +10,7 @@
 		"lib": ["es6", "ES2021.String", "es2016","ES2018", "ES2019"],
 		"module": "commonjs",
 		"target": "es6",
+		"types": ["node"],
 		"moduleResolution": "node",
 		"noEmit": true,
 		"strict": true,

@@ -1,27 +1,27 @@
-import { Text, StyleSheet, View } from 'react-native'
-import React, { Component } from 'react'
-import { sizes, Style } from 'core'
-import { Device } from 'utils'
+import { sizes, Style } from 'core';
+import React, { Component } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { Device } from 'utils';
 
 export default class ToastDebug extends Component<any, any> {
 	constructor(props: any) {
-		super(props)
+		super(props);
 		this.state = {
 			message: '',
 			show: false,
-		}
+		};
 	}
 	show = (message: string) => {
 		this.setState({ message, show: true }, () => {
 			setTimeout(() => {
-				this.hide()
-			}, 2000)
-		})
-	}
+				this.hide();
+			}, 2000);
+		});
+	};
 
 	hide = () => {
-		this.setState({ message: '', show: false })
-	}
+		this.setState({ message: '', show: false });
+	};
 
 	render() {
 		if (this.state.show) {
@@ -29,9 +29,9 @@ export default class ToastDebug extends Component<any, any> {
 				<View style={styles.container}>
 					<Text style={Style.txt12_white}>{this.state.message}</Text>
 				</View>
-			)
+			);
 		}
-		return null
+		return null;
 	}
 }
 
@@ -46,4 +46,4 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		alignSelf: 'center',
 	},
-})
+});

@@ -1,9 +1,9 @@
-import React from 'react'
-import { SafeAreaView, StatusBar, View } from 'react-native'
+import React from 'react';
+import { SafeAreaView, StatusBar, View } from 'react-native';
 
 interface Props {
-	backgroundColor?: string
-	lightContent?: boolean
+	backgroundColor?: string;
+	lightContent?: boolean;
 }
 const StatusBarView: React.FC<Props> = (props: Props) => {
 	return (
@@ -19,7 +19,7 @@ const StatusBarView: React.FC<Props> = (props: Props) => {
 				translucent={true}
 			/>
 		</View>
-	)
-}
+	);
+};
 
-export default StatusBarView
+export default StatusBarView;
