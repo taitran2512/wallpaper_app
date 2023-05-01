@@ -38,7 +38,7 @@ const Category = () => {
 			<View style={styles.viewBanner}>
 				<BannerAd
 					unitId={keyBanner_home}
-					size={BannerAdSize.BANNER}
+					size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
 					requestOptions={{
 						requestNonPersonalizedAdsOnly: true,
 					}}

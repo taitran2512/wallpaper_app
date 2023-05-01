@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unstable-nested-components */
 import { NavigationContainer } from '@react-navigation/native';
 import {
 	createNativeStackNavigator,
@@ -13,6 +14,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { enableScreens } from 'react-native-screens';
 import { Dialog, Modals } from 'screen/modal';
 import { Onboarding } from 'screen/onboard';
+import { Splash } from 'screen/splash';
 import Device from 'utils/Device';
 import HomeStack from './homeStack/HomeStack';
 
@@ -36,6 +38,7 @@ const AppStack: React.FC = () => {
 	return (
 		<NavigationContainer ref={(ref) => Navigator.setNavigationRef(ref)}>
 			<Stack.Navigator screenOptions={screenOptionsNativeStack}>
+				<Stack.Screen name={Stacks.Splash} component={Splash} />
 				<Stack.Screen name={Stacks.Onboarding} component={Onboarding} />
 				<Stack.Screen name={Stacks.HomeStack} component={HomeStack} />
 				<Stack.Screen

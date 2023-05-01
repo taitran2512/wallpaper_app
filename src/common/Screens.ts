@@ -10,6 +10,7 @@ type ScreensType<T> = {
 export const Screens: ScreensType<Keys> = {};
 
 export const Stacks = {
+	Splash: 'Splash',
 	Onboarding: 'Onboarding',
 	HomeStack: 'HomeStack',
 	Modals: 'Modals',

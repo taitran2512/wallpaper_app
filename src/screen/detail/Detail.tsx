@@ -2,6 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
 import { images } from 'assets';
+import { Screens } from 'common';
 import { ExampleScreen, Flex, Icon, ModalConfirm } from 'component';
 import { colors, Navigator, screenHeight, screenWidth, sizes, Style } from 'core/index';
 import WallpaperManageModule from 'library/wallpaper/WallpaperManager';
@@ -19,14 +20,10 @@ import {
 	View,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import { useInterstitialAd } from 'react-native-google-mobile-ads';
 import { Device, imageSource } from 'utils';
-import { keyInterstitialApplyWallpaper } from 'utils/GoogleAds';
+import { keyInterstitialApply, keyInterstitialApplyHigh } from 'utils/GoogleAds';
 
 const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
-	const { isClosed, load, show } = useInterstitialAd(keyInterstitialApplyWallpaper, {
-		requestNonPersonalizedAdsOnly: true,
-	});
 	const image = route?.params?.image;
 	const [like, setLike] = useState<boolean>(false);
 
@@ -46,6 +43,8 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 	};
 
 	const onApplyWallpaper = () => {
+		Navigator.navigate(Screens.GoogleInterstitialsAds, { key: keyInterstitialApply });
+		setType('');
 		modalRef.current.open();
 	};
 
@@ -65,7 +64,10 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 			setType('');
 			setTimeout(() => {
 				setShowToast(false);
-			}, 2000);
+				Navigator.navigate(Screens.GoogleInterstitialsAds, {
+					key: keyInterstitialApplyHigh,
+				});
+			}, 1000);
 		}
 		return;
 	};
@@ -81,9 +83,7 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 				type,
 				(res?: any) => {
 					if (res.status === 'success') {
-						show();
-					} else {
-						hideToast();
+						showToastSuccess();
 					}
 				}
 			);
@@ -104,25 +104,9 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 		hideToast();
 	}, [showToast]);
 
-	useEffect(() => {
-		// Start loading the interstitial straight away
-		load();
-	}, [load]);
-
-	useEffect(() => {
-		if (isClosed) {
-			showToastSuccess();
-		}
-	}, [isClosed]);
-
 	const onPressLike = async () => {
 		const newValue = !like;
 		setLike(newValue);
-		// const data = await Storage.getData(Storage.key.likedImageArray);
-		// if (newValue) {
-		// 	Storage.setData(Storage.key.likedImageArray, image);
-		// } else {
-		// }
 	};
 
 	const setHeader = () => (
@@ -144,14 +128,20 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 			</View>
 		);
 	};
-
+	const onToggle = (types: string) => {
+		if (type === 'home' || type === 'lock') {
+			setType('');
+		} else {
+			setType(types);
+		}
+	};
 	const renderButtonBottom = () => {
 		return (
 			<View style={styles.viewGradient}>
 				<TouchableOpacity
 					style={styles.item}
 					activeOpacity={0.8}
-					onPress={() => setType('home')}>
+					onPress={() => onToggle('home')}>
 					<Icon
 						source={type === 'home' ? images.ic_home_selected : images.ic_home}
 						size={sizes.s24}
@@ -161,7 +151,7 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 				<TouchableOpacity
 					style={styles.item}
 					activeOpacity={0.8}
-					onPress={() => setType('lock')}>
+					onPress={() => onToggle('lock')}>
 					<Icon
 						source={type === 'lock' ? images.ic_lock_selected : images.ic_lock}
 						size={sizes.s24}

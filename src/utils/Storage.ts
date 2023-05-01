@@ -8,6 +8,8 @@ export default class Storage {
 		language: 'language',
 		onboarding: 'onboarding',
 		likedImageArray: 'likedImageArray',
+		openAppAds: 'openAppAds',
+		openAppResume: 'openAppResume',
 	};
 
 	static setData = async (key: string, value: any) => {

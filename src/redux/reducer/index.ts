@@ -1,7 +1,7 @@
-import { combineReducers } from '@reduxjs/toolkit'
-import { authenReducer } from './authenReducer'
+import { combineReducers } from '@reduxjs/toolkit';
+import { authenReducer } from './authenReducer';
 
 const rootReducer = combineReducers({
 	authen: authenReducer,
-})
-export { rootReducer }
+});
+export { rootReducer };

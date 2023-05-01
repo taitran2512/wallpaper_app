@@ -1,14 +1,15 @@
-/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react-hooks/exhaustive-deps */
 
 import { images } from 'assets';
 import { dataDetailCategory } from 'common/data';
 import { Flex, GridImageView, NavigationButton } from 'component';
-import { colors, screenWidth, sizes } from 'core/index';
+import { colors, sizes } from 'core/index';
 import { ScreenProps } from 'model';
 import React, { useLayoutEffect } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
+import { keyBanner_category } from 'utils/GoogleAds';
 
 const DetailCategory: React.FC<ScreenProps> = ({ navigation, route }) => {
 	const cateogry: any = route?.params || {};
@@ -43,6 +44,21 @@ const DetailCategory: React.FC<ScreenProps> = ({ navigation, route }) => {
 	return (
 		<Flex style={styles.container}>
 			<GridImageView data={dataDetailCategory} />
+			<View style={styles.viewBanner}>
+				<BannerAd
+					unitId={keyBanner_category}
+					size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+					requestOptions={{
+						requestNonPersonalizedAdsOnly: true,
+					}}
+					onAdLoaded={() => {
+						console.log('Advert loaded');
+					}}
+					onAdFailedToLoad={(error) => {
+						console.error('Advert failed to load: ', error);
+					}}
+				/>
+			</View>
 		</Flex>
 	);
 };
@@ -58,5 +74,9 @@ const styles = StyleSheet.create({
 		width: sizes.s24,
 		height: sizes.s24,
 		marginLeft: sizes.s16,
+	},
+	viewBanner: {
+		alignItems: 'center',
+		backgroundColor: colors.background_black,
 	},
 });

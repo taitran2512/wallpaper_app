@@ -9,10 +9,11 @@ import { keyBanner_home } from 'utils/GoogleAds';
 const Popular = () => {
 	return (
 		<>
+			<GridImageView data={dataDetailCategory} />
 			<View style={styles.viewBanner}>
 				<BannerAd
 					unitId={keyBanner_home}
-					size={BannerAdSize.BANNER}
+					size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
 					requestOptions={{
 						requestNonPersonalizedAdsOnly: true,
 					}}
@@ -24,7 +25,6 @@ const Popular = () => {
 					}}
 				/>
 			</View>
-			<GridImageView data={dataDetailCategory} />
 		</>
 	);
 };

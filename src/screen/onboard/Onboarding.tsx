@@ -1,29 +1,17 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import { images } from 'assets';
+import { Screens } from 'common';
 import { Buttons, Flex, Icon } from 'component';
 import { colors, Navigator, screenHeight, screenWidth, sizes, strings, Style } from 'core/index';
+import { ScreenProps } from 'model';
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import {
-	ActivityIndicator,
-	AppState,
-	ScrollView,
-	StatusBar,
-	StyleSheet,
-	Text,
-	View,
-} from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import MobileAds, {
-	BannerAd,
-	BannerAdSize,
-	useInterstitialAd,
-} from 'react-native-google-mobile-ads';
+import { BannerAd, BannerAdSize, GAMBannerAd } from 'react-native-google-mobile-ads';
 import LinearGradient from 'react-native-linear-gradient';
-import SplashScreen from 'react-native-splash-screen';
 import { Device, Storage } from 'utils';
-import { keyBanner_onboarding, keyInterstitialSplash } from 'utils/GoogleAds';
+import { keyBanner_onboarding, keyInterstitialSplash, keyNative_onboarding } from 'utils/GoogleAds';
 
 const WelcomArr = [
 	{
@@ -39,69 +27,37 @@ const WelcomArr = [
 		content: 'Corem ipsum dolor sit amet, Nunc vulputate libero et amet',
 	},
 ];
-const requestOptions = {};
-const Onboarding = () => {
+
+const Onboarding: React.FC<ScreenProps | any> = ({ route }) => {
+	const { openAds } = route?.params || {};
+
 	const [idx, setIdx] = useState<number>(0);
 	const [language, setLanguage] = useState<string>('');
 	const scrollRef = useRef<any>();
-	const { isLoaded, isClosed, load, show } = useInterstitialAd(
-		keyInterstitialSplash,
-		requestOptions
-	);
+	const bannerRef = useRef<any>();
+
 	useLayoutEffect(() => {
-		Storage.getMultiData([Storage.key.language, Storage.key.onboarding])
-			.then((data) => {
-				const [lang, onboard] = data;
-				const appLanguage = lang || 'vi';
-				strings.setLanguage(appLanguage);
-				setLanguage(appLanguage);
-				if (onboard) {
-					Navigator.goHome();
-				}
-			})
-			.finally(() => {
-				setTimeout(() => {
-					SplashScreen.hide();
-				}, 500);
-			});
-	}, []);
-
-	const appState = useRef(AppState.currentState);
-
-	const handleAppStateChange = async (nextAppState: any) => {
-		if (appState.current.match(/inactive|background/) && nextAppState === 'active') {
-			console.log('App has come to the foreground! Showing ad...');
-			show();
-			console.log('Ad should have been shown.');
-		} else if (nextAppState === 'background') {
-			show();
-			console.log('App is going to the background');
-		} else {
-			console.log('inactive-state transition (iOS)');
-		}
-		appState.current = nextAppState;
-	};
-
-	const initApp = async () => {
-		StatusBar.setBarStyle('light-content');
-		await MobileAds().initialize();
-		load();
-	};
-
-	useEffect(() => {
-		initApp();
-		const sub = AppState.addEventListener('change', handleAppStateChange);
-		return () => {
-			sub.remove();
-		};
+		Storage.getMultiData([Storage.key.language, Storage.key.onboarding]).then((data) => {
+			const [lang, onboard] = data;
+			const appLanguage = lang || 'vi';
+			strings.setLanguage(appLanguage);
+			setLanguage(appLanguage);
+			if (onboard) {
+				Navigator.goHome();
+			}
+		});
 	}, []);
 
 	useEffect(() => {
-		if (isClosed) {
-			console.log('Reloading ad...');
-			load();
+		if (!openAds) {
+			setTimeout(() => {
+				Navigator.navigate(Screens.GoogleInterstitialsAds, {
+					key: keyInterstitialSplash,
+				});
+			}, 500);
 		}
-	}, [isClosed]);
+		return;
+	}, []);
 
 	const setAppLanguage = (lan: string) => {
 		setLanguage(lan);
@@ -137,14 +93,6 @@ const Onboarding = () => {
 			/>
 		));
 	};
-
-	if (!language) {
-		return (
-			<View style={[Style.flex, Style.column_center, { backgroundColor: colors.backgroundApp }]}>
-				<ActivityIndicator color={colors.blue} size="large" />
-			</View>
-		);
-	}
 
 	return (
 		<Flex style={styles.container}>
@@ -200,21 +148,7 @@ const Onboarding = () => {
 							</Buttons>
 						</View>
 					</ScrollView>
-					<View style={styles.viewBanner}>
-						<BannerAd
-							unitId={keyBanner_onboarding}
-							size={BannerAdSize.BANNER}
-							requestOptions={{
-								requestNonPersonalizedAdsOnly: true,
-							}}
-							onAdLoaded={() => {
-								console.log('Advert loaded');
-							}}
-							onAdFailedToLoad={(error) => {
-								console.error('Advert failed to load: ', error);
-							}}
-						/>
-					</View>
+
 					<Buttons
 						title={idx === WelcomArr.length ? 'Save and continue' : 'Next'}
 						onPress={onPressNext}
@@ -225,11 +159,43 @@ const Onboarding = () => {
 							Style.row_center,
 							Style.top24,
 							{
-								paddingBottom: sizes.s34,
+								paddingBottom: idx === 3 ? 0 : sizes.s24,
 							},
 						]}>
-						{renderDot()}
+						{idx === 3 ? null : renderDot()}
 					</View>
+					{idx === 3 ? (
+						<View style={styles.viewBanner}>
+							<GAMBannerAd
+								ref={bannerRef}
+								unitId={keyNative_onboarding}
+								sizes={[BannerAdSize.ANCHORED_ADAPTIVE_BANNER]}
+								requestOptions={{
+									requestNonPersonalizedAdsOnly: true,
+								}}
+								manualImpressionsEnabled={true}
+								onAdFailedToLoad={(error: Error) => {
+									console.log(` GAM banner error: ${error.message}`);
+								}}
+							/>
+						</View>
+					) : (
+						<View style={styles.viewBanner}>
+							<BannerAd
+								unitId={keyBanner_onboarding}
+								size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+								requestOptions={{
+									requestNonPersonalizedAdsOnly: true,
+								}}
+								onAdLoaded={() => {
+									console.log('Advert loaded');
+								}}
+								onAdFailedToLoad={(error) => {
+									console.error('Advert failed to load: ', error);
+								}}
+							/>
+						</View>
+					)}
 				</View>
 			</LinearGradient>
 		</Flex>
@@ -281,7 +247,6 @@ const styles = StyleSheet.create({
 	},
 	viewBanner: {
 		marginHorizontal: sizes.s16,
-		marginBottom: sizes.s16,
 		alignItems: 'center',
 	},
 });
