@@ -5,8 +5,9 @@ import { Screens } from 'common';
 import { Buttons, Flex, Icon } from 'component';
 import { colors, Navigator, screenHeight, screenWidth, sizes, strings, Style } from 'core/index';
 import { ScreenProps } from 'model';
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import {
+	ActivityIndicator,
 	NativeScrollEvent,
 	NativeSyntheticEvent,
 	ScrollView,
@@ -286,9 +287,7 @@ const Onboarding: React.FC<ScreenProps | any> = ({
 						contentContainerStyle={{ flexGrow: 1 }}
 						pagingEnabled
 						scrollEventThrottle={16}
-						onScroll={onScroll}
-						// scrollEnabled={false}
-					>
+						onScroll={onScroll}>
 						{renderPage()}
 						<View
 							style={{
@@ -459,6 +458,7 @@ const Onboarding: React.FC<ScreenProps | any> = ({
 										}}
 									/>
 								</View>
+
 								{media ? <NativeMediaView /> : null}
 							</View>
 						</NativeAdView>

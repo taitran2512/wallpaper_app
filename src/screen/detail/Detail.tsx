@@ -4,7 +4,7 @@
 import { images } from 'assets';
 import { Screens } from 'common';
 import { ExampleScreen, Flex, Icon, ModalConfirm, SlideImage } from 'component';
-import { colors, Navigator, screenHeight, screenWidth, sizes, Style } from 'core/index';
+import { colors, Navigator, screenHeight, sizes, Style } from 'core/index';
 import WallpaperManageModule from 'library/wallpaper/WallpaperManager';
 import { ScreenProps } from 'model';
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
@@ -19,8 +19,7 @@ import {
 	UIManager,
 	View,
 } from 'react-native';
-import FastImage from 'react-native-fast-image';
-import { Device, imageSource } from 'utils';
+import { Device } from 'utils';
 import { keyInterstitialApply, keyInterstitialApplyHigh } from 'utils/GoogleAds';
 
 const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
@@ -110,7 +109,7 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 	};
 
 	const setHeader = () => (
-		<View style={styles.header}>
+		<View style={[styles.header]}>
 			<TouchableOpacity style={styles.button} onPress={() => Navigator.goBack()}>
 				<Image source={images.ic_back_arrow} style={Style.icon16} />
 			</TouchableOpacity>
@@ -169,22 +168,20 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 	return (
 		<Flex style={styles.container}>
 			<SlideImage data={data} index={index} />
-			<View style={[styles.background, StyleSheet.absoluteFill]}>
-				{setHeader()}
-				{showToast ? renderToastNotify() : null}
-				<ExampleScreen type={type} />
-				{renderButtonBottom()}
-				<ModalConfirm
-					ref={modalRef}
-					title="Do you want to use this wallpaper for which screen?"
-					content="">
-					<View style={[Style.line, styles.line2]} />
-					<ItemOption
-						onPress={(type: string) => onHandleWallpaper(type)}
-						cancel={() => modalRef.current.close()}
-					/>
-				</ModalConfirm>
-			</View>
+			{setHeader()}
+			<ExampleScreen type={type} />
+			{showToast ? renderToastNotify() : null}
+			{renderButtonBottom()}
+			<ModalConfirm
+				ref={modalRef}
+				title="Do you want to use this wallpaper for which screen?"
+				content="">
+				<View style={[Style.line, styles.line2]} />
+				<ItemOption
+					onPress={(type: string) => onHandleWallpaper(type)}
+					cancel={() => modalRef.current.close()}
+				/>
+			</ModalConfirm>
 		</Flex>
 	);
 };
@@ -229,10 +226,8 @@ const styles = StyleSheet.create({
 	container: {
 		justifyContent: 'flex-start',
 		flex: 1,
-		// paddingHorizontal: sizes.s16,
 	},
 	background: {
-		flex: 1,
 		justifyContent: 'space-between',
 	},
 	header: {
@@ -241,6 +236,9 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		paddingHorizontal: sizes.s16,
 		paddingVertical: sizes.s8,
+		position: 'absolute',
+		left: 0,
+		right: 0,
 		marginTop: Device.setHeaderHeight(sizes.s16),
 	},
 	button: {
@@ -265,6 +263,10 @@ const styles = StyleSheet.create({
 		marginBottom: sizes.s35,
 		backgroundColor: colors.gradient5,
 		borderRadius: sizes.s8,
+		position: 'absolute',
+		bottom: 10,
+		left: 0,
+		right: 0,
 	},
 	viewGradientToast: {
 		flexDirection: 'row',

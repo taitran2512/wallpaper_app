@@ -13,7 +13,7 @@ interface Props {
 const SlideImage: React.FC<Props> = ({ data, style, index = 0 }) => {
 	const listRef = useRef<FlatList>();
 	useEffect(() => {
-		if (!!index) {
+		if (index) {
 			listRef?.current?.scrollToOffset({ animated: false, offset: screenWidth * index });
 		}
 	}, [index]);
@@ -31,7 +31,8 @@ const SlideImage: React.FC<Props> = ({ data, style, index = 0 }) => {
 					return (
 						<FastImage
 							source={imageSource(item)}
-							style={[{ width: screenWidth, height: screenHeight }]}></FastImage>
+							style={[{ width: screenWidth, height: screenHeight }]}
+						/>
 					);
 				}}
 			/>

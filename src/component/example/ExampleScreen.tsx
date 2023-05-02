@@ -1,4 +1,4 @@
-import { Style, colors, screenWidth, sizes, strings } from 'core/index';
+import { colors, screenWidth, sizes, strings, Style } from 'core/index';
 import { format } from 'date-fns';
 import { enUS, vi } from 'date-fns/locale';
 import React, { memo } from 'react';
@@ -66,6 +66,11 @@ const itemWidth = screenWidth / 8;
 const styles = StyleSheet.create({
 	container: {
 		paddingHorizontal: sizes.s24,
+		position: 'absolute',
+		top: screenWidth * 0.4,
+		bottom: 0,
+		left: 0,
+		right: 0,
 	},
 	viewItemExample: {
 		flex: 1,
