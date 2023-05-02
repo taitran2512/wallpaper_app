@@ -5,6 +5,7 @@ export { default as ExampleScreen } from './example/ExampleScreen';
 export { default as Flex } from './flex/Flex';
 export { default as StatusBarView } from './header/StatusBarView';
 export { default as AutoFastImage } from './image/AutoFastImage';
+export { default as SlideImage } from './image/SlideImage';
 export { default as GridImageView } from './image/GridImageView';
 export { default as Icon } from './image/Icon';
 export { default as Input } from './input/Input';

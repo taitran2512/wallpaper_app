@@ -49,6 +49,9 @@ export const categoryData = [
 export const dataDetailCategory = [
 	images.onboarding,
 	images.onboarding,
+	images.banner,
+	images.banner_default,
+	images.image_category,
 	images.onboarding,
 	images.onboarding,
 	images.onboarding,

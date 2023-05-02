@@ -6,7 +6,14 @@ import { Buttons, Flex, Icon } from 'component';
 import { colors, Navigator, screenHeight, screenWidth, sizes, strings, Style } from 'core/index';
 import { ScreenProps } from 'model';
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import {
+	NativeScrollEvent,
+	NativeSyntheticEvent,
+	ScrollView,
+	StyleSheet,
+	Text,
+	View,
+} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { BannerAd, BannerAdSize, GAMBannerAd } from 'react-native-google-mobile-ads';
 import LinearGradient from 'react-native-linear-gradient';
@@ -65,6 +72,11 @@ const Onboarding: React.FC<ScreenProps | any> = ({ route }) => {
 		Storage.setData(Storage.key.language, lan);
 	};
 
+	const onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+		const index = Math.round(e.nativeEvent.contentOffset.x / screenWidth);
+		setIdx(Math.round(index));
+	};
+
 	const onPressNext = () => {
 		const page = idx + 1;
 		if (page === WelcomArr.length + 1) {
@@ -116,7 +128,9 @@ const Onboarding: React.FC<ScreenProps | any> = ({ route }) => {
 						contentContainerStyle={{ flexGrow: 1 }}
 						pagingEnabled
 						scrollEventThrottle={16}
-						scrollEnabled={false}>
+						onScroll={onScroll}
+						// scrollEnabled={false}
+					>
 						{renderPage()}
 						<View
 							style={{

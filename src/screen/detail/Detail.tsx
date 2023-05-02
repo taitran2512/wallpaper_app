@@ -3,7 +3,7 @@
 
 import { images } from 'assets';
 import { Screens } from 'common';
-import { ExampleScreen, Flex, Icon, ModalConfirm } from 'component';
+import { ExampleScreen, Flex, Icon, ModalConfirm, SlideImage } from 'component';
 import { colors, Navigator, screenHeight, screenWidth, sizes, Style } from 'core/index';
 import WallpaperManageModule from 'library/wallpaper/WallpaperManager';
 import { ScreenProps } from 'model';
@@ -24,7 +24,7 @@ import { Device, imageSource } from 'utils';
 import { keyInterstitialApply, keyInterstitialApplyHigh } from 'utils/GoogleAds';
 
 const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
-	const image = route?.params?.image;
+	const { data, index } = route?.params || {};
 	const [like, setLike] = useState<boolean>(false);
 
 	if (Platform.OS === 'android') {
@@ -168,9 +168,8 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 
 	return (
 		<Flex style={styles.container}>
-			<FastImage
-				source={imageSource(image)}
-				style={[StyleSheet.absoluteFill, styles.background]}>
+			<SlideImage data={data} index={index} />
+			<View style={[styles.background, StyleSheet.absoluteFill]}>
 				{setHeader()}
 				{showToast ? renderToastNotify() : null}
 				<ExampleScreen type={type} />
@@ -185,7 +184,7 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 						cancel={() => modalRef.current.close()}
 					/>
 				</ModalConfirm>
-			</FastImage>
+			</View>
 		</Flex>
 	);
 };
@@ -230,12 +229,10 @@ const styles = StyleSheet.create({
 	container: {
 		justifyContent: 'flex-start',
 		flex: 1,
-		paddingBottom: sizes.s34,
-		paddingHorizontal: sizes.s16,
+		// paddingHorizontal: sizes.s16,
 	},
 	background: {
-		width: screenWidth,
-		height: screenHeight,
+		flex: 1,
 		justifyContent: 'space-between',
 	},
 	header: {
@@ -265,7 +262,7 @@ const styles = StyleSheet.create({
 		paddingHorizontal: sizes.s24,
 		paddingVertical: sizes.s16,
 		marginHorizontal: sizes.s16,
-		marginBottom: sizes.s70,
+		marginBottom: sizes.s35,
 		backgroundColor: colors.gradient5,
 		borderRadius: sizes.s8,
 	},

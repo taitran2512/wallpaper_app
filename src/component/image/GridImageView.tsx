@@ -13,14 +13,14 @@ interface Props {
 }
 
 const GridImageView: React.FC<Props> = ({ data, onPress }) => {
-	const detailScreen = (item: any) => {
-		Navigator.navigate(Screens.Detail, { image: item });
+	const detailScreen = (item: any, index: number) => {
+		Navigator.navigate(Screens.Detail, { data: data, index });
 	};
 	const renderItem = ({ item, index }: any) => {
 		return (
 			<View style={{ flex: index === data.length - 1 ? numColumns - 1 : 1 }}>
 				<TouchableOpacity
-					onPress={() => (onPress ? onPress?.(item) : detailScreen(item))}
+					onPress={() => (onPress ? onPress?.(item) : detailScreen(item, index))}
 					activeOpacity={0.8}>
 					<FastImage style={styles.image} source={imageSource(item)} />
 				</TouchableOpacity>
