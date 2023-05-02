@@ -14,6 +14,7 @@ export { default as TextInputAnimated } from './input/TextInputAnimated';
 export { default as Loading } from './loading/Loading';
 export { default as ModalConfirm } from './modal/ModalConfirm';
 export { default as UpdateView } from './modal/UpdateView';
+export { default as NativeAds } from './nativeAds/NativeAds';
 export { default as NavigationBackButton } from './navigation/NavigationBackButton';
 export { default as NavigationButton } from './navigation/NavigationButton';
 export { default as StackComponent } from './navigation/StackComponent';

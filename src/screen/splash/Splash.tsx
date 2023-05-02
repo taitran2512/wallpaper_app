@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Stacks } from 'common';
 import { colors, Navigator, Style } from 'core/index';
 import React, { useEffect, useRef } from 'react';
 import { ActivityIndicator, View } from 'react-native';
 import { AppOpenAd } from 'react-native-google-mobile-ads';
+import { Storage } from 'utils';
 import { keyAdsOpenApp } from 'utils/GoogleAds';
 
 const Splash = () => {
@@ -12,28 +14,40 @@ const Splash = () => {
 		keywords: [],
 	});
 	const openAppAds = useRef<boolean>(false);
+	const onboardRef = useRef<any>(null);
+	Storage.getMultiData([Storage.key.language, Storage.key.onboarding]).then((data) => {
+		console.log(data, 'data');
+		const [lang, onboard] = data;
+		onboardRef.current = onboard;
+	});
 	appOpenAd.addAdEventsListener(({ type }) => {
 		if (type === 'loaded') {
 			appOpenAd.show();
-			return;
 		}
 		if (type === 'closed') {
 			openAppAds.current = true;
-			setTimeout(() => {
-				Navigator.replace(Stacks.Onboarding, { openAds: openAppAds.current });
-			}, 500);
-			return;
+			if (onboardRef.current) {
+				Navigator.goHome();
+				return;
+			} else {
+				setTimeout(() => {
+					Navigator.replace(Stacks.Onboarding, { openAds: openAppAds.current });
+				}, 500);
+			}
 		}
 		if (type === 'error') {
 			openAppAds.current = false;
-			setTimeout(() => {
-				Navigator.replace(Stacks.Onboarding, { openAds: openAppAds.current });
-			}, 500);
-			return;
+			if (onboardRef.current) {
+				Navigator.goHome();
+				return;
+			} else {
+				setTimeout(() => {
+					Navigator.replace(Stacks.Onboarding, { openAds: openAppAds.current });
+				}, 500);
+			}
 		}
 		return;
 	});
-
 	useEffect(() => {
 		appOpenAd.load();
 	}, []);

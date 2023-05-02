@@ -2,6 +2,20 @@
 
 import { images } from 'assets';
 
+export const WelcomArr = [
+	{
+		title: 'Welcome to Sunret Dope Wallpapers',
+		content: 'Corem ipsum dolor sit amet, Nunc vulputate libero et amet',
+	},
+	{
+		title: 'Welcome to Sunret Dope Wallpapers',
+		content: 'Corem ipsum dolor sit amet, Nunc vulputate libero et amet',
+	},
+	{
+		title: 'Welcome to Sunret Dope Wallpapers',
+		content: 'Corem ipsum dolor sit amet, Nunc vulputate libero et amet',
+	},
+];
 export const categoryData = [
 	{
 		id: 0,
