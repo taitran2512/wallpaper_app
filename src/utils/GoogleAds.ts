@@ -3,7 +3,9 @@ import { TestIds } from 'react-native-google-mobile-ads';
 // KEY DEV
 export const keyAdsOpenApp: string | any = TestIds.APP_OPEN;
 export const keyBanner_onboarding: string | any = TestIds.BANNER;
-export const keyNative_onboarding: string | any = TestIds.GAM_NATIVE;
+export const keyNative_onboarding: string | any = __DEV__
+	? TestIds.BANNER
+	: 'ca-app-pub-6548166688052880/8131685939';
 export const keyBanner_home: string | any = TestIds.BANNER;
 export const keyBanner_category: string | any = TestIds.BANNER;
 export const keyInterstitialSplash = TestIds.INTERSTITIAL;
