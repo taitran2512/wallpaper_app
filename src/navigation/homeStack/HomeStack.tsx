@@ -4,9 +4,11 @@ import React, { memo, useCallback } from 'react';
 import { enableScreens } from 'react-native-screens';
 import * as HomeScreen from 'screen/home';
 import TopTab from './TopTab';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 
 enableScreens();
 const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
 
 const HomeStack: React.FC = () => {
 	const renderStackScreen = useCallback(() => {
@@ -19,6 +21,12 @@ const HomeStack: React.FC = () => {
 			/>
 		));
 	}, []);
+
+	const renderDrawer = () => (
+		<Drawer.Navigator>
+			<Drawer.Screen name="HomeDrawer" component={TopTab} />
+		</Drawer.Navigator>
+	);
 
 	return (
 		<Stack.Navigator>
