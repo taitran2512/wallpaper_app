@@ -16,4 +16,9 @@ export const images = {
 	ic_success: require('./images/ic_success.png'),
 	ic_checkbox: require('./images/ic_checkbox.png'),
 	ic_checkbox_checked: require('./images/ic_checkbox_checked.png'),
+	ic_premium: require('./images/ic_premium.png'),
+	ic_rate: require('./images/ic_rate.png'),
+	ic_language: require('./images/ic_language.png'),
+	ic_term: require('./images/ic_term.png'),
+	ic_more_app: require('./images/ic_more_app.png'),
 };

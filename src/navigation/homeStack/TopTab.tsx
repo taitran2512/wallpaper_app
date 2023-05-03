@@ -6,12 +6,12 @@ import { screenOptionsStack } from 'common/nagivationOption';
 import { NavigationButton } from 'component';
 import { colors, sizes } from 'core/index';
 import { ScreenProps } from 'model';
-import React, { memo, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Category, New, Popular } from 'screen/home';
 
 const Tab = createMaterialTopTabNavigator();
 
-const TopTab = ({ navigation }: ScreenProps) => {
+const TopTab = ({ navigation }: any) => {
 	const DATA = [
 		{
 			name: 'New',
@@ -31,11 +31,15 @@ const TopTab = ({ navigation }: ScreenProps) => {
 	];
 
 	useEffect(() => {
+		// navigation.openDrawer();
 		navigation.setOptions({
 			...screenOptionsStack,
 			headerShown: true,
 			headerLeft: () => (
 				<NavigationButton
+					onPress={() => {
+						navigation.toggleDrawer();
+					}}
 					icon={images.ic_menu_left}
 					tintColor="white"
 					style={{ width: sizes.s24, height: sizes.s24, marginLeft: sizes.s16 }}
@@ -58,7 +62,7 @@ const TopTab = ({ navigation }: ScreenProps) => {
 				backgroundColor: colors.background_black,
 			},
 		});
-	}, []);
+	}, [navigation]);
 
 	return (
 		<Tab.Navigator
@@ -93,4 +97,4 @@ const TopTab = ({ navigation }: ScreenProps) => {
 	);
 };
 
-export default memo(TopTab);
+export default TopTab;

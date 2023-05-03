@@ -113,7 +113,7 @@ const Onboarding: React.FC<ScreenProps | any> = ({ route }) => {
 						contentContainerStyle={{ flexGrow: 1 }}
 						pagingEnabled
 						scrollEventThrottle={16}
-						onScroll={onScroll}>
+						onMomentumScrollEnd={onScroll}>
 						{renderPage()}
 						<View
 							style={{
