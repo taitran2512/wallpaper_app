@@ -1,11 +1,12 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import React from 'react';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable react-native/no-inline-styles */
 import { DrawerContentComponentProps } from '@react-navigation/drawer';
-import { BlurView } from '@react-native-community/blur';
-import { Device } from 'utils';
-import { Style, sizes } from 'core/index';
-import { Icon } from 'component';
 import { images } from 'assets';
+import { Icon } from 'component';
+import { sizes, Style } from 'core/index';
+import React from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Device } from 'utils';
 
 const DrawerContent = (props: DrawerContentComponentProps) => {
 	const DATA = [
