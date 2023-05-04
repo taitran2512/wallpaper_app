@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-native/no-inline-styles */
-import { DrawerContentComponentProps } from '@react-navigation/drawer';
 import { images } from 'assets';
 import { Icon } from 'component';
 import { sizes, Style } from 'core/index';
@@ -8,7 +7,7 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Device } from 'utils';
 
-const DrawerContent = (props: DrawerContentComponentProps) => {
+const DrawerContent = ({ drawerRef }: any) => {
 	const DATA = [
 		{
 			title: 'Home',
@@ -49,7 +48,12 @@ const DrawerContent = (props: DrawerContentComponentProps) => {
 				<Text style={styles.subtitle}>Upgrade now</Text>
 			</TouchableOpacity>
 			{DATA.map((item, index) => (
-				<TouchableOpacity key={index} style={[Style.row, Style.top16]}>
+				<TouchableOpacity
+					key={index}
+					style={[Style.row, Style.top16]}
+					onPress={() => {
+						drawerRef?.current?.closeDrawer();
+					}}>
 					<Icon source={item.icon} size={sizes.s24} style={Style.right16} />
 					<Text style={styles.subtitle}>{item.title}</Text>
 				</TouchableOpacity>

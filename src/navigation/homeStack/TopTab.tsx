@@ -4,9 +4,9 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { images } from 'assets';
 import { screenOptionsStack } from 'common/nagivationOption';
 import { NavigationButton } from 'component';
-import { colors, sizes } from 'core/index';
+import { Navigator, colors, sizes } from 'core/index';
 import { ScreenProps } from 'model';
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Category, New, Popular } from 'screen/home';
 
 const Tab = createMaterialTopTabNavigator();
@@ -29,40 +29,36 @@ const TopTab = ({ navigation }: any) => {
 			title: 'Popular',
 		},
 	];
+	// useEffect(() => {
+	// 	navigation.setOptions({
+	// 		...screenOptionsStack,
+	// 		headerShown: true,
+	// 		headerLeft: () => (
+	// 			<NavigationButton
+	// 				onPress={() => {}}
+	// 				icon={images.ic_menu_left}
+	// 				tintColor="white"
+	// 				style={{ width: sizes.s24, height: sizes.s24, marginLeft: sizes.s16 }}
+	// 			/>
+	// 		),
+	// 		headerRight: () => (
+	// 			<NavigationButton
+	// 				icon={images.ic_search}
+	// 				tintColor="white"
+	// 				style={{ width: sizes.s20, height: sizes.s20, marginRight: sizes.s16 }}
+	// 			/>
+	// 		),
 
-	useEffect(() => {
-		// navigation.openDrawer();
-		navigation.setOptions({
-			...screenOptionsStack,
-			headerShown: true,
-			headerLeft: () => (
-				<NavigationButton
-					onPress={() => {
-						navigation.toggleDrawer();
-					}}
-					icon={images.ic_menu_left}
-					tintColor="white"
-					style={{ width: sizes.s24, height: sizes.s24, marginLeft: sizes.s16 }}
-				/>
-			),
-			headerRight: () => (
-				<NavigationButton
-					icon={images.ic_search}
-					tintColor="white"
-					style={{ width: sizes.s20, height: sizes.s20, marginRight: sizes.s16 }}
-				/>
-			),
-
-			headerTitleAlign: 'center',
-			headerShadowVisible: false,
-			headerTitleStyle: {
-				color: 'white',
-			},
-			headerStyle: {
-				backgroundColor: colors.background_black,
-			},
-		});
-	}, [navigation]);
+	// 		headerTitleAlign: 'center',
+	// 		headerShadowVisible: false,
+	// 		headerTitleStyle: {
+	// 			color: 'white',
+	// 		},
+	// 		headerStyle: {
+	// 			backgroundColor: colors.background_black,
+	// 		},
+	// 	});
+	// }, [navigation]);
 
 	return (
 		<Tab.Navigator
