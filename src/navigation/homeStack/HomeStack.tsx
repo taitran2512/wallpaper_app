@@ -8,8 +8,8 @@ import React, { memo, useCallback, useRef } from 'react';
 import { DrawerLayoutAndroid } from 'react-native';
 import { enableScreens } from 'react-native-screens';
 import * as HomeScreen from 'screen/home';
-import TopTab from './TopTab';
 import DrawerContent from './DrawerContent';
+import TopTab from './TopTab';
 
 enableScreens();
 const Stack = createNativeStackNavigator();
@@ -50,22 +50,22 @@ const HomeStack: React.FC = () => {
 								}}
 								icon={images.ic_menu_left}
 								tintColor="white"
-								style={{ width: sizes.s24, height: sizes.s24, marginLeft: sizes.s16 }}
+								style={{ width: sizes.s24, height: sizes.s24 }}
 							/>
 						),
 						headerRight: () => (
 							<NavigationButton
 								icon={images.ic_search}
 								tintColor="white"
-								style={{ width: sizes.s20, height: sizes.s20, marginRight: sizes.s16 }}
+								style={{ width: sizes.s20, height: sizes.s20 }}
 							/>
 						),
-
 						headerTitleAlign: 'center',
 						headerShadowVisible: false,
 						headerTitleStyle: {
 							color: 'white',
 						},
+
 						headerStyle: {
 							backgroundColor: colors.background_black,
 						},

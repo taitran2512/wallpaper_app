@@ -1,12 +1,8 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/no-unstable-nested-components */
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { images } from 'assets';
-import { screenOptionsStack } from 'common/nagivationOption';
-import { NavigationButton } from 'component';
-import { Navigator, colors, sizes } from 'core/index';
-import { ScreenProps } from 'model';
-import React, { useEffect, useRef } from 'react';
+import { colors, fonts, sizes } from 'core/index';
+import React from 'react';
+import { StyleSheet, Text } from 'react-native';
 import { Category, New, Popular } from 'screen/home';
 
 const Tab = createMaterialTopTabNavigator();
@@ -29,7 +25,7 @@ const TopTab = ({ navigation }: any) => {
 			title: 'Popular',
 		},
 	];
-	// useEffect(() => {
+
 	// 	navigation.setOptions({
 	// 		...screenOptionsStack,
 	// 		headerShown: true,
@@ -62,23 +58,26 @@ const TopTab = ({ navigation }: any) => {
 
 	return (
 		<Tab.Navigator
-			screenOptions={{
+			screenOptions={({ route }) => ({
 				tabBarStyle: {
 					backgroundColor: colors.background_black,
 					elevation: 0,
 					shadowOpacity: 0,
 				},
-				tabBarLabelStyle: {
-					color: colors.white,
-					textTransform: 'none',
-					fontSize: sizes.s14,
-				},
+				labelStyle: { fontSize: sizes.s14, fontFamily: fonts.bold },
 				tabBarActiveTintColor: colors.white,
 				tabBarIndicatorStyle: {
 					height: 2,
 					backgroundColor: colors.white,
 				},
-			}}>
+				tabBarLabel: ({ focused }) => {
+					return focused ? (
+						<Text style={styles.txtFocus}>{route.name}</Text>
+					) : (
+						<Text style={styles.noneFocus}>{route.name}</Text>
+					);
+				},
+			})}>
 			{DATA.map((item, index) => (
 				<Tab.Screen
 					key={String(index)}
@@ -94,3 +93,12 @@ const TopTab = ({ navigation }: any) => {
 };
 
 export default TopTab;
+const styles = StyleSheet.create({
+	txtFocus: {
+		fontSize: sizes.s14,
+		fontFamily: fonts.bold,
+		fontWeight: 'bold',
+		color: colors.white,
+	},
+	noneFocus: { fontSize: sizes.s14 },
+});

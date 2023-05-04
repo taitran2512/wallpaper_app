@@ -8,9 +8,6 @@ export { default as AutoFastImage } from './image/AutoFastImage';
 export { default as GridImageView } from './image/GridImageView';
 export { default as Icon } from './image/Icon';
 export { default as SlideImage } from './image/SlideImage';
-export { default as Input } from './input/Input';
-export { default as ParagraphInput } from './input/ParagraphInput';
-export { default as TextInputAnimated } from './input/TextInputAnimated';
 export { default as Loading } from './loading/Loading';
 export { default as ModalConfirm } from './modal/ModalConfirm';
 export { default as UpdateView } from './modal/UpdateView';
@@ -19,3 +16,4 @@ export { default as NavigationBackButton } from './navigation/NavigationBackButt
 export { default as NavigationButton } from './navigation/NavigationButton';
 export { default as StackComponent } from './navigation/StackComponent';
 export { default as ToastDebug } from './toast/ToastDebug';
+

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-native/no-inline-styles */
 import { images } from 'assets';
 import { Icon } from 'component';
@@ -67,7 +66,7 @@ export default DrawerContent;
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: 'rgba(51, 51, 51, 0.9)',
+		backgroundColor: 'rgba(51, 51, 51, 0.3)',
 		paddingTop: Device.setHeaderHeight(sizes.s30),
 		paddingHorizontal: sizes.s24,
 	},

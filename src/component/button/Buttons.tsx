@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import { BlurView } from '@react-native-community/blur';
 import { colors, sizes } from 'core/index';
 import React from 'react';
@@ -49,6 +50,7 @@ const styles = StyleSheet.create({
 		height: sizes.s50,
 		borderRadius: 16,
 		overflow: 'hidden',
+		borderColor: 'rgba(255, 255, 255, 1)',
 	},
 	title: {
 		color: colors.white,

@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import { Screens } from 'common';
 import { colors, Navigator, screenWidth, sizes } from 'core/index';
 import React from 'react';

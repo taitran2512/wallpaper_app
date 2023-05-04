@@ -4,7 +4,7 @@
 import { images } from 'assets';
 import { Screens } from 'common';
 import { ExampleScreen, Flex, Icon, ModalConfirm, SlideImage } from 'component';
-import { colors, Navigator, screenHeight, sizes, Style } from 'core/index';
+import { Navigator, Style, colors, screenHeight, sizes } from 'core/index';
 import WallpaperManageModule from 'library/wallpaper/WallpaperManager';
 import { ScreenProps } from 'model';
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
@@ -242,7 +242,7 @@ const styles = StyleSheet.create({
 		marginTop: Device.setHeaderHeight(sizes.s16),
 	},
 	button: {
-		backgroundColor: colors.gradient,
+		backgroundColor: colors.gradient5,
 		height: sizes.s36,
 		width: sizes.s36,
 		borderRadius: sizes.s8,
