@@ -21,7 +21,7 @@ export default class Navigator {
 	static modalsNavigation: any;
 	static modalOpened: number = 0;
 	static animationDurationTime = 250;
-	static defaultOptions: StackNavigationOptions = {
+	static defaultOptions: StackNavigationOptions | any = {
 		headerTitleAlign: 'center',
 		headerTintColor: colors.black,
 		headerLeft: () => NavigationBackButton(),

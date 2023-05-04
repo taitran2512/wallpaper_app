@@ -1,5 +1,4 @@
 import { StackNavigationOptions, TransitionPresets } from '@react-navigation/stack';
-import { colors } from 'core/style/colors';
 import sizes from 'core/size/sizes';
 import { Device } from 'utils';
 
@@ -13,7 +12,7 @@ export const headerDefaultOptions: any = {
 	},
 };
 
-export const screenOptionsStack: StackNavigationOptions = {
+export const screenOptionsStack: StackNavigationOptions | any = {
 	presentation: 'modal',
 	gestureEnabled: true,
 	...TransitionPresets.SlideFromRightIOS,
