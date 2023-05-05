@@ -25,6 +25,7 @@ const Favorite = ({ navigation }: ScreenProps) => {
 
 	return (
 		<Tab.Navigator
+			backBehavior="none"
 			screenOptions={({ route }) => ({
 				tabBarStyle: {
 					backgroundColor: colors.background_black,
