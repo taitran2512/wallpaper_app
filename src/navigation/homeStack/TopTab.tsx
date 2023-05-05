@@ -98,10 +98,9 @@ const styles = StyleSheet.create({
 	txtFocus: {
 		fontSize: sizes.s15,
 		fontFamily: fonts.bold,
-		fontWeight: 'bold',
 		color: colors.white,
 		flex: 1,
 		width: '120%',
 	},
-	noneFocus: { fontSize: sizes.s15, color: colors.white },
+	noneFocus: { fontSize: sizes.s15, color: colors.white, fontFamily: fonts.medium },
 });

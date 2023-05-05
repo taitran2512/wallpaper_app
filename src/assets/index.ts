@@ -21,4 +21,5 @@ export const images = {
 	ic_language: require('./images/ic_language.png'),
 	ic_term: require('./images/ic_term.png'),
 	ic_more_app: require('./images/ic_more_app.png'),
+	ic_arrow_left: require('./images/ic_arrow_left.png'),
 };

@@ -1,7 +1,8 @@
 /* eslint-disable react-native/no-inline-styles */
 import { images } from 'assets';
+import { Screens } from 'common';
 import { Icon } from 'component';
-import { colors, sizes, Style } from 'core/index';
+import { colors, Navigator, sizes, Style } from 'core/index';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Device } from 'utils';
@@ -16,6 +17,7 @@ const DrawerContent = ({ drawerRef }: any) => {
 			title: 'Favourites',
 			icon: images.ic_like,
 			isShowBorder: true,
+			onPress: () => Navigator.navigate(Screens.Favorite),
 		},
 		{
 			title: 'More app',
@@ -46,18 +48,18 @@ const DrawerContent = ({ drawerRef }: any) => {
 			<Text style={styles.title}>4K Wallpaper</Text>
 			{renderBorderBottom()}
 			{DATA.map((item, index) => (
-				<>
+				<View key={index}>
 					<TouchableOpacity
-						key={index}
 						style={[Style.row, Style.top24]}
 						onPress={() => {
+							item.onPress?.();
 							drawerRef?.current?.closeDrawer();
 						}}>
 						<Icon source={item.icon} size={sizes.s24} style={Style.right16} />
 						<Text style={styles.subtitle}>{item.title}</Text>
 					</TouchableOpacity>
 					{item.isShowBorder && renderBorderBottom()}
-				</>
+				</View>
 			))}
 		</View>
 	);

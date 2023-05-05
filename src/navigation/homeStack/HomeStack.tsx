@@ -22,7 +22,10 @@ const HomeStack: React.FC = () => {
 			<Stack.Screen
 				key={String(index)}
 				name={key}
-				options={Navigator.defaultOptions}
+				options={{
+					...Navigator.defaultOptions,
+					...screenOptionsStack,
+				}}
 				component={(HomeScreen as any)[key]}
 			/>
 		));

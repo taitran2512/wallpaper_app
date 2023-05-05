@@ -1,5 +1,5 @@
 import { StackNavigationOptions, TransitionPresets } from '@react-navigation/stack';
-import { fonts, sizes } from 'core';
+import { colors, fonts, sizes } from 'core';
 import { Device } from 'utils';
 
 export const defaultHeaderHeight = Device.setHeaderHeight(sizes.s60);
@@ -9,6 +9,8 @@ export const headerDefaultOptions: any = {
 		height: defaultHeaderHeight,
 		elevation: 0, // remove shadow on Android
 		shadowOpacity: 0, // remove shadow on iOS
+		backgroundColor: colors.background_black,
+		padding: 20,
 	},
 };
 
