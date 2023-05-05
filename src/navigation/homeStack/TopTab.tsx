@@ -65,6 +65,7 @@ const TopTab = ({ navigation }: any) => {
 					shadowOpacity: 0,
 				},
 				labelStyle: { fontSize: sizes.s14, fontFamily: fonts.bold },
+				tabBarInactiveTintColor: colors.white,
 				tabBarActiveTintColor: colors.white,
 				tabBarIndicatorStyle: {
 					height: 2,
@@ -95,10 +96,12 @@ const TopTab = ({ navigation }: any) => {
 export default TopTab;
 const styles = StyleSheet.create({
 	txtFocus: {
-		fontSize: sizes.s14,
+		fontSize: sizes.s15,
 		fontFamily: fonts.bold,
 		fontWeight: 'bold',
 		color: colors.white,
+		flex: 1,
+		width: '120%',
 	},
-	noneFocus: { fontSize: sizes.s14 },
+	noneFocus: { fontSize: sizes.s15, color: colors.white },
 });

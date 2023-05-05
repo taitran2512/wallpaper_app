@@ -6143,10 +6143,9 @@ react-localization@^1.0.17:
   dependencies:
     localized-strings "^0.2.0"
 
-react-native-admob-native-ads@^0.6.0:
+react-native-admob-native-ads@taitran2512/react-native-admob-native-ads:
   version "0.6.0"
-  resolved "https://registry.yarnpkg.com/react-native-admob-native-ads/-/react-native-admob-native-ads-0.6.0.tgz#9d742e2d32dde30e83987569c004f58df1f15b94"
-  integrity sha512-KBqdks/+LawXncQXb6kIUBhiOlkcK95o5jrKFjsUTaoudqzYvynI8gv/eBLjBT0p28G/BV2pzI9gEbnyLQ0NpQ==
+  resolved "https://codeload.github.com/taitran2512/react-native-admob-native-ads/tar.gz/9f569abf45311663f9e40a27c45fcc673806765f"
 
 react-native-codegen@^0.71.5:
   version "0.71.5"

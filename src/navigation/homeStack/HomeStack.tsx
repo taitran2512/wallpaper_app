@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { images } from 'assets';
 import { screenOptionsStack } from 'common/nagivationOption';
 import { NavigationButton } from 'component';
-import { Navigator, colors, screenWidth, sizes } from 'core';
+import { Navigator, colors, fonts, screenWidth, sizes } from 'core';
 import React, { memo, useCallback, useRef } from 'react';
 import { DrawerLayoutAndroid } from 'react-native';
 import { enableScreens } from 'react-native-screens';
@@ -38,11 +38,12 @@ const HomeStack: React.FC = () => {
 			drawerLockMode="locked-closed">
 			<Stack.Navigator>
 				<Stack.Screen
-					name={'HomeTab'}
+					name={'All'}
 					component={TopTab}
 					options={{
 						...screenOptionsStack,
 						headerShown: true,
+						title: 'All',
 						headerLeft: () => (
 							<NavigationButton
 								onPress={() => {
@@ -62,10 +63,6 @@ const HomeStack: React.FC = () => {
 						),
 						headerTitleAlign: 'center',
 						headerShadowVisible: false,
-						headerTitleStyle: {
-							color: 'white',
-						},
-
 						headerStyle: {
 							backgroundColor: colors.background_black,
 						},

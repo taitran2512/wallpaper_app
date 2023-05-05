@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import { images } from 'assets';
 import { Icon } from 'component';
-import { sizes, Style } from 'core/index';
+import { colors, sizes, Style } from 'core/index';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Device } from 'utils';
@@ -15,6 +15,7 @@ const DrawerContent = ({ drawerRef }: any) => {
 		{
 			title: 'Favourites',
 			icon: images.ic_like,
+			isShowBorder: true,
 		},
 		{
 			title: 'More app',
@@ -38,24 +39,25 @@ const DrawerContent = ({ drawerRef }: any) => {
 		},
 	];
 
+	const renderBorderBottom = () => <View style={styles.border} />;
+
 	return (
 		<View style={styles.container}>
-			<Icon size={sizes.s30} source={images.ic_premium} style={{ alignSelf: 'center' }} />
-			<Text style={styles.title}>PRO ACCESS</Text>
-			<Text style={styles.subtitle}>Remove Ads - Unlimited content </Text>
-			<TouchableOpacity style={styles.button} activeOpacity={0.8}>
-				<Text style={styles.subtitle}>Upgrade now</Text>
-			</TouchableOpacity>
+			<Text style={styles.title}>4K Wallpaper</Text>
+			{renderBorderBottom()}
 			{DATA.map((item, index) => (
-				<TouchableOpacity
-					key={index}
-					style={[Style.row, Style.top16]}
-					onPress={() => {
-						drawerRef?.current?.closeDrawer();
-					}}>
-					<Icon source={item.icon} size={sizes.s24} style={Style.right16} />
-					<Text style={styles.subtitle}>{item.title}</Text>
-				</TouchableOpacity>
+				<>
+					<TouchableOpacity
+						key={index}
+						style={[Style.row, Style.top24]}
+						onPress={() => {
+							drawerRef?.current?.closeDrawer();
+						}}>
+						<Icon source={item.icon} size={sizes.s24} style={Style.right16} />
+						<Text style={styles.subtitle}>{item.title}</Text>
+					</TouchableOpacity>
+					{item.isShowBorder && renderBorderBottom()}
+				</>
 			))}
 		</View>
 	);
@@ -71,13 +73,10 @@ const styles = StyleSheet.create({
 		paddingHorizontal: sizes.s24,
 	},
 	title: {
-		alignSelf: 'center',
-		textAlign: 'center',
-		color: 'white',
-		fontSize: sizes.s15,
-		fontWeight: 'bold',
+		...Style.h4,
 		marginTop: sizes.s8,
 		marginBottom: sizes.s4,
+		color: colors.white,
 	},
 	subtitle: {
 		alignSelf: 'center',
@@ -90,5 +89,10 @@ const styles = StyleSheet.create({
 		paddingVertical: sizes.s5,
 		borderRadius: sizes.s8,
 		marginTop: sizes.s8,
+	},
+	border: {
+		backgroundColor: colors.white,
+		height: 1,
+		marginTop: sizes.s24,
 	},
 });

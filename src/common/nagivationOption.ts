@@ -1,8 +1,8 @@
 import { StackNavigationOptions, TransitionPresets } from '@react-navigation/stack';
-import sizes from 'core/size/sizes';
+import { fonts, sizes } from 'core';
 import { Device } from 'utils';
 
-export const defaultHeaderHeight = Device.setHeaderHeight(sizes.s50);
+export const defaultHeaderHeight = Device.setHeaderHeight(sizes.s60);
 
 export const headerDefaultOptions: any = {
 	headerStyle: {
@@ -17,7 +17,11 @@ export const screenOptionsStack: StackNavigationOptions | any = {
 	gestureEnabled: true,
 	...TransitionPresets.SlideFromRightIOS,
 	cardStyle: {
-		backgroundColor: 'rgba(51, 51, 51, 0.4)',
+		backgroundColor: 'rgba(51, 51, 51, 0.8)',
 	},
 	...headerDefaultOptions,
+	headerTitleStyle: {
+		color: 'white',
+		fontFamily: fonts.bold,
+	},
 };

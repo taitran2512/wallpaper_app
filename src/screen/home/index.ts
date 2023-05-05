@@ -5,3 +5,4 @@ export { default as GoogleInterstitialsAds } from './googleAds/GoogleInterstitia
 export { default as New } from './New';
 export { default as Popular } from './Popular';
 export { default as Premium } from './Premium';
+export { default as Favorite } from './Favorite';
