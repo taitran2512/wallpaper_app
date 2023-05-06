@@ -1,15 +1,29 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
-import React, { useEffect } from 'react';
-import { View } from 'react-native';
-import NativeAdView, { AdManager } from 'react-native-admob-native-ads';
+import { sizes } from 'core/index';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { ActivityIndicator, DeviceEventEmitter, StyleSheet, Text, View } from 'react-native';
+import NativeAdView, {
+	AdManager,
+	AdvertiserView,
+	CallToActionView,
+	HeadlineView,
+	IconView,
+	NativeMediaView,
+	StarRatingView,
+	StoreView,
+	TaglineView,
+	TestIds,
+} from 'react-native-admob-native-ads';
 
-const NativeAds = ({ index, media = false, type = 'image', loadOnMount = true }: any) => {
-	const nativeAdRef = useRef();
+const NativeAds = ({ index, media = false, type = 'image', loadOnMount = true, keys }: any) => {
+	const nativeAdRef = useRef<any>();
 	const [aspectRatio, setAspectRatio] = useState<any>(1.5);
 	const [loading, setLoading] = useState(false);
 	const [loaded, setLoaded] = useState(false);
 	const [error, setError] = useState(false);
-	const onAdFailedToLoad = (event) => {
+	const onAdFailedToLoad = (event: any) => {
 		setError(true);
 		setLoading(false);
 		/**
@@ -22,10 +36,6 @@ const NativeAds = ({ index, media = false, type = 'image', loadOnMount = true }:
 		 * folders by running ./gradlew clean in /android folder
 		 * and for iOS clean the project in xcode. Hopefully the error will
 		 * be gone.
-		 *
-		 * [iOS] If you get this error: "Cannot find an ad network adapter with
-		 * the name(s): com.google.DummyAdapter". The ad inventory is empty in your
-		 * location. Try using a vpn to get ads in a different location.
 		 *
 		 * If you have recently created AdMob IDs for your ads, it might take
 		 * a few days until the ads will start showing.
@@ -45,7 +55,7 @@ const NativeAds = ({ index, media = false, type = 'image', loadOnMount = true }:
 		console.log('AD', 'IMPRESSION', 'Ad impression recorded');
 	};
 
-	const onNativeAdLoaded = (event) => {
+	const onNativeAdLoaded = (event: any) => {
 		console.log('AD', 'RECIEVED', 'Unified ad  Recieved', event);
 		setLoading(false);
 		setLoaded(true);
@@ -58,13 +68,13 @@ const NativeAds = ({ index, media = false, type = 'image', loadOnMount = true }:
 	};
 
 	const onViewableItemsChanged = useCallback(
-		(event) => {
+		(event: any) => {
 			/**
 			 * [STEP IV] We check if any AdViews are currently viewable.
 			 */
-			let viewableAds = event.viewableItems.filter((i) => i.key.indexOf('ad') !== -1);
+			let viewableAds = event.viewableItems.filter((i: any) => i.key.indexOf('ad') !== -1);
 
-			viewableAds.forEach((adView) => {
+			viewableAds.forEach((adView: any) => {
 				if (adView.index === index && !loaded) {
 					/**
 					 * [STEP V] If the ad is viewable and not loaded
@@ -103,7 +113,7 @@ const NativeAds = ({ index, media = false, type = 'image', loadOnMount = true }:
 		 *
 		 * [STEP III] We will subscribe to onViewableItemsChanged event in all AdViews in the List.
 		 */
-		let onViewableItemsChangedHandler;
+		let onViewableItemsChangedHandler: any;
 		nativeAdRef.current?.loadAd();
 		if (!loadOnMount) {
 			onViewableItemsChangedHandler = DeviceEventEmitter.addListener(
@@ -136,7 +146,6 @@ const NativeAds = ({ index, media = false, type = 'image', loadOnMount = true }:
 		tagForChildDirectedTreatment: false,
 		tagForUnderAgeConsent: false,
 	};
-	AdManager.isTestDevice().then((result) => console.log(result));
 	useEffect(() => {
 		const init = async () => {
 			await AdManager.setRequestConfiguration({
@@ -158,13 +167,10 @@ const NativeAds = ({ index, media = false, type = 'image', loadOnMount = true }:
 			onAdClicked={onAdClicked}
 			onAdImpression={onAdImpression}
 			onNativeAdLoaded={onNativeAdLoaded}
+			requestNonPersonalizedAdsOnly={true}
 			refreshInterval={60000 * 2}
-			adUnitID="ca-app-pub-6548166688052880/8131685939" // TEST adUnitID
-			style={{
-				width: '98%',
-				alignSelf: 'center',
-				backgroundColor: 'transparent',
-			}}
+			adUnitID={'ca-app-pub-6548166688052880/8131685939'} // TEST adUnitID
+			style={styles.container}
 			videoOptions={{
 				customControlsRequested: true,
 			}}
@@ -191,20 +197,15 @@ const NativeAds = ({ index, media = false, type = 'image', loadOnMount = true }:
 
 				<View
 					style={{
-						height: 100,
 						width: '100%',
 						flexDirection: 'row',
 						justifyContent: 'space-between',
 						alignItems: 'flex-start',
-						paddingHorizontal: 10,
+						paddingVertical: sizes.s16,
+						paddingHorizontal: sizes.s16,
 						opacity: loading || error || !loaded ? 0 : 1,
 					}}>
-					<IconView
-						style={{
-							width: 60,
-							height: 60,
-						}}
-					/>
+					<IconView style={styles.logoAds} />
 					<View
 						style={{
 							flexGrow: 1,
@@ -212,7 +213,6 @@ const NativeAds = ({ index, media = false, type = 'image', loadOnMount = true }:
 							paddingHorizontal: 6,
 						}}>
 						<HeadlineView
-							// hello="abc"
 							style={{
 								fontWeight: 'bold',
 								fontSize: 13,
@@ -230,7 +230,6 @@ const NativeAds = ({ index, media = false, type = 'image', loadOnMount = true }:
 								color: 'gray',
 							}}
 						/>
-
 						<View
 							style={{
 								flexDirection: 'row',
@@ -242,7 +241,6 @@ const NativeAds = ({ index, media = false, type = 'image', loadOnMount = true }:
 								}}
 							/>
 							<StarRatingView
-								// starSize={12}
 								style={{
 									width: 65,
 									marginLeft: 10,
@@ -278,4 +276,14 @@ const NativeAds = ({ index, media = false, type = 'image', loadOnMount = true }:
 		</NativeAdView>
 	);
 };
-export default NativeAds;
+export default React.memo(NativeAds);
+const styles = StyleSheet.create({
+	container: {
+		width: '100%',
+		backgroundColor: 'red',
+	},
+	logoAds: {
+		width: sizes.s60,
+		height: sizes.s60,
+	},
+});

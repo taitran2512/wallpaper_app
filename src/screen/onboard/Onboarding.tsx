@@ -3,8 +3,8 @@
 import { images } from 'assets';
 import { Screens } from 'common';
 import { WelcomArr } from 'common/data';
-import { Buttons, Flex, Icon } from 'component';
-import { colors, Navigator, screenHeight, screenWidth, sizes, strings, Style } from 'core/index';
+import { Buttons, Flex, Icon, NativeAds } from 'component';
+import { Navigator, Style, colors, screenHeight, screenWidth, sizes, strings } from 'core/index';
 import { ScreenProps } from 'model';
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import {
@@ -19,7 +19,7 @@ import FastImage from 'react-native-fast-image';
 import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
 import LinearGradient from 'react-native-linear-gradient';
 import { Device, Storage } from 'utils';
-import { keyBanner_onboarding, keyInterstitialSplash } from 'utils/GoogleAds';
+import { keyBanner_onboarding, keyInterstitialSplash, keyNative_onboarding } from 'utils/GoogleAds';
 
 const Onboarding: React.FC<ScreenProps | any> = ({ route }) => {
 	const { openAds } = route?.params || {};
@@ -162,7 +162,13 @@ const Onboarding: React.FC<ScreenProps | any> = ({ route }) => {
 						{idx === 3 ? null : renderDot()}
 					</View>
 					{idx === 3 ? (
-						<View />
+						<NativeAds
+							loadOnMount={false}
+							index={1}
+							type="image"
+							media={false}
+							keys={keyNative_onboarding}
+						/>
 					) : (
 						<View style={styles.viewBanner}>
 							<BannerAd

@@ -3,6 +3,7 @@
  */
 
 import { AppRegistry, LogBox, Text } from 'react-native';
+import { AdManager } from 'react-native-admob-native-ads';
 import { name as appName } from './app.json';
 import App from './src/App';
 import { Screens, objScreen } from './src/common';
@@ -10,6 +11,25 @@ import { Screens, objScreen } from './src/common';
 for (let key in objScreen) {
 	Screens[key] = key;
 }
+
+AdManager.setRequestConfiguration({
+	tagForChildDirectedTreatment: false,
+});
+
+// image test ad
+AdManager.registerRepository({
+	name: 'imageAd',
+	adUnitId: 'ca-app-pub-6548166688052880/8131685939',
+	numOfAds: 3,
+	nonPersonalizedAdsOnly: false,
+	videoOptions: {
+		mute: false,
+	},
+	expirationPeriod: 3600000, // in milliseconds (optional)
+	mediationEnabled: false,
+}).then((result) => {
+	console.log('registered: ', result);
+});
 
 // disale console log on build
 if (!__DEV__) {
