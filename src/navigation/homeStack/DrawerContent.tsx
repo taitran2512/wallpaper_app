@@ -30,6 +30,7 @@ const DrawerContent = ({ drawerRef }: any) => {
 		{
 			title: 'Language',
 			icon: images.ic_language,
+			onPress: () => Navigator.navigate(Screens.Language),
 		},
 		{
 			title: 'Privacy',

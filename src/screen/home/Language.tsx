@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import { images } from 'assets';
-import { Screens, Stacks } from 'common';
+import { Screens } from 'common';
 import { WelcomArr } from 'common/data';
 import { Buttons, Flex, Icon, NativeAds } from 'component';
 import { Navigator, Style, colors, screenHeight, screenWidth, sizes, strings } from 'core/index';
@@ -19,13 +19,12 @@ import FastImage from 'react-native-fast-image';
 import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
 import LinearGradient from 'react-native-linear-gradient';
 import { Device, Storage } from 'utils';
-import { keyBanner_onboarding, keyInterstitialSplash, keyNative_onboarding } from 'utils/GoogleAds';
+import { keyBanner_onboarding, keyInterstitialSplash } from 'utils/GoogleAds';
 
-const Onboarding: React.FC<ScreenProps | any> = ({ route }) => {
+const Onboarding: React.FC<ScreenProps> = ({ navigation, route }) => {
 	const { openAds } = route?.params || {};
 
-	const [idx, setIdx] = useState<number>(0);
-	const scrollRef = useRef<any>();
+	const [language, setLanguage] = useState<string>('');
 
 	useEffect(() => {
 		if (!openAds) {
@@ -35,45 +34,28 @@ const Onboarding: React.FC<ScreenProps | any> = ({ route }) => {
 				});
 			}, 500);
 		}
+		navigation.setOptions({
+			headerShown: false,
+		});
+		Storage.getData(Storage.key.language).then((lang) => {
+			const appLanguage = lang || 'vi';
+			strings.setLanguage(appLanguage);
+			setLanguage(appLanguage);
+		});
 	}, []);
 
-	const onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
-		const index = Math.round(e.nativeEvent.contentOffset.x / screenWidth);
-		setIdx(Math.round(index));
+	const setAppLanguage = (lan: string) => {
+		setLanguage(lan);
+		strings.setLanguage(lan);
+		Storage.setData(Storage.key.language, lan);
 	};
 
 	const onPressNext = () => {
-		const page = idx + 1;
-		if (page === WelcomArr.length) {
-			Navigator.replace(Stacks.HomeStack, {
-				screen: 'Language',
-				params: {
-					openAds,
-				},
-			});
-			Storage.setData(Storage.key.onboarding, 'true');
+		if (navigation.canGoBack()) {
+			navigation.goBack();
 		} else {
-			setIdx(page);
-			scrollRef.current.scrollTo({ x: screenWidth * page });
+			Navigator.goHome();
 		}
-	};
-
-	const renderPage = () => {
-		return WelcomArr.map((item, index) => (
-			<View key={String(index)} style={styles.page}>
-				<Text style={styles.title}>{item.title}</Text>
-				<Text style={styles.subtitle}>{item.content} </Text>
-			</View>
-		));
-	};
-
-	const renderDot = () => {
-		return WelcomArr.map((item, index) => (
-			<View
-				key={String(index)}
-				style={[Style.right6, index === idx ? styles.dot_active : styles.dot]}
-			/>
-		));
 	};
 
 	return (
@@ -92,56 +74,66 @@ const Onboarding: React.FC<ScreenProps | any> = ({ route }) => {
 				]}>
 				<View style={styles.container}>
 					<ScrollView
-						ref={scrollRef}
-						horizontal
 						showsHorizontalScrollIndicator={false}
 						contentContainerStyle={{ flexGrow: 1 }}
 						pagingEnabled
-						scrollEventThrottle={16}
-						onMomentumScrollEnd={onScroll}>
-						{renderPage()}
+						scrollEventThrottle={16}>
+						<View
+							style={{
+								width: screenWidth,
+								paddingHorizontal: sizes.s16,
+								paddingTop: Device.setHeaderHeight(sizes.s24),
+							}}>
+							<Buttons
+								onPress={() => setAppLanguage('vi')}
+								style={[Style.row_between, Style.top16, Style.ph16]}>
+								<Text style={[Style.h6, { color: colors.white }]}>Tiếng Việt</Text>
+								<Icon
+									source={
+										language === 'vi' ? images.ic_checkbox_checked : images.ic_checkbox
+									}
+									size={sizes.s24}
+								/>
+							</Buttons>
+							<Buttons
+								onPress={() => setAppLanguage('en')}
+								style={[Style.row_between, Style.top16, Style.ph16]}>
+								<Text style={[Style.h6, { color: colors.white }]}>English</Text>
+								<Icon
+									source={
+										language === 'en' ? images.ic_checkbox_checked : images.ic_checkbox
+									}
+									size={sizes.s24}
+								/>
+							</Buttons>
+						</View>
 					</ScrollView>
 
-					<Buttons
-						title={idx === WelcomArr.length ? 'Save and continue' : 'Next'}
-						onPress={onPressNext}
-						style={[Style.mh16]}
-					/>
+					<Buttons title={'Save and continue'} onPress={onPressNext} style={[Style.mh16]} />
 					<View
 						style={[
 							Style.row_center,
 							Style.top24,
 							{
-								paddingBottom: idx === 3 ? 0 : sizes.s24,
+								paddingBottom: sizes.s24,
 							},
-						]}>
-						{idx === 3 ? null : renderDot()}
-					</View>
-					{idx === 3 ? (
-						<NativeAds
-							loadOnMount={false}
-							index={1}
-							type="image"
-							media={false}
-							keys={keyNative_onboarding}
+						]}></View>
+
+					<View style={styles.viewBanner}>
+						<BannerAd
+							unitId={keyBanner_onboarding}
+							size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+							requestOptions={{
+								requestNonPersonalizedAdsOnly: true,
+							}}
+							onAdLoaded={() => {
+								console.log('Advert loaded');
+							}}
+							onAdFailedToLoad={(error) => {
+								console.error('Advert failed to load: ', error);
+							}}
 						/>
-					) : (
-						<View style={styles.viewBanner}>
-							<BannerAd
-								unitId={keyBanner_onboarding}
-								size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-								requestOptions={{
-									requestNonPersonalizedAdsOnly: true,
-								}}
-								onAdLoaded={() => {
-									console.log('Advert loaded');
-								}}
-								onAdFailedToLoad={(error) => {
-									console.error('Advert failed to load: ', error);
-								}}
-							/>
-						</View>
-					)}
+					</View>
 				</View>
 			</LinearGradient>
 		</Flex>

@@ -41,7 +41,7 @@ const HomeStack: React.FC = () => {
 			drawerLockMode="locked-closed">
 			<Stack.Navigator>
 				<Stack.Screen
-					name={'All'}
+					name={'Home'}
 					component={TopTab}
 					options={{
 						...screenOptionsStack,
