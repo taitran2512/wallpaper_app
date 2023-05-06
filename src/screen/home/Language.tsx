@@ -1,39 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import { images } from 'assets';
-import { Screens } from 'common';
-import { WelcomArr } from 'common/data';
 import { Buttons, Flex, Icon, NativeAds } from 'component';
-import { Navigator, Style, colors, screenHeight, screenWidth, sizes, strings } from 'core/index';
+import { colors, Navigator, screenHeight, screenWidth, sizes, strings, Style } from 'core/index';
 import { ScreenProps } from 'model';
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import {
-	NativeScrollEvent,
-	NativeSyntheticEvent,
-	ScrollView,
-	StyleSheet,
-	Text,
-	View,
-} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
 import LinearGradient from 'react-native-linear-gradient';
 import { Device, Storage } from 'utils';
-import { keyBanner_onboarding, keyInterstitialSplash } from 'utils/GoogleAds';
+import { keyNative_onboarding } from 'utils/GoogleAds';
 
-const Onboarding: React.FC<ScreenProps> = ({ navigation, route }) => {
-	const { openAds } = route?.params || {};
-
+const Language: React.FC<ScreenProps> = ({ navigation }) => {
 	const [language, setLanguage] = useState<string>('');
 
 	useEffect(() => {
-		if (!openAds) {
-			setTimeout(() => {
-				Navigator.navigate(Screens.GoogleInterstitialsAds, {
-					key: keyInterstitialSplash,
-				});
-			}, 500);
-		}
 		navigation.setOptions({
 			headerShown: false,
 		});
@@ -117,30 +98,22 @@ const Onboarding: React.FC<ScreenProps> = ({ navigation, route }) => {
 							{
 								paddingBottom: sizes.s24,
 							},
-						]}></View>
-
-					<View style={styles.viewBanner}>
-						<BannerAd
-							unitId={keyBanner_onboarding}
-							size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-							requestOptions={{
-								requestNonPersonalizedAdsOnly: true,
-							}}
-							onAdLoaded={() => {
-								console.log('Advert loaded');
-							}}
-							onAdFailedToLoad={(error) => {
-								console.error('Advert failed to load: ', error);
-							}}
-						/>
-					</View>
+						]}
+					/>
+					<NativeAds
+						loadOnMount={false}
+						index={1}
+						type="image"
+						media={false}
+						keys={keyNative_onboarding}
+					/>
 				</View>
 			</LinearGradient>
 		</Flex>
 	);
 };
 
-export default Onboarding;
+export default Language;
 
 const styles = StyleSheet.create({
 	background: {

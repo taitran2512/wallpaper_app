@@ -3,10 +3,10 @@
 import { images } from 'assets';
 import { Screens, Stacks } from 'common';
 import { WelcomArr } from 'common/data';
-import { Buttons, Flex, Icon, NativeAds } from 'component';
-import { Navigator, Style, colors, screenHeight, screenWidth, sizes, strings } from 'core/index';
+import { Buttons, Flex } from 'component';
+import { colors, Navigator, screenHeight, screenWidth, sizes, Style } from 'core/index';
 import { ScreenProps } from 'model';
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
 	NativeScrollEvent,
 	NativeSyntheticEvent,
@@ -18,8 +18,8 @@ import {
 import FastImage from 'react-native-fast-image';
 import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
 import LinearGradient from 'react-native-linear-gradient';
-import { Device, Storage } from 'utils';
-import { keyBanner_onboarding, keyInterstitialSplash, keyNative_onboarding } from 'utils/GoogleAds';
+import { Storage } from 'utils';
+import { keyBanner_onboarding, keyInterstitialSplash } from 'utils/GoogleAds';
 
 const Onboarding: React.FC<ScreenProps | any> = ({ route }) => {
 	const { openAds } = route?.params || {};
@@ -117,31 +117,22 @@ const Onboarding: React.FC<ScreenProps | any> = ({ route }) => {
 						]}>
 						{idx === 3 ? null : renderDot()}
 					</View>
-					{idx === 3 ? (
-						<NativeAds
-							loadOnMount={false}
-							index={1}
-							type="image"
-							media={false}
-							keys={keyNative_onboarding}
+
+					<View style={styles.viewBanner}>
+						<BannerAd
+							unitId={keyBanner_onboarding}
+							size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+							requestOptions={{
+								requestNonPersonalizedAdsOnly: true,
+							}}
+							onAdLoaded={() => {
+								console.log('Advert loaded');
+							}}
+							onAdFailedToLoad={(error) => {
+								console.error('Advert failed to load: ', error);
+							}}
 						/>
-					) : (
-						<View style={styles.viewBanner}>
-							<BannerAd
-								unitId={keyBanner_onboarding}
-								size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-								requestOptions={{
-									requestNonPersonalizedAdsOnly: true,
-								}}
-								onAdLoaded={() => {
-									console.log('Advert loaded');
-								}}
-								onAdFailedToLoad={(error) => {
-									console.error('Advert failed to load: ', error);
-								}}
-							/>
-						</View>
-					)}
+					</View>
 				</View>
 			</LinearGradient>
 		</Flex>

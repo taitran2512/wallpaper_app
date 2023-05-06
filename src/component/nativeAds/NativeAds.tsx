@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
-import { sizes } from 'core/index';
+import { colors, screenWidth, sizes } from 'core/index';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, DeviceEventEmitter, StyleSheet, Text, View } from 'react-native';
 import NativeAdView, {
@@ -14,7 +14,6 @@ import NativeAdView, {
 	StarRatingView,
 	StoreView,
 	TaglineView,
-	TestIds,
 } from 'react-native-admob-native-ads';
 
 const NativeAds = ({ index, media = false, type = 'image', loadOnMount = true, keys }: any) => {
@@ -215,19 +214,21 @@ const NativeAds = ({ index, media = false, type = 'image', loadOnMount = true, k
 						<HeadlineView
 							style={{
 								fontWeight: 'bold',
-								fontSize: 13,
+								fontSize: sizes.s14,
+								color: 'rgba(29, 36, 51, 1)',
 							}}
 						/>
 						<TaglineView
 							numberOfLines={2}
 							style={{
-								fontSize: 11,
+								color: 'rgba(29, 36, 51, 1)',
+								fontSize: sizes.s14,
 							}}
 						/>
 						<AdvertiserView
 							style={{
-								fontSize: 10,
-								color: 'gray',
+								fontSize: sizes.s14,
+								color: 'rgba(29, 36, 51, 1)',
 							}}
 						/>
 						<View
@@ -248,29 +249,13 @@ const NativeAds = ({ index, media = false, type = 'image', loadOnMount = true, k
 							/>
 						</View>
 					</View>
-
-					<CallToActionView
-						style={[
-							{
-								minHeight: 45,
-								paddingHorizontal: 12,
-								justifyContent: 'center',
-								alignItems: 'center',
-								elevation: 10,
-								maxWidth: 100,
-								width: 80,
-							},
-						]}
-						allCaps
-						textStyle={{
-							fontSize: 13,
-							flexWrap: 'wrap',
-							textAlign: 'center',
-							color: 'white',
-						}}
-					/>
 				</View>
-
+				<CallToActionView
+					style={styles.btnAds}
+					buttonAndroidStyle={styles.buttonStyle}
+					allCaps
+					textStyle={styles.txtBtnAds}
+				/>
 				{media ? <NativeMediaView /> : null}
 			</View>
 		</NativeAdView>
@@ -280,10 +265,29 @@ export default React.memo(NativeAds);
 const styles = StyleSheet.create({
 	container: {
 		width: '100%',
-		backgroundColor: 'red',
+		backgroundColor: colors.white,
 	},
 	logoAds: {
 		width: sizes.s60,
 		height: sizes.s60,
+	},
+	btnAds: {
+		width: screenWidth * 0.9,
+		height: sizes.s42,
+		marginBottom: sizes.s12,
+		paddingVertical: sizes.s12,
+		alignItems: 'center',
+	},
+
+	buttonStyle: {
+		borderRadius: sizes.s16,
+		backgroundColor: '#6EA1FC',
+	},
+	txtBtnAds: {
+		fontSize: sizes.s16,
+		textAlign: 'center',
+		color: colors.white,
+		marginBottom: sizes.s12,
+		fontWeight: 'bold',
 	},
 });

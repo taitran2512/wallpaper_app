@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { images } from 'assets';
 import { screenOptionsStack } from 'common/nagivationOption';
 import { NavigationButton } from 'component';
-import { Navigator, colors, fonts, screenWidth, sizes } from 'core';
+import { colors, Navigator, screenWidth, sizes } from 'core';
 import React, { memo, useCallback, useRef } from 'react';
 import { DrawerLayoutAndroid } from 'react-native';
 import { enableScreens } from 'react-native-screens';
