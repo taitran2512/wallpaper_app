@@ -1,11 +1,11 @@
-import { StyleSheet, Text, View } from 'react-native';
-import React, { useEffect } from 'react';
-import { ScreenProps } from 'model';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { Navigator, colors, fonts, sizes } from 'core/index';
-import { GridImageView, NavigationBackButton } from 'component';
 import { dataDetailCategory } from 'common/data';
 import { screenOptionsStack } from 'common/nagivationOption';
+import { GridImageView, NavigationBackButton } from 'component';
+import { colors, fonts, sizes } from 'core/index';
+import { ScreenProps } from 'model';
+import React, { useEffect } from 'react';
+import { StyleSheet, Text } from 'react-native';
 
 const Tab = createMaterialTopTabNavigator();
 const Favorite = ({ navigation }: ScreenProps) => {

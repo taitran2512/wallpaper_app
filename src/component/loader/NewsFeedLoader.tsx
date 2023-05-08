@@ -1,79 +1,79 @@
-import * as React from 'react'
-import { Animated, View, StyleSheet, ViewStyle } from 'react-native'
+import * as React from 'react';
+import { Animated, StyleSheet, View, ViewStyle } from 'react-native';
 import {
-	getInterpolatedColor,
-	startAnimationHelper,
-	commonDefaultProps,
 	CommonProps,
 	THeightType,
 	TWidthType,
-} from './LoaderAnimation'
+	commonDefaultProps,
+	getInterpolatedColor,
+	startAnimationHelper,
+} from './LoaderAnimation';
 
 const AVATAR_SIZE: any = {
 	default: 60,
 	large: 30,
 	small: 25,
-}
+};
 interface Props extends CommonProps {
 	/**
 	 * Used to determine the height of the main title.
 	 */
-	tHeight: THeightType
+	tHeight: THeightType;
 	/**
 	 * Used to determine the width of the main title.
 	 */
-	tWidth: TWidthType
+	tWidth: TWidthType;
 	/**
 	 * Used to determine the height of secondary title.
 	 */
-	sTHeight: string | number
+	sTHeight: string | number;
 	/**
 	 * Used to determine the width of secondary title.
 	 */
-	sTWidth: string | number
+	sTWidth: string | number;
 	/**
 	 * add additinal imageStyles or overwrite previous ones.
 	 */
-	imageStyles?: ViewStyle
+	imageStyles?: ViewStyle;
 	/**
 	 * Used to determine height of the image
 	 */
-	imageHeight: string | number
+	imageHeight: string | number;
 	/**
 	 * add additional avatarStyles or overwrite them
 	 */
-	avatarStyles?: ViewStyle
+	avatarStyles?: ViewStyle;
 	/**
 	 * add additional secondary title styles or overwrite them.
 	 */
-	secondaryTitleStyles?: ViewStyle
+	secondaryTitleStyles?: ViewStyle;
 }
 class NewsFeedLoader extends React.PureComponent<Props> {
-	static defaultProps: Props
+	static defaultProps: Props;
 	state = {
 		animation: new Animated.Value(0),
-	}
+	};
 	componentDidMount() {
-		const { active } = this.props
+		const { active } = this.props;
 		if (active) {
-			this.startAnimation()
+			this.startAnimation();
 		}
 	}
 
 	componentDidUpdate(prevProps: any) {
-		const { loading } = this.props
+		const { loading } = this.props;
 		if (prevProps.loading !== loading) {
 			if (loading) {
-				this.startAnimation()
+				this.startAnimation();
 			}
 		}
 	}
 
 	startAnimation = () => {
-		const { animation } = this.state
-		const { animationDuration } = this.props
-		startAnimationHelper(animation, animationDuration)
-	}
+		const { animation } = this.state;
+		const { animationDuration } = this.props;
+		startAnimationHelper(animation, animationDuration);
+	};
 
 	render() {
 		const {
@@ -95,32 +95,32 @@ class NewsFeedLoader extends React.PureComponent<Props> {
 			primaryColor,
 			secondaryColor,
 			children,
-		} = this.props
-		const { animation } = this.state
+		} = this.props;
+		const { animation } = this.state;
 
-		const interpolatedBackground = getInterpolatedColor(animation, primaryColor, secondaryColor)
+		const interpolatedBackground = getInterpolatedColor(animation, primaryColor, secondaryColor);
 		if (loading === false) {
-			return children || null
+			return children || null;
 		}
 		const imageInitialStyles = {
 			height: imageHeight,
 			width: '100%',
-		}
+		};
 		const titleInitialStyles = {
 			height: tHeight,
 			width: tWidth,
-		}
+		};
 		const secondaryTitleInitialStyles = {
 			height: sTHeight,
 			width: sTWidth,
-		}
+		};
 		const avatarInitialStyles = {
 			height: AVATAR_SIZE[aSize] || aSize,
 			width: AVATAR_SIZE[aSize] || aSize,
 			borderRadius: aShape === 'circle' ? AVATAR_SIZE[aSize] / 2 || (aSize as any) / 2 : 3,
 			marginRight: reverse ? 0 : 5,
 			marginLeft: reverse ? 5 : 0,
-		}
+		};
 
 		return [...Array(listSize)].map((_, index) => (
 			<View key={index} style={{ width: '100%', marginVertical: 8 }}>
@@ -169,7 +169,7 @@ class NewsFeedLoader extends React.PureComponent<Props> {
 					/>
 				</View>
 			</View>
-		))
+		));
 	}
 }
 
@@ -181,7 +181,7 @@ NewsFeedLoader.defaultProps = {
 	imageHeight: 200,
 	imageStyles: {},
 	sTHeight: 7,
-}
+};
 const styles = StyleSheet.create({
 	container: {
 		flexDirection: 'row',
@@ -212,5 +212,5 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 12,
 		marginTop: 10,
 	},
-})
-export default NewsFeedLoader
+});
+export default NewsFeedLoader;

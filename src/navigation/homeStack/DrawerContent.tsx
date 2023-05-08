@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import { images } from 'assets';
 import { Screens } from 'common';
 import { Icon } from 'component';

@@ -1,12 +1,12 @@
-import { headerDefaultOptions } from 'common/nagivationOption'
-import { isEmpty } from 'lodash'
-import { ScreenProps } from 'model/ScreenType'
+import { headerDefaultOptions } from 'common/nagivationOption';
+import { isEmpty } from 'lodash';
+import { ScreenProps } from 'model/ScreenType';
 
 export const useNavigator = (props: ScreenProps) => {
-	const { navigation, route } = props
-	const params = route?.params || {}
+	const { navigation, route } = props;
+	const params = route?.params || {};
 
-	const options = isEmpty(params?.options) ? {} : params.options
+	const options = isEmpty(params?.options) ? {} : params.options;
 
 	const defaultOptions = {
 		...options,
@@ -14,7 +14,7 @@ export const useNavigator = (props: ScreenProps) => {
 			...headerDefaultOptions.headerStyle,
 			...options?.headerStyle,
 		},
-	}
+	};
 	const newProps = {
 		navigation,
 		route: {
@@ -25,8 +25,8 @@ export const useNavigator = (props: ScreenProps) => {
 			...params,
 			options: defaultOptions,
 		},
-	}
+	};
 	return {
 		...newProps,
-	}
-}
+	};
+};

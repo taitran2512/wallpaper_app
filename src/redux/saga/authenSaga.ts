@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { PayloadAction } from '@reduxjs/toolkit';
 import * as Actions from 'action/authenAction';
 import { takeLatest } from 'redux-saga/effects';

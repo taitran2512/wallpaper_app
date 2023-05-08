@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef } from 'react';
 
 export const useDidUpdate = (callback: () => void, dependencies?: any[]) => {

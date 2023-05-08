@@ -1,3 +1,3 @@
-import { Screens, Stacks, objScreen } from './Screens'
+import { Screens, Stacks, objScreen } from './Screens';
 
-export { Screens, Stacks, objScreen }
+export { Screens, Stacks, objScreen };

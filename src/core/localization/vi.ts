@@ -62,5 +62,5 @@ export const vi = {
 	Issue: 'Issue',
 	createIssue: 'Tạo Issue mới',
 	signup: 'Đăng ký',
-	login:'Đăng nhập',
+	login: 'Đăng nhập',
 };

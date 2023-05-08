@@ -1,5 +1,5 @@
 import { BottomSheet, BottomSheetSwipe } from 'component';
-import { colors, Navigator, screenWidth, sizes, Style } from 'core';
+import { Navigator, Style, colors, screenWidth, sizes } from 'core';
 import { throttle } from 'lodash';
 import { ModalsParams } from 'model';
 import React, { Component } from 'react';

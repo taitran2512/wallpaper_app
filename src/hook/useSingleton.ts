@@ -1,10 +1,10 @@
-import { useState } from 'react'
+import { useState } from 'react';
 
 export const useSingleton = (callBack = () => {}) => {
-	const [hasBeenCalled, setHasBeenCalled] = useState<boolean>(false)
+	const [hasBeenCalled, setHasBeenCalled] = useState<boolean>(false);
 	if (hasBeenCalled) {
-		return
+		return;
 	}
-	callBack()
-	setHasBeenCalled(true)
-}
+	callBack();
+	setHasBeenCalled(true);
+};

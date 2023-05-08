@@ -1,18 +1,18 @@
-import * as React from 'react'
+import * as React from 'react';
 
-import { Animated, View, StyleSheet, ViewStyle } from 'react-native'
+import { Animated, StyleSheet, View, ViewStyle } from 'react-native';
 
 import {
-	getInterpolatedColor,
-	commonDefaultProps,
-	startAnimationHelper,
-	paragraphInitialStyles,
 	CommonProps,
 	PHeightType,
 	PWidthType,
-	TWidthType,
 	THeightType,
-} from './LoaderAnimation'
+	TWidthType,
+	commonDefaultProps,
+	getInterpolatedColor,
+	paragraphInitialStyles,
+	startAnimationHelper,
+} from './LoaderAnimation';
 /**
  * default content loader .
  *
@@ -20,72 +20,72 @@ import {
  * can be customized to the needs, .
  */
 interface ContentLoaderAvatar {
-	default: string | number
-	large: string | number
-	small: string | number
+	default: string | number;
+	large: string | number;
+	small: string | number;
 }
 const AVATAR_SIZE: ContentLoaderAvatar = {
 	default: 50,
 	large: 70,
 	small: 35,
-}
+};
 interface Props extends CommonProps {
 	/**
 	 * Enables or disables paragraph lines.
 	 */
-	paragraph?: boolean
+	paragraph?: boolean;
 	/**
 	 * Used to determine height of the paragraph line.
 	 */
-	pHeight: PHeightType
+	pHeight: PHeightType;
 	/**
 	 * Duration of fade animation, default = 500ms
 	 */
-	animationDuration: number
+	animationDuration: number;
 	/**
 	 * Used to determine the width of the paragraph lines, If you want dymanic widths for each line, you can add an array
 	 * [100,200,300]
 	 */
-	pWidth: PWidthType
+	pWidth: PWidthType;
 	/**
 	 * Used to determine how many paragraph rows should be rendered.
 	 */
-	pRows: number
+	pRows: number;
 	/**
 	 * Used to determine the width of the title.
 	 */
-	tWidth: TWidthType
+	tWidth: TWidthType;
 	/**
 	 * Used to determine the height of the title
 	 */
-	tHeight: THeightType
+	tHeight: THeightType;
 	/**
 	 * If you want to add additional styles/overwrite styles of paragraph
 	 */
-	paragraphStyles?: ViewStyle
+	paragraphStyles?: ViewStyle;
 	/**
 	 * If you want to add additional styles/overwrite styles of avatar
 	 */
-	avatarStyles?: ViewStyle
+	avatarStyles?: ViewStyle;
 }
 
 class ContentLoader extends React.PureComponent<Props> {
-	static defaultProps: Props
+	static defaultProps: Props;
 	state = {
 		animation: new Animated.Value(0),
-	}
+	};
 	componentDidMount() {
-		const { active } = this.props
+		const { active } = this.props;
 		if (active) {
-			this.startAnimation()
+			this.startAnimation();
 		}
 	}
 
 	private startAnimation = (): void => {
-		const { animation } = this.state
-		const { animationDuration } = this.props
-		startAnimationHelper(animation, animationDuration)
-	}
+		const { animation } = this.state;
+		const { animationDuration } = this.props;
+		startAnimationHelper(animation, animationDuration);
+	};
 
 	render() {
 		const {
@@ -109,18 +109,18 @@ class ContentLoader extends React.PureComponent<Props> {
 			primaryColor,
 			secondaryColor,
 			children,
-		} = this.props
-		const { animation } = this.state
+		} = this.props;
+		const { animation } = this.state;
 
-		const interpolatedBackground = getInterpolatedColor(animation, primaryColor, secondaryColor)
+		const interpolatedBackground = getInterpolatedColor(animation, primaryColor, secondaryColor);
 
 		if (loading === false) {
-			return children || null
+			return children || null;
 		}
 		const titleInitialStyles: ViewStyle = {
 			height: tHeight,
 			width: tWidth,
-		}
+		};
 		const avatarInitialStyles: ViewStyle = {
 			height: (AVATAR_SIZE as any)[aSize] || aSize,
 			width: (AVATAR_SIZE as any)[aSize] || aSize,
@@ -128,7 +128,7 @@ class ContentLoader extends React.PureComponent<Props> {
 				aShape === 'circle' ? (AVATAR_SIZE as any)[aSize] / 2 || (aSize as any) / 2 : 3,
 			marginRight: reverse ? 0 : 10,
 			marginLeft: reverse ? 10 : 0,
-		}
+		};
 
 		return [...Array(listSize)].map((_, index) => (
 			<View
@@ -177,7 +177,7 @@ class ContentLoader extends React.PureComponent<Props> {
 					)}
 				</View>
 			</View>
-		))
+		));
 	}
 }
 ContentLoader.defaultProps = {
@@ -189,7 +189,7 @@ ContentLoader.defaultProps = {
 	tWidth: '60%',
 	tHeight: 15,
 	paragraphStyles: {},
-}
+};
 const styles = StyleSheet.create({
 	container: {
 		flexDirection: 'row',
@@ -210,5 +210,5 @@ const styles = StyleSheet.create({
 		borderRadius: 3,
 	},
 	paragraphContainer: {},
-})
-export default ContentLoader
+});
+export default ContentLoader;
