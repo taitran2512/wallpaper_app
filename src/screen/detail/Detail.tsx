@@ -128,7 +128,7 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 		);
 	};
 	const onToggle = (types: string) => {
-		if (type === 'home' || type === 'lock') {
+		if (type === types) {
 			setType('');
 		} else {
 			setType(types);
