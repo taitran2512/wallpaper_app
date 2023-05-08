@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Stacks } from 'common';
 import { colors, Navigator, strings, Style } from 'core/index';
@@ -23,6 +22,7 @@ const Splash = () => {
 		onboardRef.current = onboard;
 	});
 	appOpenAd.addAdEventsListener(({ type }) => {
+		console.log(type, 'type');
 		if (type === 'loaded') {
 			appOpenAd.show();
 		} else if (type === 'closed') {

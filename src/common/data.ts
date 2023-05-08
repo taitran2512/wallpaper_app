@@ -4,16 +4,38 @@ import { images } from 'assets';
 
 export const WelcomArr = [
 	{
-		title: 'Welcome to Sunret Dope Wallpapers',
-		content: 'Corem ipsum dolor sit amet, Nunc vulputate libero et amet',
+		title: 'Extremely high quality wallpapers',
+		content: 'Various 4k resolution wallpapers for you to choose',
 	},
 	{
-		title: 'Welcome to Sunret Dope Wallpapers',
-		content: 'Corem ipsum dolor sit amet, Nunc vulputate libero et amet',
+		title: 'Daily new wallpapers',
+		content: 'Various 4k resolution wallpapers for you to choose',
 	},
 	{
-		title: 'Welcome to Sunret Dope Wallpapers',
-		content: 'Corem ipsum dolor sit amet, Nunc vulputate libero et amet',
+		title: 'Set for homescreen and lockscreen',
+		content: 'Various 4k resolution wallpapers for you to choose',
+	},
+];
+export const Languages = [
+	{
+		id: 0,
+		lang: 'vi',
+		name: 'Tiếng Việt',
+	},
+	{
+		id: 1,
+		lang: 'en',
+		name: 'English',
+	},
+	{
+		id: 2,
+		lang: 'in',
+		name: 'Indian',
+	},
+	{
+		id: 3,
+		lang: 'korean',
+		name: 'Korean',
 	},
 ];
 export const categoryData = [

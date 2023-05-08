@@ -1,8 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import { images } from 'assets';
+import { Languages } from 'common/data';
 import { Buttons, Flex, Icon, NativeAds } from 'component';
-import { colors, Navigator, screenHeight, screenWidth, sizes, strings, Style } from 'core/index';
+import { Navigator, Style, colors, screenHeight, screenWidth, sizes, strings } from 'core/index';
 import { ScreenProps } from 'model';
 import React, { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
@@ -65,28 +66,25 @@ const Language: React.FC<ScreenProps> = ({ navigation }) => {
 								paddingHorizontal: sizes.s16,
 								paddingTop: Device.setHeaderHeight(sizes.s24),
 							}}>
-							<Buttons
-								onPress={() => setAppLanguage('vi')}
-								style={[Style.row_between, Style.top16, Style.ph16]}>
-								<Text style={[Style.h6, { color: colors.white }]}>Tiếng Việt</Text>
-								<Icon
-									source={
-										language === 'vi' ? images.ic_checkbox_checked : images.ic_checkbox
-									}
-									size={sizes.s24}
-								/>
-							</Buttons>
-							<Buttons
-								onPress={() => setAppLanguage('en')}
-								style={[Style.row_between, Style.top16, Style.ph16]}>
-								<Text style={[Style.h6, { color: colors.white }]}>English</Text>
-								<Icon
-									source={
-										language === 'en' ? images.ic_checkbox_checked : images.ic_checkbox
-									}
-									size={sizes.s24}
-								/>
-							</Buttons>
+							<Text style={Style.h6}>Language</Text>
+							{Languages.map((item, index) => {
+								return (
+									<Buttons
+										key={index}
+										onPress={() => setAppLanguage(item.lang)}
+										style={[Style.row_between, Style.top16, Style.ph16]}>
+										<Text style={[Style.h6, { color: colors.white }]}>{item.name}</Text>
+										<Icon
+											source={
+												language === item.lang
+													? images.ic_checkbox_checked
+													: images.ic_checkbox
+											}
+											size={sizes.s24}
+										/>
+									</Buttons>
+								);
+							})}
 						</View>
 					</ScrollView>
 

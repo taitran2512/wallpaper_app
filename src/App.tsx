@@ -5,18 +5,20 @@ import AppStack from 'navigation';
 import React, { useEffect, useRef } from 'react';
 import { AppState, StatusBar, UIManager } from 'react-native';
 import 'react-native-gesture-handler';
-import { useInterstitialAd } from 'react-native-google-mobile-ads';
+import { useAppOpenAd } from 'react-native-google-mobile-ads';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import SplashScreen from 'react-native-splash-screen';
 import { Provider } from 'react-redux';
 import { Device } from 'utils';
-import { keyInterstitialOnAppResume } from 'utils/GoogleAds';
+import { keyOnAppResume } from 'utils/GoogleAds';
 import store from './redux/store';
 export let data = { isShowAds: false };
 const App: React.FC = () => {
 	const appState = useRef<any>(AppState.currentState);
-	const { isClosed, isLoaded, load, show } = useInterstitialAd(keyInterstitialOnAppResume, {
+
+	const { isClosed, isLoaded, load, show } = useAppOpenAd(keyOnAppResume, {
 		requestNonPersonalizedAdsOnly: true,
+		keywords: [],
 	});
 	const isFirst = useRef(true);
 	useEffect(() => {

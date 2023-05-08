@@ -4,7 +4,7 @@ import { images } from 'assets';
 import { Screens, Stacks } from 'common';
 import { WelcomArr } from 'common/data';
 import { Buttons, Flex } from 'component';
-import { colors, Navigator, screenHeight, screenWidth, sizes, Style } from 'core/index';
+import { Navigator, Style, colors, screenHeight, screenWidth, sizes } from 'core/index';
 import { ScreenProps } from 'model';
 import React, { useEffect, useRef, useState } from 'react';
 import {
@@ -103,7 +103,7 @@ const Onboarding: React.FC<ScreenProps | any> = ({ route }) => {
 					</ScrollView>
 
 					<Buttons
-						title={idx === WelcomArr.length ? 'Save and continue' : 'Next'}
+						title={idx === 2 ? 'Get Started' : 'Next'}
 						onPress={onPressNext}
 						style={[Style.mh16]}
 					/>
