@@ -20,7 +20,7 @@ const DrawerContent = ({ drawerRef }: any) => {
 		},
 		{
 			title: 'More app',
-			icon: images.ic_more_app,
+			// icon: images.ic_more_app,
 		},
 		{
 			title: 'Term and Conditions',

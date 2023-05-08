@@ -19,7 +19,7 @@ export const screenOptionsStack: StackNavigationOptions | any = {
 	gestureEnabled: true,
 	...TransitionPresets.SlideFromRightIOS,
 	cardStyle: {
-		backgroundColor: 'rgba(51, 51, 51, 0.8)',
+		backgroundColor: 'rgba(51, 51, 51, 0.9)',
 	},
 	...headerDefaultOptions,
 	headerTitleStyle: {

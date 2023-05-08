@@ -8,6 +8,7 @@ import 'react-native-gesture-handler';
 import { useAppOpenAd } from 'react-native-google-mobile-ads';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import SplashScreen from 'react-native-splash-screen';
+import SystemNavigationBar from 'react-native-system-navigation-bar';
 import { Provider } from 'react-redux';
 import { Device } from 'utils';
 import { keyOnAppResume } from 'utils/GoogleAds';
@@ -15,23 +16,26 @@ import store from './redux/store';
 export let data = { isShowAds: false };
 const App: React.FC = () => {
 	const appState = useRef<any>(AppState.currentState);
-
 	const { isClosed, isLoaded, load, show } = useAppOpenAd(keyOnAppResume, {
 		requestNonPersonalizedAdsOnly: true,
 		keywords: [],
 	});
 	const isFirst = useRef(true);
+
 	useEffect(() => {
+		setTimeout(() => {
+			SplashScreen.hide();
+		}, 500);
+
 		if (Device.isAndroid) {
 			if (UIManager.setLayoutAnimationEnabledExperimental) {
 				UIManager.setLayoutAnimationEnabledExperimental(true);
 			}
 		}
 	}, []);
+
 	useEffect(() => {
-		setTimeout(() => {
-			SplashScreen.hide();
-		}, 500);
+		SystemNavigationBar.immersive();
 	}, []);
 
 	const handleAppStateChange = async (nextAppState: any) => {

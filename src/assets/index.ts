@@ -1,7 +1,8 @@
 export const images = {
 	ic_back: require('./images/ic_back.png'),
 	ic_search: require('./images/ic_search.png'),
-	ic_menu_left: require('./images/ic_menu_left.png'),
+	ic_menu: require('./images/ic_menu.png'),
+	ic_menu_selected: require('./images/ic_menu_selected.png'),
 	image_category: require('./images/image_category.png'),
 	ic_back_arrow: require('./images/ic_back_arrow.png'),
 	banner: require('./images/banner.png'),
@@ -20,6 +21,9 @@ export const images = {
 	ic_rate: require('./images/ic_rate.png'),
 	ic_language: require('./images/ic_language.png'),
 	ic_term: require('./images/ic_term.png'),
-	ic_more_app: require('./images/ic_more_app.png'),
+	ic_category: require('./images/ic_category.png'),
+	ic_category_selected: require('./images/ic_category_selected.png'),
 	ic_arrow_left: require('./images/ic_arrow_left.png'),
+	ic_popular: require('./images/ic_popular.png'),
+	ic_popular_selected: require('./images/ic_popular_selected.png'),
 };
