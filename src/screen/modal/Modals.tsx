@@ -1,3 +1,5 @@
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { BottomSheet, BottomSheetSwipe } from 'component';
 import { Navigator, Style, colors, screenWidth, sizes } from 'core';
 import { throttle } from 'lodash';

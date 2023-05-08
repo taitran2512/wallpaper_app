@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import Buttons from 'component/button/Buttons';
 import { colors, sizes, Style } from 'core';
 import { BottomSheetSwipeProps } from 'model';

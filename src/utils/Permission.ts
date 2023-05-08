@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Alert, PermissionsAndroid } from 'react-native';
 import {
-	openSettings,
 	PERMISSIONS,
+	RESULTS,
+	openSettings,
 	request,
 	requestNotifications,
-	RESULTS,
 } from 'react-native-permissions';
 import Device from './Device';
 

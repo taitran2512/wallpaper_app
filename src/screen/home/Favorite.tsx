@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { dataDetailCategory } from 'common/data';
 import { screenOptionsStack } from 'common/nagivationOption';

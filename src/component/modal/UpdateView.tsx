@@ -1,7 +1,7 @@
-import { images } from 'assets';
+/* eslint-disable react-native/no-inline-styles */
 import { colors, screenWidth, Style } from 'core';
 import React from 'react';
-import { Image, Modal, StyleSheet, Text, View } from 'react-native';
+import { Modal, StyleSheet, Text, View } from 'react-native';
 
 interface Props {
 	visible: boolean;
@@ -11,7 +11,7 @@ const UpdateView: React.FC<Props> = (props: Props) => {
 	return (
 		<Modal statusBarTranslucent transparent animationType="fade" visible={props.visible}>
 			<View style={styles.container}>
-				<Image source={images.ic_downloading} style={styles.icon} />
+				{/* <Image source={images.ic_downloading} style={styles.icon} /> */}
 				<Text style={styles.title}>{'Downloading an update'}</Text>
 				<View style={styles.outside}>
 					<View

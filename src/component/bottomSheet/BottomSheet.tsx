@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { colors, screenHeight, sizes } from 'core';
 import { BottomSheetProps } from 'model';
 import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';

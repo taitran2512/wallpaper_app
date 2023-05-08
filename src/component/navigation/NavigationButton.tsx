@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { colors, sizes, Style } from 'core';
 import { throttle } from 'lodash';
 import React from 'react';

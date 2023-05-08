@@ -1,3 +1,5 @@
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import * as React from 'react';
 
 import { Animated, StyleSheet, View, ViewStyle } from 'react-native';

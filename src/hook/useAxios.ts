@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Navigator } from 'core/index';
 import { useEffect, useState } from 'react';
 
