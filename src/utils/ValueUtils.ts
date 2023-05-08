@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 export function removeSpace(text: string) {
 	return text?.replace?.(/ /g, '') || '';
 }

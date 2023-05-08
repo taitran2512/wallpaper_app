@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-shadow */
 import { screenHeight, screenWidth } from 'core';
 import React, { useEffect, useRef } from 'react';
 import { FlatList, StyleProp, View, ViewStyle } from 'react-native';

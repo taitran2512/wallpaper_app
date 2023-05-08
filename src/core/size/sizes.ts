@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Dimensions, Platform } from 'react-native';
 
 export let screenWidth: number = Dimensions.get('screen').width;
