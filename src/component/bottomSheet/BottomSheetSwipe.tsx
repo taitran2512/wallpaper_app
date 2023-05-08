@@ -120,7 +120,7 @@ class BottomSheetSwipe extends Component<BottomSheetSwipeProps, States> {
 				</View>
 				{isShowButton && (
 					<Buttons
-						isSafe
+						// isSafe
 						style={Style.mh24}
 						title={buttonTitle}
 						onPress={() => this.close(buttonOnPress)}
