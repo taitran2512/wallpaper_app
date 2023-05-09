@@ -26,4 +26,5 @@ export const images = {
 	ic_arrow_left: require('./images/ic_arrow_left.png'),
 	ic_popular: require('./images/ic_popular.png'),
 	ic_popular_selected: require('./images/ic_popular_selected.png'),
+	ic_tick: require('./images/ic_tick.png'),
 };

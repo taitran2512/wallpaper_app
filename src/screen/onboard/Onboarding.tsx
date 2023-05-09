@@ -13,6 +13,7 @@ import {
 	ScrollView,
 	StyleSheet,
 	Text,
+	TouchableOpacity,
 	View,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
@@ -102,20 +103,20 @@ const Onboarding: React.FC<ScreenProps | any> = ({ route }) => {
 						{renderPage()}
 					</ScrollView>
 
-					<Buttons
-						title={idx === 2 ? 'Get Started' : 'Next'}
-						onPress={onPressNext}
-						style={[Style.mh16]}
-					/>
 					<View
 						style={[
-							Style.row_center,
+							Style.row_between,
 							Style.top24,
+							Style.ph24,
 							{
-								paddingBottom: idx === 3 ? 0 : sizes.s24,
+								paddingBottom: sizes.s24,
 							},
 						]}>
-						{idx === 3 ? null : renderDot()}
+						<View style={{ width: sizes.s16 * 2 }}></View>
+						<View style={Style.row}>{renderDot()}</View>
+						<TouchableOpacity onPress={onPressNext}>
+							<Text style={[Style.txt16_white, Style.bold]}>Next</Text>
+						</TouchableOpacity>
 					</View>
 
 					<View style={styles.viewBanner}>
@@ -163,6 +164,7 @@ const styles = StyleSheet.create({
 		fontSize: sizes.s18,
 		textAlign: 'center',
 		marginBottom: sizes.s64,
+		width: '80%',
 	},
 	page: {
 		width: screenWidth,

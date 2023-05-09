@@ -66,7 +66,10 @@ const Language: React.FC<ScreenProps> = ({ navigation }) => {
 								paddingHorizontal: sizes.s16,
 								paddingTop: Device.setHeaderHeight(sizes.s24),
 							}}>
-							<Text style={Style.h6}>Language</Text>
+							<View style={Style.row_between}>
+								<Text style={Style.h3}>Language</Text>
+								<Icon source={images.ic_tick} size={sizes.s24} onPress={onPressNext} />
+							</View>
 							{Languages.map((item, index) => {
 								return (
 									<Buttons
@@ -88,7 +91,6 @@ const Language: React.FC<ScreenProps> = ({ navigation }) => {
 						</View>
 					</ScrollView>
 
-					<Buttons title={'Save and continue'} onPress={onPressNext} style={[Style.mh16]} />
 					<View
 						style={[
 							Style.row_center,
