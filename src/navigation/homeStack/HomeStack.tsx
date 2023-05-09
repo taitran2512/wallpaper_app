@@ -37,14 +37,14 @@ const HomeStack: React.FC = () => {
 				options={{
 					...screenOptionsStack,
 					headerShown: true,
-					title: 'All',
-					headerRight: () => (
-						<NavigationButton
-							icon={images.ic_search}
-							tintColor="white"
-							style={{ width: sizes.s20, height: sizes.s20 }}
-						/>
-					),
+					title: 'Popular',
+					// headerRight: () => (
+					// 	<NavigationButton
+					// 		icon={images.ic_search}
+					// 		tintColor="white"
+					// 		style={{ width: sizes.s20, height: sizes.s20 }}
+					// 	/>
+					// ),
 					headerTitleAlign: 'center',
 					headerShadowVisible: false,
 					headerStyle: {
