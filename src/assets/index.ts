@@ -27,4 +27,5 @@ export const images = {
 	ic_popular: require('./images/ic_popular.png'),
 	ic_popular_selected: require('./images/ic_popular_selected.png'),
 	ic_tick: require('./images/ic_tick.png'),
+	menu_background: require('./images/menu_background.png'),
 };

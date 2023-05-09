@@ -25,5 +25,6 @@ export const screenOptionsStack: StackNavigationOptions | any = {
 	headerTitleStyle: {
 		color: 'white',
 		fontFamily: fonts.bold,
+		fontSize: sizes.s18,
 	},
 };

@@ -1,10 +1,10 @@
 import { images } from 'assets';
 import { Screens } from 'common';
+import { screenOptionsStack } from 'common/nagivationOption';
 import { Buttons, Icon } from 'component';
-import { colors, Navigator, sizes, Style } from 'core/index';
+import { Navigator, Style, colors, sizes } from 'core/index';
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Device } from 'utils';
+import { StyleSheet, Text, View } from 'react-native';
 
 const DrawerContent = () => {
 	const DATA = [
@@ -44,6 +44,12 @@ const DrawerContent = () => {
 
 	return (
 		<View style={styles.container}>
+			<View style={{ height: sizes.s60, alignItems: 'center', justifyContent: 'center' }}>
+				<Text
+					style={[screenOptionsStack.headerTitleStyle, Style.txtCenter, { color: 'white' }]}>
+					Menu
+				</Text>
+			</View>
 			{DATA.map((item, index) => (
 				<Buttons
 					key={index}
@@ -74,7 +80,6 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		paddingHorizontal: sizes.s24,
-		backgroundColor: colors.background_black,
 	},
 	title: {
 		...Style.h4,

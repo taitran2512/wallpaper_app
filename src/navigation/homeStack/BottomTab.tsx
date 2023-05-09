@@ -34,6 +34,9 @@ const TabScreen = [
 		screen: Menu,
 		icon: images.ic_menu,
 		icon_selected: images.ic_menu_selected,
+		options: {
+			headerShown: false,
+		},
 	},
 ];
 
@@ -45,7 +48,11 @@ const BottomTab = ({ navigation }: TabScreenProps) => {
 				name={tab.name}
 				listeners={{
 					tabPress: () => {
-						navigation.setOptions({ title: tab.name });
+						navigation.setOptions({
+							title: tab.name,
+							headerShown: true,
+							...tab.options,
+						});
 					},
 				}}
 				options={{
