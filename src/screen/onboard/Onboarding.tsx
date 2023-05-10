@@ -1,12 +1,10 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import { images } from 'assets';
-import { Screens, Stacks } from 'common';
 import { WelcomArr } from 'common/data';
-import { Buttons, Flex } from 'component';
-import { Navigator, Style, colors, screenHeight, screenWidth, sizes } from 'core/index';
+import { Flex } from 'component';
+import { Navigator, Style, colors, screenHeight, screenWidth, sizes, strings } from 'core/index';
 import { ScreenProps } from 'model';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import {
 	NativeScrollEvent,
 	NativeSyntheticEvent,
@@ -20,23 +18,11 @@ import FastImage from 'react-native-fast-image';
 import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
 import LinearGradient from 'react-native-linear-gradient';
 import { Storage } from 'utils';
-import { keyBanner_onboarding, keyInterstitialSplash } from 'utils/GoogleAds';
+import { keyBanner_onboarding } from 'utils/GoogleAds';
 
-const Onboarding: React.FC<ScreenProps | any> = ({ route }) => {
-	const { openAds } = route?.params || {};
-
+const Onboarding: React.FC<ScreenProps | any> = () => {
 	const [idx, setIdx] = useState<number>(0);
 	const scrollRef = useRef<any>();
-
-	useEffect(() => {
-		if (!openAds) {
-			setTimeout(() => {
-				Navigator.navigate(Screens.GoogleInterstitialsAds, {
-					key: keyInterstitialSplash,
-				});
-			}, 500);
-		}
-	}, []);
 
 	const onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
 		const index = Math.round(e.nativeEvent.contentOffset.x / screenWidth);
@@ -46,12 +32,7 @@ const Onboarding: React.FC<ScreenProps | any> = ({ route }) => {
 	const onPressNext = () => {
 		const page = idx + 1;
 		if (page === WelcomArr.length) {
-			Navigator.replace(Stacks.HomeStack, {
-				screen: 'Language',
-				params: {
-					openAds,
-				},
-			});
+			Navigator.goHome();
 			Storage.setData(Storage.key.onboarding, 'true');
 		} else {
 			setIdx(page);
@@ -112,10 +93,12 @@ const Onboarding: React.FC<ScreenProps | any> = ({ route }) => {
 								paddingBottom: sizes.s24,
 							},
 						]}>
-						<View style={{ width: sizes.s16 * 2 }}></View>
+						<View style={{ width: sizes.s16 * 2 }} />
 						<View style={Style.row}>{renderDot()}</View>
 						<TouchableOpacity onPress={onPressNext}>
-							<Text style={[Style.txt16_white, Style.bold]}>Next</Text>
+							<Text style={[Style.txt16_white, Style.bold]}>
+								{idx === 2 ? strings.started : strings.next}
+							</Text>
 						</TouchableOpacity>
 					</View>
 

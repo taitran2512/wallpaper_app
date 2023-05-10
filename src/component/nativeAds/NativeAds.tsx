@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
-import { colors, screenWidth, sizes } from 'core/index';
+import { colors, sizes } from 'core/index';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, DeviceEventEmitter, StyleSheet, Text, View } from 'react-native';
 import NativeAdView, {
@@ -168,7 +168,7 @@ const NativeAds = ({ index, media = false, type = 'image', loadOnMount = true, k
 			onNativeAdLoaded={onNativeAdLoaded}
 			requestNonPersonalizedAdsOnly={true}
 			refreshInterval={60000 * 2}
-			adUnitID={'ca-app-pub-6548166688052880/8131685939'} // TEST adUnitID
+			// adUnitID={'ca-app-pub-6548166688052880/8131685939'} // TEST adUnitID
 			style={styles.container}
 			videoOptions={{
 				customControlsRequested: true,
@@ -250,6 +250,7 @@ const NativeAds = ({ index, media = false, type = 'image', loadOnMount = true, k
 						</View>
 					</View>
 				</View>
+				{/* <ImageView source={images.banner} style={{ width: 50, height: 50 }} /> */}
 				<CallToActionView
 					style={styles.btnAds}
 					buttonAndroidStyle={styles.buttonStyle}
@@ -264,16 +265,19 @@ const NativeAds = ({ index, media = false, type = 'image', loadOnMount = true, k
 export default React.memo(NativeAds);
 const styles = StyleSheet.create({
 	container: {
-		width: '100%',
-		backgroundColor: colors.white,
+		backgroundColor: '#D9D9D9',
+		marginHorizontal: sizes.s16,
+		marginBottom: sizes.s16,
+		borderRadius: sizes.s10,
+		borderWidth: 1,
 	},
 	logoAds: {
 		width: sizes.s60,
 		height: sizes.s60,
 	},
 	btnAds: {
-		width: screenWidth * 0.9,
-		height: sizes.s42,
+		width: 300,
+		height: sizes.s50,
 		marginBottom: sizes.s12,
 		paddingVertical: sizes.s12,
 		alignItems: 'center',
@@ -281,7 +285,7 @@ const styles = StyleSheet.create({
 
 	buttonStyle: {
 		borderRadius: sizes.s16,
-		backgroundColor: '#6EA1FC',
+		backgroundColor: colors.background_black,
 	},
 	txtBtnAds: {
 		fontSize: sizes.s16,

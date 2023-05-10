@@ -11,6 +11,8 @@ export const Screens: ScreensType<Keys> = {};
 
 export const Stacks = {
 	Splash: 'Splash',
+	LanguageSplash: 'LanguageSplash',
+	GoogleInterstitialsAdsSplash: 'GoogleInterstitialsAdsSplash',
 	Onboarding: 'Onboarding',
 	HomeStack: 'HomeStack',
 	Modals: 'Modals',

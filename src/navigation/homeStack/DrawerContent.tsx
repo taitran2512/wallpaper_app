@@ -1,43 +1,41 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable react-native/no-inline-styles */
 import { images } from 'assets';
 import { Screens } from 'common';
 import { screenOptionsStack } from 'common/nagivationOption';
 import { Buttons, Icon } from 'component';
-import { Navigator, Style, colors, sizes } from 'core/index';
+import { Navigator, Style, colors, sizes, strings } from 'core/index';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { canOpenUrl } from 'utils';
+import { urlPolicy, urlTermOfService } from 'utils/GoogleAds';
 
 const DrawerContent = () => {
 	const DATA = [
-		// {
-		// 	title: 'Home',
-		// 	icon: images.ic_home,
-		// },
 		{
-			title: 'Favourites',
+			title: strings.favorites,
 			icon: images.ic_like,
 			onPress: () => Navigator.navigate(Screens.Favorite),
 		},
 		{
-			title: 'More app',
+			title: strings.moreApp,
 			icon: images.ic_category,
 		},
 		{
-			title: 'Term and Conditions',
+			title: strings.tof,
 			icon: images.ic_term,
+			onPress: () => canOpenUrl(urlTermOfService, strings.tof),
 		},
 		{
-			title: 'Language',
+			title: strings.language,
 			icon: images.ic_language,
 			onPress: () => Navigator.navigate(Screens.Language),
 		},
 		{
-			title: 'Privacy',
+			title: strings.policy,
 			icon: images.ic_lock,
+			onPress: () => canOpenUrl(urlPolicy, strings.policy),
 		},
-		// {
-		// 	title: 'Rate us',
-		// 	icon: images.ic_rate,
-		// },
 	];
 
 	const renderBorderBottom = () => <View style={styles.border} />;

@@ -55,6 +55,12 @@ export const Style = StyleSheet.create({
 		fontFamily: fonts.bold,
 		color: colors.text,
 	},
+	h7: {
+		fontSize: sizes.s12,
+		lineHeight: sizes.s16,
+		fontFamily: fonts.bold,
+		color: colors.text,
+	},
 	txt12: {
 		fontSize: sizes.s12,
 		lineHeight: sizes.s16,

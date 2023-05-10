@@ -1,41 +1,55 @@
 // import { images } from 'assets';
 
 import { images } from 'assets';
+import { strings } from 'core/localization';
 
 export const WelcomArr = [
 	{
-		title: 'Extremely high quality wallpapers',
-		content: 'Various 4k resolution wallpapers for you to choose',
+		id: 0,
+		title: strings.titleOnboarding1,
+		content: strings.titleOnboarding1,
 	},
 	{
-		title: 'Daily new wallpapers',
-		content: 'Various 4k resolution wallpapers for you to choose',
+		id: 1,
+		title: strings.titleOnboarding2,
+		content: strings.descriptionOnboarding2,
 	},
 	{
-		title: 'Set for homescreen and lockscreen',
-		content: 'Various 4k resolution wallpapers for you to choose',
+		id: 3,
+		title: strings.titleOnboarding3,
+		content: strings.descriptionOnboarding3,
 	},
 ];
 export const Languages = [
 	{
 		id: 0,
-		lang: 'vi',
-		name: 'Tiếng Việt',
-	},
-	{
-		id: 1,
 		lang: 'en',
 		name: 'English',
 	},
 	{
+		id: 1,
+		lang: 'es',
+		name: 'Spanish',
+	},
+	{
 		id: 2,
-		lang: 'in',
-		name: 'Indian',
+		lang: 'pt',
+		name: 'Portuguese',
 	},
 	{
 		id: 3,
-		lang: 'korean',
-		name: 'Korean',
+		lang: 'hi',
+		name: 'Hindi',
+	},
+	{
+		id: 4,
+		lang: 'fr',
+		name: 'French',
+	},
+	{
+		id: 5,
+		lang: 'de',
+		name: 'German',
 	},
 ];
 export const categoryData = [

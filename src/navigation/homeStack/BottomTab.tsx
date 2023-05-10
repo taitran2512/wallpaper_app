@@ -1,37 +1,31 @@
 /* eslint-disable react/no-unstable-nested-components */
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { images } from 'assets';
-import { Navigator, Style, colors, fonts, sizes } from 'core';
+import { Navigator, Style, colors, fonts, sizes, strings } from 'core';
 import { TabScreenProps } from 'model';
 import React, { memo } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
-import { Category, Menu, Popular } from 'screen/home';
+import { Category, More, Popular } from 'screen/home';
 import { Device } from 'utils';
 
 const Tab = createBottomTabNavigator();
 
 const TabScreen = [
-	// {
-	// 	name: 'Home',
-	// 	screen: New,
-	// 	icon: images.ic_home,
-	// 	icon_selected: images.ic_home_selected,
-	// },
 	{
-		name: 'Popular',
+		name: strings.popular,
 		screen: Popular,
 		icon: images.ic_popular,
 		icon_selected: images.ic_popular_selected,
 	},
 	{
-		name: 'Category',
+		name: strings.category,
 		screen: Category,
 		icon: images.ic_category,
 		icon_selected: images.ic_category_selected,
 	},
 	{
-		name: 'Menu',
-		screen: Menu,
+		name: strings.more,
+		screen: More,
 		icon: images.ic_menu,
 		icon_selected: images.ic_menu_selected,
 		options: {

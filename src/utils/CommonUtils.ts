@@ -1,5 +1,5 @@
 import { throttle } from 'lodash';
-import { Alert, LayoutAnimation } from 'react-native';
+import { Alert, LayoutAnimation, Linking } from 'react-native';
 
 export const showAlert = (
 	message = 'Something went wrong, please try again later.',
@@ -42,3 +42,16 @@ export const layoutAnimation = throttle(() => {
 		)
 	);
 }, 1500);
+export const canOpenUrl = (url: string, name?: string) => {
+	try {
+		Linking.canOpenURL(url).then((canOpen) => {
+			if (canOpen) {
+				Linking.openURL(`${url}`);
+			} else {
+				Alert.alert('Error', `Can't open ${name}`);
+			}
+		});
+	} catch (error) {
+		Alert.alert('Error', `Can't open ${name}`);
+	}
+};

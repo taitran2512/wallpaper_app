@@ -23,6 +23,7 @@ const ModalConfirm: React.FC<Props> = forwardRef((props: Props, ref: any) => {
 		open: () => open(),
 		close: (callBack: () => void) => close(callBack),
 	}));
+
 	return (
 		<Modal
 			visible={show}

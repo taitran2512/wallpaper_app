@@ -13,17 +13,17 @@ import LinearGradient from 'react-native-linear-gradient';
 import { Device, Storage } from 'utils';
 import { keyNative_onboarding } from 'utils/GoogleAds';
 
-const Language: React.FC<ScreenProps | any> = ({ navigation }) => {
-	const [language, setLanguage] = useState<string>('');
+const LanguageSplash: React.FC<ScreenProps | any> = ({ navigation }) => {
+	const [language, setLanguage] = useState<string>(Languages?.[0].lang);
 
 	useEffect(() => {
 		navigation.setOptions({
 			headerShown: false,
 		});
 		Storage.getData(Storage.key.language).then((lang) => {
-			const appLanguage = lang || 'en';
-			strings.setLanguage(appLanguage || 'en');
-			setLanguage(appLanguage || 'en');
+			const appLanguage = lang || 'vi';
+			strings.setLanguage(appLanguage);
+			setLanguage(appLanguage);
 		});
 	}, []);
 
@@ -34,7 +34,7 @@ const Language: React.FC<ScreenProps | any> = ({ navigation }) => {
 	};
 
 	const onSetLang = () => {
-		Navigator.replace(Stacks.HomeStack);
+		Navigator.replace(Stacks.Onboarding);
 	};
 
 	return (
@@ -110,7 +110,7 @@ const Language: React.FC<ScreenProps | any> = ({ navigation }) => {
 	);
 };
 
-export default Language;
+export default LanguageSplash;
 
 const styles = StyleSheet.create({
 	background: {

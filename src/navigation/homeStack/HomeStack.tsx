@@ -1,9 +1,6 @@
-/* eslint-disable react/no-unstable-nested-components */
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { images } from 'assets';
 import { screenOptionsStack } from 'common/nagivationOption';
-import { NavigationButton } from 'component';
-import { colors, Navigator, sizes } from 'core';
+import { colors, Navigator } from 'core';
 import React, { memo, useCallback } from 'react';
 import { enableScreens } from 'react-native-screens';
 import SystemNavigationBar from 'react-native-system-navigation-bar';
@@ -38,13 +35,6 @@ const HomeStack: React.FC = () => {
 					...screenOptionsStack,
 					headerShown: true,
 					title: 'Popular',
-					// headerRight: () => (
-					// 	<NavigationButton
-					// 		icon={images.ic_search}
-					// 		tintColor="white"
-					// 		style={{ width: sizes.s20, height: sizes.s20 }}
-					// 	/>
-					// ),
 					headerTitleAlign: 'center',
 					headerShadowVisible: false,
 					headerStyle: {

@@ -4,7 +4,7 @@
 import { images } from 'assets';
 import { Screens } from 'common';
 import { ExampleScreen, Flex, Icon, ModalConfirm, SlideImage } from 'component';
-import { Navigator, Style, colors, screenHeight, sizes } from 'core/index';
+import { Navigator, Style, colors, screenHeight, sizes, strings } from 'core/index';
 import WallpaperManageModule from 'library/wallpaper/WallpaperManager';
 import { ScreenProps } from 'model';
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
@@ -20,7 +20,7 @@ import {
 	View,
 } from 'react-native';
 import { Device } from 'utils';
-import { keyInterstitialApply, keyInterstitialApplyHigh } from 'utils/GoogleAds';
+import { keyInterstitialApplyHigh } from 'utils/GoogleAds';
 
 const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 	const { data, index } = route?.params || {};
@@ -42,7 +42,7 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 	};
 
 	const onApplyWallpaper = () => {
-		Navigator.navigate(Screens.GoogleInterstitialsAds, { key: keyInterstitialApply });
+		// Navigator.navigate(Screens.GoogleInterstitialsAds, { key: keyInterstitialApply });
 		setType('');
 		modalRef.current.open();
 	};
@@ -123,7 +123,7 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 		return (
 			<View style={styles.viewGradientToast}>
 				<Image source={images.ic_success} style={Style.icon24} />
-				<Text style={styles.txtSuccess}>Success</Text>
+				<Text style={styles.txtSuccess}>{strings.success}</Text>
 			</View>
 		);
 	};
@@ -145,7 +145,7 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 						source={type === 'home' ? images.ic_home_selected : images.ic_home}
 						size={sizes.s24}
 					/>
-					<Text style={[Style.txt14_white, Style.top4]}>Homescreen</Text>
+					<Text style={[Style.txt14_white, Style.top4]}>{strings.homeScreen}</Text>
 				</TouchableOpacity>
 				<TouchableOpacity
 					style={styles.item}
@@ -155,11 +155,11 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 						source={type === 'lock' ? images.ic_lock_selected : images.ic_lock}
 						size={sizes.s24}
 					/>
-					<Text style={[Style.txt14_white, Style.top4]}>Lockscreen</Text>
+					<Text style={[Style.txt14_white, Style.top4, Style.ph10]}>{strings.lockscreen}</Text>
 				</TouchableOpacity>
 				<View style={styles.line} />
 				<TouchableOpacity style={styles.item} activeOpacity={0.8} onPress={onApplyWallpaper}>
-					<Text style={[Style.h6, { color: colors.white }]}>Apply</Text>
+					<Text style={[Style.h6, { color: colors.white }]}>{strings.apply}</Text>
 				</TouchableOpacity>
 			</View>
 		);
@@ -172,10 +172,7 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 			<ExampleScreen type={type} />
 			{showToast ? renderToastNotify() : null}
 			{renderButtonBottom()}
-			<ModalConfirm
-				ref={modalRef}
-				title="Do you want to use this wallpaper for which screen?"
-				content="">
+			<ModalConfirm ref={modalRef} title={strings.questionWallpaper} content="">
 				<View style={[Style.line, styles.line2]} />
 				<ItemOption
 					onPress={(type: string) => onHandleWallpaper(type)}
@@ -191,15 +188,15 @@ const ItemOption = ({ onPress, cancel }: any) => {
 	const options = [
 		{
 			type: 'both',
-			title: 'Both Homescreen & Lockscreen',
+			title: strings.option1,
 		},
 		{
 			type: 'home',
-			title: 'Set as Homescreen',
+			title: strings.option2,
 		},
 		{
 			type: 'lock',
-			title: 'Set as Lockscreen',
+			title: strings.option3,
 		},
 	];
 	const handlePress = (type: string) => {
@@ -217,7 +214,7 @@ const ItemOption = ({ onPress, cancel }: any) => {
 				</TouchableOpacity>
 			))}
 			<TouchableOpacity style={styles.itemOption} onPress={cancel}>
-				<Text style={styles.txtCancel}>Cancel</Text>
+				<Text style={styles.txtCancel}>{strings.cancel}</Text>
 			</TouchableOpacity>
 		</>
 	);

@@ -73,7 +73,6 @@ const styles = StyleSheet.create({
 	iconHeader: {
 		width: sizes.s24,
 		height: sizes.s24,
-		marginLeft: sizes.s16,
 	},
 	viewBanner: {
 		alignItems: 'center',

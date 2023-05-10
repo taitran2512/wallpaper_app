@@ -19,7 +19,7 @@ AdManager.setRequestConfiguration({
 // image test ad
 AdManager.registerRepository({
 	name: 'imageAd',
-	adUnitId: 'ca-app-pub-6548166688052880/8131685939',
+	adUnitId: 'ca-app-pub-3940256099942544/2247696110',
 	numOfAds: 3,
 	nonPersonalizedAdsOnly: false,
 	videoOptions: {

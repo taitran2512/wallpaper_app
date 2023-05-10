@@ -1,18 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Stacks } from 'common';
-import { Navigator, Style, colors, strings } from 'core/index';
+import { colors, Navigator, strings, Style } from 'core/index';
+import { ScreenProps } from 'model';
 import React, { useEffect, useRef } from 'react';
 import { ActivityIndicator, View } from 'react-native';
-import { AppOpenAd } from 'react-native-google-mobile-ads';
+import { useInterstitialAd } from 'react-native-google-mobile-ads';
 import { Storage } from 'utils';
-import { keyAdsOpenApp } from 'utils/GoogleAds';
+import { keyInterstitialSplash } from 'utils/GoogleAds';
 
-const Splash = () => {
-	const appOpenAd = AppOpenAd.createForAdRequest(keyAdsOpenApp, {
+const GoogleInterstitialsAds: React.FC<ScreenProps | any> = ({ navigation }) => {
+	const { isClosed, isLoaded, load, show } = useInterstitialAd(keyInterstitialSplash, {
 		requestNonPersonalizedAdsOnly: true,
-		keywords: [],
 	});
-
 	const onboardRef = useRef<any>(null);
 	Storage.getMultiData([Storage.key.language, Storage.key.onboarding]).then((data) => {
 		console.log(data, 'data');
@@ -21,32 +20,37 @@ const Splash = () => {
 		strings.setLanguage(appLanguage);
 		onboardRef.current = onboard;
 	});
-	appOpenAd.addAdEventsListener(({ type }) => {
-		console.log(type, 'type');
-		if (type === 'loaded') {
-			appOpenAd.show();
-			return;
+	const initScreen = () => {
+		navigation.setOptions({
+			headerShown: false,
+		});
+	};
+
+	useEffect(() => {
+		initScreen();
+	}, []);
+
+	useEffect(() => {
+		if (isLoaded) {
+			show();
 		}
-		if (type === 'closed') {
+	}, [isLoaded]);
+
+	useEffect(() => {
+		load();
+	}, [load]);
+
+	useEffect(() => {
+		if (isClosed) {
 			if (onboardRef.current) {
 				Navigator.goHome();
 			} else {
 				setTimeout(() => {
 					Navigator.replace(Stacks.LanguageSplash);
 				}, 500);
-				return;
 			}
-			return;
 		}
-		if (type === 'error') {
-			Navigator.replace(Stacks.GoogleInterstitialsAdsSplash);
-			return;
-		}
-	});
-
-	useEffect(() => {
-		appOpenAd.load();
-	}, []);
+	}, [isClosed]);
 
 	return (
 		<View style={[Style.flex, Style.column_center, { backgroundColor: colors.backgroundApp }]}>
@@ -54,4 +58,4 @@ const Splash = () => {
 		</View>
 	);
 };
-export default Splash;
+export default GoogleInterstitialsAds;
