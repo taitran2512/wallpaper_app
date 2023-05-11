@@ -10,31 +10,31 @@ import { Device } from 'utils';
 
 const Tab = createBottomTabNavigator();
 
-const TabScreen = [
-	{
-		name: strings.popular,
-		screen: Popular,
-		icon: images.ic_popular,
-		icon_selected: images.ic_popular_selected,
-	},
-	{
-		name: strings.category,
-		screen: Category,
-		icon: images.ic_category,
-		icon_selected: images.ic_category_selected,
-	},
-	{
-		name: strings.more,
-		screen: More,
-		icon: images.ic_menu,
-		icon_selected: images.ic_menu_selected,
-		options: {
-			headerShown: false,
-		},
-	},
-];
-
 const BottomTab = ({ navigation }: TabScreenProps) => {
+	const TabScreen = [
+		{
+			name: strings.popular,
+			screen: Popular,
+			icon: images.ic_popular,
+			icon_selected: images.ic_popular_selected,
+		},
+		{
+			name: strings.category,
+			screen: Category,
+			icon: images.ic_category,
+			icon_selected: images.ic_category_selected,
+		},
+		{
+			name: strings.more,
+			screen: More,
+			icon: images.ic_menu,
+			icon_selected: images.ic_menu_selected,
+			options: {
+				headerShown: false,
+			},
+		},
+	];
+
 	const renderTabScreen = () => {
 		return TabScreen.map((tab, index: number) => (
 			<Tab.Screen

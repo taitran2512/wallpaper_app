@@ -7,7 +7,7 @@ import { Buttons, Icon } from 'component';
 import { Navigator, Style, colors, sizes, strings } from 'core/index';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { canOpenUrl } from 'utils';
+import { Device, canOpenUrl } from 'utils';
 import { urlPolicy, urlTermOfService } from 'utils/GoogleAds';
 
 const DrawerContent = () => {
@@ -42,7 +42,13 @@ const DrawerContent = () => {
 
 	return (
 		<View style={styles.container}>
-			<View style={{ height: sizes.s60, alignItems: 'center', justifyContent: 'center' }}>
+			<View
+				style={{
+					height: sizes.s60,
+					alignItems: 'center',
+					justifyContent: 'center',
+					marginTop: Device.getStatusBarHeight(),
+				}}>
 				<Text
 					style={[screenOptionsStack.headerTitleStyle, Style.txtCenter, { color: 'white' }]}>
 					Menu

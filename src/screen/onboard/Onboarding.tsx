@@ -1,6 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
 import { images } from 'assets';
-import { WelcomArr } from 'common/data';
 import { Flex } from 'component';
 import { Navigator, Style, colors, screenHeight, screenWidth, sizes, strings } from 'core/index';
 import { ScreenProps } from 'model';
@@ -23,6 +22,23 @@ import { keyBanner_onboarding } from 'utils/GoogleAds';
 const Onboarding: React.FC<ScreenProps | any> = () => {
 	const [idx, setIdx] = useState<number>(0);
 	const scrollRef = useRef<any>();
+	const WelcomArr = [
+		{
+			id: 0,
+			title: strings.titleOnboarding1,
+			content: strings.titleOnboarding1,
+		},
+		{
+			id: 1,
+			title: strings.titleOnboarding2,
+			content: strings.descriptionOnboarding2,
+		},
+		{
+			id: 3,
+			title: strings.titleOnboarding3,
+			content: strings.descriptionOnboarding3,
+		},
+	];
 
 	const onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
 		const index = Math.round(e.nativeEvent.contentOffset.x / screenWidth);

@@ -1,25 +1,7 @@
 // import { images } from 'assets';
 
 import { images } from 'assets';
-import { strings } from 'core/localization';
 
-export const WelcomArr = [
-	{
-		id: 0,
-		title: strings.titleOnboarding1,
-		content: strings.titleOnboarding1,
-	},
-	{
-		id: 1,
-		title: strings.titleOnboarding2,
-		content: strings.descriptionOnboarding2,
-	},
-	{
-		id: 3,
-		title: strings.titleOnboarding3,
-		content: strings.descriptionOnboarding3,
-	},
-];
 export const Languages = [
 	{
 		id: 0,

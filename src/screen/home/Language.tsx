@@ -34,7 +34,7 @@ const Language: React.FC<ScreenProps | any> = ({ navigation }) => {
 	};
 
 	const onSetLang = () => {
-		Navigator.replace(Stacks.HomeStack);
+		Navigator.reset(Stacks.HomeStack);
 	};
 
 	return (
