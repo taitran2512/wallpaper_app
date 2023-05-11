@@ -204,6 +204,7 @@ export const Style = StyleSheet.create({
 	row: {
 		flexDirection: 'row',
 		alignItems: 'center',
+		flex: 1,
 	},
 	row_start: {
 		flexDirection: 'row',

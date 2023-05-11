@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
 	subtitle: {
 		alignSelf: 'center',
 		textAlign: 'center',
-		color: 'white',
+		color: colors.white,
 		fontSize: sizes.s13,
 	},
 	button: {
