@@ -254,7 +254,7 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		justifyContent: 'space-around',
 		alignItems: 'center',
-		paddingHorizontal: sizes.s24,
+		paddingHorizontal: sizes.s8,
 		paddingVertical: sizes.s16,
 		marginHorizontal: sizes.s16,
 		marginBottom: sizes.s35,
