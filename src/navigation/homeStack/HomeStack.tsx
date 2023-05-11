@@ -40,6 +40,7 @@ const HomeStack: React.FC = () => {
 					headerStyle: {
 						backgroundColor: colors.background_black,
 					},
+					animation: 'slide_from_right',
 				}}
 			/>
 			{renderStackScreen()}
