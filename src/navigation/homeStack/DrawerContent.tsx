@@ -38,8 +38,6 @@ const DrawerContent = () => {
 		},
 	];
 
-	const renderBorderBottom = () => <View style={styles.border} />;
-
 	return (
 		<View style={styles.container}>
 			<View
@@ -63,6 +61,7 @@ const DrawerContent = () => {
 							backgroundColor: 'rgba(255, 255, 255, 0.1)',
 							justifyContent: 'flex-start',
 							width: '100%',
+							flex: 0,
 						},
 						Style.ph16,
 						Style.top24,

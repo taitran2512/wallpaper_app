@@ -110,8 +110,8 @@ const Onboarding: React.FC<ScreenProps | any> = () => {
 							},
 						]}>
 						<View style={{ flex: 1 }} />
-						<View style={Style.row}>{renderDot()}</View>
-						<View style={{ flex: 1 }}>
+						<View style={Style.row_center}>{renderDot()}</View>
+						<View style={{ flex: 1, alignItems: 'flex-end' }}>
 							<TouchableOpacity onPress={onPressNext}>
 								<Text style={[Style.txt16_white, Style.bold]}>
 									{idx === 2 ? strings.started : strings.next}
