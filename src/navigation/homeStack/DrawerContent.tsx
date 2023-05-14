@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-native/no-inline-styles */
 import { images } from 'assets';
 import { Screens } from 'common';
@@ -9,6 +8,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Device, canOpenUrl } from 'utils';
 import { urlPolicy, urlTermOfService } from 'utils/GoogleAds';
+import { data } from '../../App';
 
 const DrawerContent = () => {
 	const DATA = [
@@ -24,7 +24,13 @@ const DrawerContent = () => {
 		{
 			title: strings.tof,
 			icon: images.ic_term,
-			onPress: () => canOpenUrl(urlTermOfService, strings.tof),
+			onPress: () => {
+				data.isShowAds = true;
+				canOpenUrl(urlTermOfService, strings.tof);
+				setTimeout(() => {
+					data.isShowAds = false;
+				}, 500);
+			},
 		},
 		{
 			title: strings.language,
@@ -34,7 +40,13 @@ const DrawerContent = () => {
 		{
 			title: strings.policy,
 			icon: images.ic_lock,
-			onPress: () => canOpenUrl(urlPolicy, strings.policy),
+			onPress: () => {
+				data.isShowAds = true;
+				canOpenUrl(urlPolicy, strings.policy);
+				setTimeout(() => {
+					data.isShowAds = false;
+				}, 500);
+			},
 		},
 	];
 

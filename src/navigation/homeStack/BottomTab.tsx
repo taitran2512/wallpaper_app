@@ -51,7 +51,7 @@ const BottomTab = ({ navigation }: TabScreenProps) => {
 				}}
 				options={{
 					...(Navigator.defaultOptions as any),
-					lazy: false,
+					lazy: true,
 					tabBarInactiveTintColor: colors.white,
 					tabBarActiveTintColor: colors.white,
 					tabBarStyle: {

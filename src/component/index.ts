@@ -1,3 +1,4 @@
+export { default as BannerAds } from './bannerAds/BannerAds';
 export { default as BottomSheet } from './bottomSheet/BottomSheet';
 export { default as BottomSheetSwipe } from './bottomSheet/BottomSheetSwipe';
 export { default as Buttons } from './button/Buttons';

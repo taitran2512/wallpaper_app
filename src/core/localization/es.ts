@@ -25,4 +25,5 @@ export const es = {
 	option3: 'Establecer como Pantalla de bloqueo',
 	cancel: 'Cancelar',
 	success: 'Éxito',
+	wallpaper: 'Fondos de pantalla',
 };

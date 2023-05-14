@@ -25,4 +25,5 @@ export const fr = {
 	option3: 'Définir comme écran de verrouillage',
 	cancel: 'Annuler',
 	success: 'Succès',
+	wallpaper: 'Papiers peints',
 };

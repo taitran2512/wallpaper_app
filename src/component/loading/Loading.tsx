@@ -73,7 +73,7 @@ export default class Loading extends PureComponent<Props, States> {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: colors.bgTransparent,
+		backgroundColor: colors.background_black,
 		justifyContent: 'center',
 		alignItems: 'center',
 	},

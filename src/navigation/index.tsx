@@ -25,8 +25,8 @@ const screenOptionsNativeStack: NativeStackNavigationOptions = {
 	headerShown: false,
 	customAnimationOnGesture: true,
 	fullScreenGestureEnabled: true,
-	gestureEnabled: true,
-	animationTypeForReplace: 'push',
+	gestureEnabled: false,
+	animationTypeForReplace: 'pop',
 	animation: 'slide_from_right',
 	presentation: Platform.OS === 'android' ? 'modal' : undefined,
 };
@@ -36,7 +36,19 @@ const AppStack: React.FC = () => {
 	Device.setDeviceInset(insets);
 
 	return (
-		<NavigationContainer ref={(ref) => Navigator.setNavigationRef(ref)}>
+		<NavigationContainer
+			ref={(ref) => Navigator.setNavigationRef(ref)}
+			theme={{
+				dark: false,
+				colors: {
+					background: 'transparent',
+					primary: '',
+					card: '',
+					text: '',
+					border: '',
+					notification: '',
+				},
+			}}>
 			<Stack.Navigator screenOptions={screenOptionsNativeStack}>
 				<Stack.Screen name={Stacks.Splash} component={Splash} />
 				<Stack.Screen name={Stacks.LanguageSplash} component={LanguageSplash} />
@@ -60,9 +72,9 @@ const AppStack: React.FC = () => {
 					name={Stacks.Dialog}
 					component={Dialog}
 					options={{
-						animation: 'slide_from_bottom',
+						animation: 'slide_from_right',
 						gestureEnabled: false,
-						animationDuration: 400,
+						animationDuration: 500,
 						...(Navigator.defaultOptions as any),
 						headerTitleStyle: Style.h6,
 						headerLeft: () => (

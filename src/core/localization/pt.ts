@@ -8,7 +8,7 @@ export const pt = {
 		'Fácil de definir seu papel de parede favorito tanto na tela inicial quanto na tela de bloqueio',
 	next: 'Próximo',
 	started: 'Começar',
-	language: 'Idioma',
+	language: 'Linguagem',
 	popular: 'Popular',
 	category: 'Categoria',
 	favorites: 'Favoritos',
@@ -25,4 +25,5 @@ export const pt = {
 	option3: 'Definir como Tela de bloqueio',
 	cancel: 'Cancelar',
 	success: 'Sucesso',
+	wallpaper: 'Papéis de parede',
 };

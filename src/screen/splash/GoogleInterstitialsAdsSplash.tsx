@@ -9,7 +9,7 @@ import { Storage } from 'utils';
 import { keyInterstitialSplash } from 'utils/GoogleAds';
 
 const GoogleInterstitialsAds: React.FC<ScreenProps | any> = ({ navigation }) => {
-	const { isClosed, isLoaded, load, show } = useInterstitialAd(keyInterstitialSplash, {
+	const { isClosed, isLoaded, load, show, error } = useInterstitialAd(keyInterstitialSplash, {
 		requestNonPersonalizedAdsOnly: true,
 	});
 	const onboardRef = useRef<any>(null);
@@ -51,6 +51,12 @@ const GoogleInterstitialsAds: React.FC<ScreenProps | any> = ({ navigation }) => 
 			}
 		}
 	}, [isClosed]);
+
+	useEffect(() => {
+		if (error) {
+			Navigator.goHome();
+		}
+	}, [error]);
 
 	return (
 		<View style={[Style.flex, Style.column_center, { backgroundColor: colors.backgroundApp }]}>

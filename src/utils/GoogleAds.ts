@@ -9,6 +9,10 @@ export const keyBanner_category: string | any = TestIds.BANNER;
 export const keyInterstitialSplash: string | any = TestIds.INTERSTITIAL;
 export const keyInterstitialApplyHigh: string | any = TestIds.INTERSTITIAL;
 export const keyInterstitialApply: string | any = TestIds.INTERSTITIAL;
+export const keyInterstitialOpenImageHigh: string = TestIds.INTERSTITIAL;
+export const keyInterstitialOpenImage: string = TestIds.INTERSTITIAL;
+export const keyInterstitialOpenCateHigh: string = TestIds.INTERSTITIAL;
+export const keyInterstitialOpenCate: string = TestIds.INTERSTITIAL;
 export const keyOnAppResume: string | any = TestIds.APP_OPEN;
 
 /// Key PRODUCTION
@@ -20,6 +24,10 @@ export const keyOnAppResume: string | any = TestIds.APP_OPEN;
 // export const keyInterstitialSplash = 'ca-app-pub-6548166688052880/9444767609';
 // export const keyInterstitialApplyHigh = 'ca-app-pub-6548166688052880/5999280959';
 // export const keyInterstitialApply = 'ca-app-pub-6548166688052880/1021699710';
+// export const keyInterstitialOpenImageHigh: string = 'ca-app-pub-6548166688052880/1368359669';
+// export const keyInterstitialOpenImage: string = 'ca-app-pub-6548166688052880/3994523008';
+// export const keyInterstitialOpenCateHigh: string = 'ca-app-pub-6548166688052880/9598999633';
+// export const keyInterstitialOpenCate: string = 'ca-app-pub-6548166688052880/5738849518';
 // export const keyOnAppResume = 'ca-app-pub-6548166688052880/5721145011';
 
 // LINK WEB

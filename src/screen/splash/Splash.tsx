@@ -29,7 +29,9 @@ const Splash = () => {
 		}
 		if (type === 'closed') {
 			if (onboardRef.current) {
-				Navigator.goHome();
+				setTimeout(() => {
+					Navigator.goHome();
+				}, 500);
 			} else {
 				setTimeout(() => {
 					Navigator.replace(Stacks.LanguageSplash);

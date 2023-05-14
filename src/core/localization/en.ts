@@ -24,4 +24,5 @@ export const en = {
 	option3: 'Set as Lockscreen',
 	cancel: 'Cancel',
 	success: 'Success',
+	wallpaper: 'Wallpapers',
 };

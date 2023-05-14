@@ -3,8 +3,9 @@ import { images } from 'assets';
 import { Flex } from 'component';
 import { Navigator, Style, colors, screenHeight, screenWidth, sizes, strings } from 'core/index';
 import { ScreenProps } from 'model';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
+	ActivityIndicator,
 	NativeScrollEvent,
 	NativeSyntheticEvent,
 	ScrollView,
@@ -21,6 +22,7 @@ import { keyBanner_onboarding } from 'utils/GoogleAds';
 
 const Onboarding: React.FC<ScreenProps | any> = () => {
 	const [idx, setIdx] = useState<number>(0);
+	const [loading, setLoading] = useState<boolean>(true);
 	const scrollRef = useRef<any>();
 	const WelcomArr = [
 		{
@@ -73,7 +75,11 @@ const Onboarding: React.FC<ScreenProps | any> = () => {
 			/>
 		));
 	};
-
+	useEffect(() => {
+		setTimeout(() => {
+			setLoading(false);
+		}, 1500);
+	}, []);
 	return (
 		<Flex style={styles.container}>
 			<FastImage
@@ -121,19 +127,23 @@ const Onboarding: React.FC<ScreenProps | any> = () => {
 					</View>
 
 					<View style={styles.viewBanner}>
-						<BannerAd
-							unitId={keyBanner_onboarding}
-							size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-							requestOptions={{
-								requestNonPersonalizedAdsOnly: true,
-							}}
-							onAdLoaded={() => {
-								console.log('Advert loaded');
-							}}
-							onAdFailedToLoad={(error) => {
-								console.error('Advert failed to load: ', error);
-							}}
-						/>
+						{loading ? (
+							<ActivityIndicator color={colors.blue} size="large" />
+						) : (
+							<BannerAd
+								unitId={keyBanner_onboarding}
+								size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+								requestOptions={{
+									requestNonPersonalizedAdsOnly: true,
+								}}
+								onAdLoaded={() => {
+									console.log('Advert loaded');
+								}}
+								onAdFailedToLoad={(error) => {
+									console.error('Advert failed to load: ', error);
+								}}
+							/>
+						)}
 					</View>
 				</View>
 			</LinearGradient>

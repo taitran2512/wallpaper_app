@@ -21,7 +21,7 @@ const LanguageSplash: React.FC<ScreenProps | any> = ({ navigation }) => {
 			headerShown: false,
 		});
 		Storage.getData(Storage.key.language).then((lang) => {
-			const appLanguage = lang || 'vi';
+			const appLanguage = lang || Languages?.[0]?.lang;
 			strings.setLanguage(appLanguage);
 			setLanguage(appLanguage);
 		});

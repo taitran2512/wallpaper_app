@@ -25,4 +25,5 @@ export const de = {
 	option3: 'Als Sperrbildschirm festlegen',
 	cancel: 'Abbrechen',
 	success: 'Erfolgreich',
+	wallpaper: 'Hintergrundbilder',
 };

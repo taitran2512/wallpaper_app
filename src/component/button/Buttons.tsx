@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import { BlurView } from '@react-native-community/blur';
 import { colors, sizes } from 'core/index';
-import React from 'react';
+import React, { memo } from 'react';
 import { StyleProp, StyleSheet, Text, TouchableOpacity, ViewStyle } from 'react-native';
 
 interface Props {
@@ -31,7 +31,7 @@ const Buttons: React.FC<Props> = ({ title, onPress, children, blurStyle, style }
 					blurStyle,
 				]}
 				blurType="light"
-				blurAmount={20}
+				blurAmount={10}
 				blurRadius={20}
 				overlayColor="transparent"
 			/>
@@ -40,7 +40,7 @@ const Buttons: React.FC<Props> = ({ title, onPress, children, blurStyle, style }
 	);
 };
 
-export default Buttons;
+export default memo(Buttons);
 
 const styles = StyleSheet.create({
 	container: {

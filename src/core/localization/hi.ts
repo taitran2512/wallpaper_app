@@ -25,4 +25,5 @@ export const hi = {
 	option3: 'लॉकस्क्रीन के रूप में सेट करें',
 	cancel: 'रद्द करें',
 	success: 'सफलता',
+	wallpaper: 'वॉलपेपर',
 };

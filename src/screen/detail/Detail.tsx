@@ -20,7 +20,7 @@ import {
 	View,
 } from 'react-native';
 import { Device } from 'utils';
-import { keyInterstitialApplyHigh } from 'utils/GoogleAds';
+import { keyInterstitialApply, keyInterstitialApplyHigh } from 'utils/GoogleAds';
 
 const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 	const { data, index } = route?.params || {};
@@ -42,7 +42,6 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 	};
 
 	const onApplyWallpaper = () => {
-		// Navigator.navigate(Screens.GoogleInterstitialsAds, { key: keyInterstitialApply });
 		setType('');
 		modalRef.current.open();
 	};
@@ -65,6 +64,8 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 				setShowToast(false);
 				Navigator.navigate(Screens.GoogleInterstitialsAds, {
 					key: keyInterstitialApplyHigh,
+					key2: keyInterstitialApply,
+					type: 'apply_high',
 				});
 			}, 1000);
 		}
