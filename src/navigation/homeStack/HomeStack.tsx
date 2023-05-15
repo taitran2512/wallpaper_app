@@ -6,6 +6,7 @@ import { enableScreens } from 'react-native-screens';
 import SystemNavigationBar from 'react-native-system-navigation-bar';
 import * as HomeScreen from 'screen/home';
 import BottomTab from './BottomTab';
+import { Platform } from 'react-native';
 
 enableScreens();
 const Stack = createNativeStackNavigator();
@@ -27,7 +28,15 @@ const HomeStack: React.FC = () => {
 	}, []);
 
 	return (
-		<Stack.Navigator>
+		<Stack.Navigator
+			screenOptions={{
+				customAnimationOnGesture: true,
+				fullScreenGestureEnabled: true,
+				gestureEnabled: true,
+				animationTypeForReplace: 'push',
+				animation: 'slide_from_right',
+				presentation: Platform.OS === 'android' ? 'modal' : undefined,
+			}}>
 			<Stack.Screen
 				name={'HomeTab'}
 				component={BottomTab}
