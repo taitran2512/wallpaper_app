@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unstable-nested-components */
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { images } from 'assets';
-import { Navigator, Style, colors, fonts, sizes, strings } from 'core';
+import { Navigator, Style, colors, fonts, screenHeight, screenWidth, sizes, strings } from 'core';
 import { TabScreenProps } from 'model';
 import React, { memo, useEffect, useState } from 'react';
 import { ActivityIndicator, Image, StyleSheet, Text, View } from 'react-native';
@@ -99,9 +99,11 @@ const BottomTab = ({ navigation }: TabScreenProps) => {
 		};
 	}, []);
 	return (
-		<View>
+		<View style={{ flex: 1 }}>
 			<Tab.Navigator>{renderTabScreen()}</Tab.Navigator>
-			<View style={styles.viewBanner}>
+			<View
+				style={styles.viewBanner}
+				onLayout={(e) => console.log(e.nativeEvent.layout, screenHeight, screenWidth)}>
 				{loading ? (
 					<ActivityIndicator color={colors.blue} size="large" />
 				) : (
@@ -136,5 +138,7 @@ const styles = StyleSheet.create({
 	},
 	viewBanner: {
 		alignItems: 'center',
+		justifyContent: 'center',
+		height: screenHeight / 14.285,
 	},
 });

@@ -4,23 +4,10 @@ import { categoryData } from 'common/data';
 import { Flex } from 'component';
 import { Navigator, colors, sizes } from 'core/index';
 import React, { memo, useEffect, useState } from 'react';
-import {
-	ActivityIndicator,
-	FlatList,
-	ImageBackground,
-	StyleSheet,
-	Text,
-	TouchableOpacity,
-	View,
-} from 'react-native';
-import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
+import { FlatList, ImageBackground, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { countCategory } from 'selector/appSelector';
-import {
-	keyBanner_category,
-	keyInterstitialOpenCate,
-	keyInterstitialOpenCateHigh,
-} from 'utils/GoogleAds';
+import { keyInterstitialOpenCate, keyInterstitialOpenCateHigh } from 'utils/GoogleAds';
 
 const Category = () => {
 	const [loading, setLoading] = useState<boolean>(true);
@@ -72,7 +59,7 @@ const Category = () => {
 				showsVerticalScrollIndicator={false}
 				keyExtractor={(e, index) => String(e?.id || index)}
 			/>
-			<View style={styles.viewBanner}>
+			{/* <View style={styles.viewBanner}>
 				{loading ? (
 					<ActivityIndicator color={colors.blue} size="large" />
 				) : (
@@ -88,7 +75,7 @@ const Category = () => {
 						}}
 					/>
 				)}
-			</View>
+			</View> */}
 		</Flex>
 	);
 };
