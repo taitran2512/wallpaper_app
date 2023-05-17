@@ -128,6 +128,6 @@ const styles = StyleSheet.create({
 		fontFamily: fonts.medium,
 	},
 	viewBanner: {
-		height: screenHeight / 14.285,
+		height: screenHeight / 14.2,
 	},
 });
