@@ -17,3 +17,4 @@ export { default as NavigationBackButton } from './navigation/NavigationBackButt
 export { default as NavigationButton } from './navigation/NavigationButton';
 export { default as StackComponent } from './navigation/StackComponent';
 export { default as ToastDebug } from './toast/ToastDebug';
+export { default as Skeleton } from './skeleton/Skeleton';
