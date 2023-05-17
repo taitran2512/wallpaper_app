@@ -3,10 +3,12 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { images } from 'assets';
 import { Navigator, Style, colors, fonts, sizes, strings } from 'core';
 import { TabScreenProps } from 'model';
-import React, { memo } from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import React, { memo, useEffect, useState } from 'react';
+import { ActivityIndicator, Image, StyleSheet, Text, View } from 'react-native';
+import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
 import { Category, More, Popular } from 'screen/home';
 import { Device } from 'utils';
+import { keyBanner_category } from 'utils/GoogleAds';
 
 const Tab = createBottomTabNavigator();
 
@@ -87,8 +89,37 @@ const BottomTab = ({ navigation }: TabScreenProps) => {
 			/>
 		));
 	};
-
-	return <Tab.Navigator>{renderTabScreen()}</Tab.Navigator>;
+	const [loading, setLoading] = useState<boolean>(true);
+	useEffect(() => {
+		const timeOut = setTimeout(() => {
+			setLoading(false);
+		}, 1500);
+		return () => {
+			clearTimeout(timeOut);
+		};
+	}, []);
+	return (
+		<View>
+			<Tab.Navigator>{renderTabScreen()}</Tab.Navigator>
+			<View style={styles.viewBanner}>
+				{loading ? (
+					<ActivityIndicator color={colors.blue} size="large" />
+				) : (
+					<BannerAd
+						unitId={keyBanner_category}
+						size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+						requestOptions={{
+							requestNonPersonalizedAdsOnly: true,
+						}}
+						onAdLoaded={(e) => console.log(e)}
+						onAdFailedToLoad={(error) => {
+							console.error('Advert failed to load: ', error);
+						}}
+					/>
+				)}
+			</View>
+		</View>
+	);
 };
 
 export default memo(BottomTab);
@@ -102,5 +133,8 @@ const styles = StyleSheet.create({
 		fontSize: sizes.s12,
 		color: colors.white,
 		fontFamily: fonts.medium,
+	},
+	viewBanner: {
+		alignItems: 'center',
 	},
 });
