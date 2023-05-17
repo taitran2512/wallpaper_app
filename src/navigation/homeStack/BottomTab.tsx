@@ -95,9 +95,7 @@ const BottomTab = ({ navigation }: TabScreenProps) => {
 	return (
 		<View style={{ flex: 1 }}>
 			<Tab.Navigator>{renderTabScreen()}</Tab.Navigator>
-			<View
-				style={styles.viewBanner}
-				onLayout={(e) => console.log(e.nativeEvent.layout, screenHeight, screenWidth)}>
+			<View style={styles.viewBanner}>
 				{loading && <Skeleton style={StyleSheet.absoluteFill} />}
 				<BannerAd
 					unitId={keyBanner_category}
