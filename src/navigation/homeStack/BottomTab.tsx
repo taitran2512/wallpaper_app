@@ -38,23 +38,19 @@ const BottomTab = ({ navigation }: TabScreenProps) => {
 		},
 	];
 
+	useEffect(() => {
+		navigation.setOptions({
+			headerShown: false,
+		});
+	}, []);
+
 	const renderTabScreen = () => {
 		return TabScreen.map((tab, index: number) => (
 			<Tab.Screen
 				key={String(index)}
 				name={tab.name}
-				listeners={{
-					tabPress: () => {
-						navigation.setOptions({
-							title: tab.name,
-							headerShown: true,
-							...tab.options,
-						});
-					},
-				}}
 				options={{
 					...(Navigator.defaultOptions as any),
-					lazy: true,
 					tabBarInactiveTintColor: colors.white,
 					tabBarActiveTintColor: colors.white,
 					tabBarStyle: {

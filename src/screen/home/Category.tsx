@@ -1,27 +1,39 @@
 import { incrementCategoryAction } from 'action/appAction';
+import WallpaperApi from 'api/WallpaperApi';
 import { Screens } from 'common';
 import { categoryData } from 'common/data';
 import { Flex } from 'component';
-import { Navigator, colors, sizes } from 'core/index';
+import { Navigator, colors, fonts, sizes } from 'core/index';
+import { TabScreenProps } from 'model';
 import React, { memo, useEffect, useState } from 'react';
 import { FlatList, ImageBackground, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { countCategory } from 'selector/appSelector';
 import { keyInterstitialOpenCate, keyInterstitialOpenCateHigh } from 'utils/GoogleAds';
 
-const Category = () => {
-	const [loading, setLoading] = useState<boolean>(true);
+const Category = ({ navigation }: TabScreenProps) => {
 	const count = useSelector(countCategory);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		const timeOut = setTimeout(() => {
-			setLoading(false);
-		}, 1500);
-		return () => {
-			clearTimeout(timeOut);
-		};
+		getCategoryData();
+		navigation.setOptions({
+			headerShown: true,
+			title: 'Category',
+			headerLeft: undefined,
+			headerTitleStyle: {
+				color: 'white',
+				fontFamily: fonts.bold,
+				fontSize: sizes.s18,
+			},
+		});
 	}, []);
+
+	const getCategoryData = async () => {
+		try {
+			const reponse = await WallpaperApi.getCategory();
+		} catch (error) {}
+	};
 
 	const detailCategory = (item: any) => {
 		dispatch(incrementCategoryAction());
@@ -59,23 +71,6 @@ const Category = () => {
 				showsVerticalScrollIndicator={false}
 				keyExtractor={(e, index) => String(e?.id || index)}
 			/>
-			{/* <View style={styles.viewBanner}>
-				{loading ? (
-					<ActivityIndicator color={colors.blue} size="large" />
-				) : (
-					<BannerAd
-						unitId={keyBanner_category}
-						size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-						requestOptions={{
-							requestNonPersonalizedAdsOnly: true,
-						}}
-						onAdLoaded={(e) => console.log(e)}
-						onAdFailedToLoad={(error) => {
-							console.error('Advert failed to load: ', error);
-						}}
-					/>
-				)}
-			</View> */}
 		</Flex>
 	);
 };

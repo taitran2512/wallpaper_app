@@ -2,7 +2,7 @@ import { StackNavigationOptions, TransitionPresets } from '@react-navigation/sta
 import { colors, fonts, sizes } from 'core';
 import { Device } from 'utils';
 
-export const defaultHeaderHeight = Device.setHeaderHeight(sizes.s60);
+export const defaultHeaderHeight = Device.setHeaderHeight(sizes.s40);
 
 export const headerDefaultOptions: any = {
 	headerStyle: {
@@ -10,7 +10,6 @@ export const headerDefaultOptions: any = {
 		elevation: 0, // remove shadow on Android
 		shadowOpacity: 0, // remove shadow on iOS
 		backgroundColor: colors.background_black,
-		padding: 20,
 	},
 };
 

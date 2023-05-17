@@ -1,46 +1,25 @@
 import { dataDetailCategory } from 'common/data';
 import { GridImageView } from 'component';
-import { colors } from 'core/index';
-import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, StyleSheet, View } from 'react-native';
-import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
-import { keyBanner_home } from 'utils/GoogleAds';
+import { colors, fonts, sizes } from 'core/index';
+import { TabScreenProps } from 'model';
+import React, { useEffect } from 'react';
+import { StyleSheet } from 'react-native';
 
-const Popular = () => {
-	const [loading, setLoading] = useState<boolean>(true);
-
+const Popular = ({ navigation }: TabScreenProps) => {
 	useEffect(() => {
-		const timeOut = setTimeout(() => {
-			setLoading(false);
-		}, 1500);
-		return () => {
-			clearTimeout(timeOut);
-		};
+		navigation.setOptions({
+			headerShown: true,
+			title: 'Popular',
+			headerLeft: undefined,
+			headerTitleStyle: {
+				color: 'white',
+				fontFamily: fonts.bold,
+				fontSize: sizes.s18,
+			},
+		});
 	}, []);
-	return (
-		<>
-			<GridImageView data={dataDetailCategory} />
-			<View style={styles.viewBanner}>
-				{loading ? (
-					<ActivityIndicator color={colors.blue} size="large" />
-				) : (
-					<BannerAd
-						unitId={keyBanner_home}
-						size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-						requestOptions={{
-							requestNonPersonalizedAdsOnly: true,
-						}}
-						onAdLoaded={() => {
-							console.log('Advert loaded');
-						}}
-						onAdFailedToLoad={(error) => {
-							console.error('Advert failed to load: ', error);
-						}}
-					/>
-				)}
-			</View>
-		</>
-	);
+
+	return <GridImageView data={dataDetailCategory} />;
 };
 
 export default Popular;

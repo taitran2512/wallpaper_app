@@ -7,26 +7,7 @@ import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
 import { keyBanner_home } from 'utils/GoogleAds';
 
 const New = () => {
-	return (
-		<>
-			<GridImageView data={dataDetailCategory} />
-			<View style={styles.viewBanner}>
-				<BannerAd
-					unitId={keyBanner_home}
-					size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-					requestOptions={{
-						requestNonPersonalizedAdsOnly: true,
-					}}
-					onAdLoaded={() => {
-						console.log('Advert loaded');
-					}}
-					onAdFailedToLoad={(error) => {
-						console.error('Advert failed to load: ', error);
-					}}
-				/>
-			</View>
-		</>
-	);
+	return <GridImageView data={dataDetailCategory} />;
 };
 
 export default New;
