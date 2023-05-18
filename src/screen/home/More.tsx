@@ -1,8 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { images } from 'assets';
-import { Style, screenHeight, screenWidth } from 'core/index';
+import { screenHeight, screenWidth, Style } from 'core/index';
 import { TabScreenProps } from 'model';
 import DrawerContent from 'navigation/homeStack/DrawerContent';
-import React, { useEffect, useLayoutEffect } from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 

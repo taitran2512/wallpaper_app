@@ -2,11 +2,11 @@
 import { images } from 'assets';
 import { Screens } from 'common';
 import { screenOptionsStack } from 'common/nagivationOption';
-import { Buttons, Icon } from 'component';
-import { Navigator, Style, colors, sizes, strings } from 'core/index';
+import { Icon } from 'component';
+import { colors, Navigator, sizes, strings, Style } from 'core/index';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { Device, canOpenUrl } from 'utils';
+import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { canOpenUrl, Device } from 'utils';
 import { urlPolicy, urlTermOfService } from 'utils/GoogleAds';
 import { data } from '../../App';
 
@@ -17,10 +17,7 @@ const DrawerContent = () => {
 			icon: images.ic_like,
 			onPress: () => Navigator.navigate(Screens.Favorite),
 		},
-		{
-			title: strings.moreApp,
-			icon: images.ic_category,
-		},
+
 		{
 			title: strings.tof,
 			icon: images.ic_term,
@@ -54,7 +51,7 @@ const DrawerContent = () => {
 		<View style={styles.container}>
 			<View
 				style={{
-					height: sizes.s60,
+					height: sizes.s45,
 					alignItems: 'center',
 					justifyContent: 'center',
 					marginTop: Device.getStatusBarHeight(),
@@ -65,25 +62,21 @@ const DrawerContent = () => {
 				</Text>
 			</View>
 			{DATA.map((item, index) => (
-				<Buttons
+				<TouchableOpacity
+					activeOpacity={0.8}
 					key={index}
-					style={[
-						Style.row,
-						{
-							backgroundColor: 'rgba(255, 255, 255, 0.1)',
-							justifyContent: 'flex-start',
-							width: '100%',
-							flex: 0,
-						},
-						Style.ph16,
-						Style.top24,
-					]}
+					style={[Style.ph16, Style.top16]}
 					onPress={() => {
 						item.onPress?.();
 					}}>
-					<Icon source={item.icon} size={sizes.s24} style={Style.right16} />
-					<Text style={styles.subtitle}>{item.title}</Text>
-				</Buttons>
+					<ImageBackground
+						source={images.bg_button}
+						style={[styles.button]}
+						resizeMode="stretch">
+						<Icon source={item.icon} size={sizes.s24} style={[Style.right16, Style.left16]} />
+						<Text style={styles.subtitle}>{item.title}</Text>
+					</ImageBackground>
+				</TouchableOpacity>
 			))}
 		</View>
 	);
@@ -94,8 +87,9 @@ export default DrawerContent;
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		paddingHorizontal: sizes.s24,
+		paddingHorizontal: sizes.s16,
 	},
+
 	title: {
 		...Style.h4,
 		marginTop: sizes.s8,
@@ -109,10 +103,10 @@ const styles = StyleSheet.create({
 		fontSize: sizes.s13,
 	},
 	button: {
-		backgroundColor: '#F8C100',
-		paddingVertical: sizes.s5,
-		borderRadius: sizes.s8,
-		marginTop: sizes.s8,
+		...Style.row,
+		height: sizes.s50,
+		flex: 0,
+		marginHorizontal: -16,
 	},
 	border: {
 		backgroundColor: colors.white,

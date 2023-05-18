@@ -1,11 +1,12 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/no-unstable-nested-components */
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { images } from 'assets';
 import { Skeleton } from 'component';
-import { Navigator, Style, colors, fonts, screenHeight, screenWidth, sizes, strings } from 'core';
+import { colors, fonts, Navigator, screenHeight, sizes, strings, Style } from 'core';
 import { TabScreenProps } from 'model';
 import React, { memo, useEffect, useState } from 'react';
-import { ActivityIndicator, Image, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
 import { Category, More, Popular } from 'screen/home';
 import { Device } from 'utils';
@@ -30,8 +31,8 @@ const BottomTab = ({ navigation }: TabScreenProps) => {
 		{
 			name: strings.more,
 			screen: More,
-			icon: images.ic_menu,
-			icon_selected: images.ic_menu_selected,
+			icon: images.ic_more,
+			icon_selected: images.ic_more_selected,
 			options: {
 				headerShown: false,
 			},
@@ -89,7 +90,7 @@ const BottomTab = ({ navigation }: TabScreenProps) => {
 	const [loading, setLoading] = useState<boolean>(true);
 
 	return (
-		<View style={{ flex: 1 }}>
+		<View style={styles.container}>
 			<Tab.Navigator>{renderTabScreen()}</Tab.Navigator>
 			<View style={styles.viewBanner}>
 				{loading && <Skeleton style={StyleSheet.absoluteFill} />}
@@ -99,7 +100,11 @@ const BottomTab = ({ navigation }: TabScreenProps) => {
 					requestOptions={{
 						requestNonPersonalizedAdsOnly: true,
 					}}
-					onAdLoaded={(e) => setLoading(false)}
+					onAdLoaded={(e: any) => {
+						if (e) {
+							setLoading(false);
+						}
+					}}
 					onAdFailedToLoad={(error) => {
 						console.error('Advert failed to load: ', error);
 					}}
@@ -111,6 +116,9 @@ const BottomTab = ({ navigation }: TabScreenProps) => {
 
 export default memo(BottomTab);
 const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+	},
 	txtFocus: {
 		fontSize: sizes.s12,
 		fontFamily: fonts.bold,

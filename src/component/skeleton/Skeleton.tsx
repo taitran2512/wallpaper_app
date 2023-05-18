@@ -1,6 +1,8 @@
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable react-hooks/exhaustive-deps */
 import { colors, screenWidth } from 'core/index';
 import React, { useEffect, useState } from 'react';
-import { View, ActivityIndicator, Animated, StyleSheet } from 'react-native';
+import { Animated, StyleSheet, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -49,7 +51,8 @@ const SkeletonView = ({ style }: any) => {
 						'rgba(0, 0, 0, 0.3)',
 					]}
 					start={{ x: 0, y: 0 }}
-					end={{ x: 1, y: 0 }}></LinearGradient>
+					end={{ x: 1, y: 0 }}
+				/>
 			</Animated.View>
 		</View>
 	);

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "242864672483",
+    "project_id": "apero-sg-wallpaper-4k",
+    "storage_bucket": "apero-sg-wallpaper-4k.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:242864672483:android:db9ed3b0941daee5f73fd6",
+        "android_client_info": {
+          "package_name": "com.wallpaper4k.wallpapers.backgroundhd.phonebackground"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "242864672483-78lf4li39adf205b1vi6vmsd5k4rfte5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.wallpaper4k.wallpapers.backgroundhd.phonebackground",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "242864672483-kjddg15o6k40dghpg70fuebjf4tvpl7l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDt0BDKJu5A5lap1edo4rtWRQRMJLdgq3s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "242864672483-kjddg15o6k40dghpg70fuebjf4tvpl7l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

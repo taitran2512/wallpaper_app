@@ -8,11 +8,16 @@
 		"lint": "eslint .",
 		"start": "react-native start",
 		"test": "jest",
-		"apk-dev": "cd android && ./gradlew assembleRelease"
+		"apk-dev": "cd android && ./gradlew assembleRelease",
+		"key-sha-dev": "keytool -keystore android/app/debug.keystore -list -v",
+		"key-sha-prod": "keytool -keystore android/app/keystore -list -v",
+		"get-key-signin-report": "cd android && ./gradlew signinReport"
 	},
 	"dependencies": {
 		"@react-native-async-storage/async-storage": "^1.18.1",
 		"@react-native-community/blur": "^4.3.0",
+		"@react-native-firebase/app": "^17.5.0",
+		"@react-native-firebase/remote-config": "^17.5.0",
 		"@react-native-masked-view/masked-view": "^0.2.9",
 		"@react-navigation/bottom-tabs": "^6.5.7",
 		"@react-navigation/material-top-tabs": "^6.6.2",

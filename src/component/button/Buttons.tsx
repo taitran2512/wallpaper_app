@@ -46,11 +46,13 @@ const styles = StyleSheet.create({
 	container: {
 		justifyContent: 'center',
 		alignItems: 'center',
-		backgroundColor: 'rgba(255, 255, 255, 0.3)',
+		backgroundColor: 'rgba(255, 255, 255, 0.2)',
 		height: sizes.s50,
-		borderRadius: 16,
+		borderRadius: sizes.s10,
 		overflow: 'hidden',
-		borderColor: 'rgba(255, 255, 255, 1)',
+		borderColor: 'rgba(255, 255, 255, 0.5)',
+		borderLeftWidth: 0.6,
+		borderTopWidth: 0.6,
 	},
 	title: {
 		color: colors.white,

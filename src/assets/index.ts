@@ -28,4 +28,8 @@ export const images = {
 	ic_popular_selected: require('./images/ic_popular_selected.png'),
 	ic_tick: require('./images/ic_tick.png'),
 	menu_background: require('./images/menu_background.png'),
+	bg_button: require('./images/bg_button.png'),
+	ic_more: require('./images/ic_more.png'),
+	ic_more_selected: require('./images/ic_more_selected.png'),
+	bg_btn_language: require('./images/bg_btn_language.png'),
 };

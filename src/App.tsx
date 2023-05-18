@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Loading, ToastDebug } from 'component';
+import remoteConfig from '@react-native-firebase/remote-config';
+import { Loading, ModalAdsResume, ToastDebug } from 'component';
 import { Navigator } from 'core';
 import AppStack from 'navigation';
 import React, { useEffect, useRef } from 'react';
@@ -13,9 +14,11 @@ import { Provider } from 'react-redux';
 import { Device } from 'utils';
 import { keyOnAppResume } from 'utils/GoogleAds';
 import store from './redux/store';
+
 export let data = { isShowAds: false };
 const App: React.FC = () => {
 	const appState = useRef<any>(AppState.currentState);
+	const showAdsRef = useRef<any>();
 	const { isClosed, isLoaded, load, show } = useAppOpenAd(keyOnAppResume, {
 		requestNonPersonalizedAdsOnly: true,
 		keywords: [],
@@ -36,6 +39,7 @@ const App: React.FC = () => {
 
 	useEffect(() => {
 		SystemNavigationBar.immersive();
+		getConfigRemoteFirebase();
 	}, []);
 
 	const handleAppStateChange = async (nextAppState: any) => {
@@ -43,6 +47,7 @@ const App: React.FC = () => {
 			if (isFirst.current || data.isShowAds) {
 				isFirst.current = false;
 			} else {
+				showAdsRef.current?.open();
 				show();
 			}
 		}
@@ -65,9 +70,25 @@ const App: React.FC = () => {
 	useEffect(() => {
 		if (isClosed) {
 			load();
+			showAdsRef.current?.close();
 		}
 	}, [isClosed]);
-
+	const getConfigRemoteFirebase = async () => {
+		try {
+			// await remoteConfig().setDefaults(); // setting default value
+			// await remoteConfig().fetch(10); // 10 seconds cache
+			const values = await remoteConfig().getAll(); //returns all values set in remote
+			console.log(values, 'get config remote');
+			const activated = await remoteConfig().fetchAndActivate(); //can read remote data if true
+			if (activated) {
+				console.log(activated, 'activated');
+				// const values = await remoteConfig().getAll(); //returns all values set in remote
+				// console.log(values);
+			}
+		} catch (error: any) {
+			console.log(error.message);
+		}
+	};
 	return (
 		<Provider store={store}>
 			<StatusBar
@@ -81,6 +102,7 @@ const App: React.FC = () => {
 			</SafeAreaProvider>
 			<Loading ref={(ref) => Navigator.setLoadingRef(ref)} />
 			<ToastDebug ref={(ref) => Navigator.setToastDebugRef(ref)} />
+			<ModalAdsResume ref={showAdsRef} />
 		</Provider>
 	);
 };

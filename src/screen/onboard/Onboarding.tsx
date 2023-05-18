@@ -1,11 +1,10 @@
 /* eslint-disable react-native/no-inline-styles */
 import { images } from 'assets';
-import { Flex } from 'component';
-import { Navigator, Style, colors, screenHeight, screenWidth, sizes, strings } from 'core/index';
+import { Flex, Skeleton } from 'component';
+import { colors, Navigator, screenHeight, screenWidth, sizes, strings, Style } from 'core/index';
 import { ScreenProps } from 'model';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import {
-	ActivityIndicator,
 	NativeScrollEvent,
 	NativeSyntheticEvent,
 	ScrollView,
@@ -75,11 +74,7 @@ const Onboarding: React.FC<ScreenProps | any> = () => {
 			/>
 		));
 	};
-	useEffect(() => {
-		setTimeout(() => {
-			setLoading(false);
-		}, 1500);
-	}, []);
+
 	return (
 		<Flex style={styles.container}>
 			<FastImage
@@ -127,23 +122,22 @@ const Onboarding: React.FC<ScreenProps | any> = () => {
 					</View>
 
 					<View style={styles.viewBanner}>
-						{loading ? (
-							<ActivityIndicator color={colors.blue} size="large" />
-						) : (
-							<BannerAd
-								unitId={keyBanner_onboarding}
-								size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-								requestOptions={{
-									requestNonPersonalizedAdsOnly: true,
-								}}
-								onAdLoaded={() => {
-									console.log('Advert loaded');
-								}}
-								onAdFailedToLoad={(error) => {
-									console.error('Advert failed to load: ', error);
-								}}
-							/>
-						)}
+						{loading && <Skeleton style={StyleSheet.absoluteFill} />}
+						<BannerAd
+							unitId={keyBanner_onboarding}
+							size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+							requestOptions={{
+								requestNonPersonalizedAdsOnly: true,
+							}}
+							onAdLoaded={(e) => {
+								if (e) {
+									setLoading(false);
+								}
+							}}
+							onAdFailedToLoad={(error) => {
+								console.error('Advert failed to load: ', error);
+							}}
+						/>
 					</View>
 				</View>
 			</LinearGradient>
@@ -196,7 +190,6 @@ const styles = StyleSheet.create({
 		backgroundColor: colors.white,
 	},
 	viewBanner: {
-		marginHorizontal: sizes.s16,
 		alignItems: 'center',
 	},
 });
