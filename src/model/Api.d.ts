@@ -3,21 +3,123 @@ interface ResponseApi<T> {
 	meta: Meta;
 }
 
-interface CategoryType {
+interface Meta {
+	pagination: Pagination;
+}
+
+interface Pagination {
+	page: number;
+	pageSize: number;
+	pageCount: number;
+	total: number;
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+interface WallpaperType {
 	id: number;
-	attributes: Attributes;
+	name: any;
+	download_count: number;
+	is_premium: boolean;
+	createdAt: string;
+	updatedAt: string;
+	media: Media;
+	category: Category;
+}
+
+interface Media {
+	id: number;
+	name: string;
+	alternativeText: any;
+	caption: any;
+	width: number;
+	height: number;
+	formats: Formats;
+	hash: string;
+	ext: string;
+	mime: string;
+	size: number;
+	url: string;
+	previewUrl: any;
+	provider: string;
+	provider_metadata: any;
+	createdAt: string;
+	updatedAt: string;
+}
+
+interface Formats {
+	large: Large;
+	small: Small;
+	medium: Medium;
+	thumbnail: Thumbnail;
+}
+
+interface Large {
+	ext: string;
+	url: string;
+	hash: string;
+	mime: string;
+	name: string;
+	path: any;
+	size: number;
+	width: number;
+	height: number;
+}
+
+interface Small {
+	ext: string;
+	url: string;
+	hash: string;
+	mime: string;
+	name: string;
+	path: any;
+	size: number;
+	width: number;
+	height: number;
+}
+
+interface Medium {
+	ext: string;
+	url: string;
+	hash: string;
+	mime: string;
+	name: string;
+	path: any;
+	size: number;
+	width: number;
+	height: number;
 }
 
 interface Thumbnail {
-	data?: Data;
+	ext: string;
+	url: string;
+	hash: string;
+	mime: string;
+	name: string;
+	path: any;
+	size: number;
+	width: number;
+	height: number;
 }
 
-interface Data {
+interface Category {
 	id: number;
-	attributes: Attributes2;
+	name: string;
+	createdAt: string;
+	updatedAt: string;
 }
 
-interface Attributes2 {
+/////////////////////////////////////////////////////////////////////////
+interface CategoryType {
+	id: number;
+	name: string;
+	createdAt: string;
+	updatedAt: string;
+	thumbnail: Thumbnail;
+	image_count: number;
+}
+
+interface Thumbnail {
+	id: number;
 	name: string;
 	alternativeText: any;
 	caption: any;
@@ -50,15 +152,4 @@ interface Thumbnail2 {
 	size: number;
 	width: number;
 	height: number;
-}
-
-interface Meta {
-	pagination: Pagination;
-}
-
-interface Pagination {
-	page: number;
-	pageSize: number;
-	pageCount: number;
-	total: number;
 }

@@ -1,5 +1,6 @@
 import { throttle } from 'lodash';
 import { Alert, LayoutAnimation, Linking } from 'react-native';
+import { IMAGE_URL } from './Https';
 
 export const showAlert = (
 	message = 'Something went wrong, please try again later.',
@@ -30,7 +31,7 @@ export const imageSource = (image?: string) => {
 	if (image?.includes('https://') || image?.includes('http://') || image?.includes('file://')) {
 		return { uri: image };
 	}
-	return { uri: URL + image };
+	return { uri: IMAGE_URL + image };
 };
 
 export const layoutAnimation = throttle(() => {

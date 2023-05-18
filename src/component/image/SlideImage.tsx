@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-shadow */
-import { screenHeight, screenWidth } from 'core';
+import { colors, screenHeight, screenWidth } from 'core';
 import React, { useEffect, useRef } from 'react';
 import { FlatList, StyleProp, View, ViewStyle } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { imageSource } from 'utils';
 
 interface Props {
-	data: any[];
+	data: WallpaperType[];
 	style?: StyleProp<ViewStyle>;
 	index: number;
 }
@@ -28,11 +28,19 @@ const SlideImage: React.FC<Props> = ({ data, style, index = 0 }) => {
 				nestedScrollEnabled
 				pagingEnabled
 				showsHorizontalScrollIndicator={false}
+				initialNumToRender={20}
 				renderItem={({ item }) => {
+					console.log(imageSource(item?.media?.url), 'imageSource(item?.media?.url)');
 					return (
 						<FastImage
-							source={imageSource(item)}
-							style={[{ width: screenWidth, height: screenHeight }]}
+							source={imageSource(item?.media?.url)}
+							style={[
+								{
+									width: screenWidth,
+									height: screenHeight,
+									backgroundColor: colors.backgroundApp,
+								},
+							]}
 						/>
 					);
 				}}

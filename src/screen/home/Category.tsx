@@ -23,7 +23,7 @@ import { IMAGE_URL } from 'utils/Https';
 const Category = ({ navigation }: TabScreenProps) => {
 	const count = useSelector(countCategory);
 	const dispatch = useDispatch();
-	const [dataCate, setDataCate] = useState([]);
+	const [dataCate, setDataCate] = useState<CategoryType[]>([]);
 	useEffect(() => {
 		getCategoryData();
 		navigation.setOptions({
@@ -43,28 +43,25 @@ const Category = ({ navigation }: TabScreenProps) => {
 			const reponse = await WallpaperApi.getCategory();
 			if (reponse.data) {
 				setDataCate(reponse?.data);
-			} else {
-				setDataCate([]);
 			}
 		} catch (error) {
 			setDataCate([]);
 		}
 	};
 
-	const detailCategory = (item: any) => {
+	const detailCategory = (item: CategoryType) => {
 		dispatch(incrementCategoryAction());
-		Navigator.navigate(Screens.DetailCategory, { title: item.name || '' });
+		Navigator.navigate(Screens.DetailCategory, { categoryName: item?.name });
 		if (count % 2 !== 0) {
 			Navigator.navigate(Screens.GoogleInterstitialsAds, {
 				key: keyInterstitialOpenCateHigh,
 				key2: keyInterstitialOpenCate,
 				type: 'category_high',
 			});
-			return;
 		}
 	};
 
-	const renderItem = ({ item }: any) => {
+	const renderItem = ({ item }: { item: CategoryType }) => {
 		return (
 			<TouchableOpacity activeOpacity={0.8} onPress={() => detailCategory(item)}>
 				<ImageBackground
@@ -108,6 +105,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: 'center',
 		alignItems: 'center',
+		backgroundColor: colors.backgroundApp,
 	},
 	itemCategory: {
 		paddingVertical: sizes.s20,

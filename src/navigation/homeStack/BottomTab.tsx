@@ -8,7 +8,7 @@ import { TabScreenProps } from 'model';
 import React, { memo, useEffect, useState } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
-import { Category, More, Popular } from 'screen/home';
+import { Category, DetailCategory, More, Popular } from 'screen/home';
 import { Device } from 'utils';
 import { keyBanner_category } from 'utils/GoogleAds';
 
@@ -18,7 +18,7 @@ const BottomTab = ({ navigation }: TabScreenProps) => {
 	const TabScreen = [
 		{
 			name: strings.popular,
-			screen: Popular,
+			screen: DetailCategory,
 			icon: images.ic_popular,
 			icon_selected: images.ic_popular_selected,
 		},
@@ -52,6 +52,7 @@ const BottomTab = ({ navigation }: TabScreenProps) => {
 				name={tab.name}
 				options={{
 					...(Navigator.defaultOptions as any),
+					lazy: false,
 					tabBarInactiveTintColor: colors.white,
 					tabBarActiveTintColor: colors.white,
 					tabBarStyle: {
