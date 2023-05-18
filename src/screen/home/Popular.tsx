@@ -1,9 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { dataDetailCategory } from 'common/data';
 import { GridImageView } from 'component';
-import { colors, fonts, sizes } from 'core/index';
+import { fonts, sizes } from 'core/index';
 import { TabScreenProps } from 'model';
 import React, { useEffect } from 'react';
-import { StyleSheet } from 'react-native';
 
 const Popular = ({ navigation }: TabScreenProps) => {
 	useEffect(() => {
@@ -23,9 +23,3 @@ const Popular = ({ navigation }: TabScreenProps) => {
 };
 
 export default Popular;
-const styles = StyleSheet.create({
-	viewBanner: {
-		alignItems: 'center',
-		backgroundColor: colors.background_black,
-	},
-});

@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import remoteConfig from '@react-native-firebase/remote-config';
+import { setConfigFirebase } from 'action/appAction';
+import ConfigApi from 'api/ConfigApi';
 import { Loading, ModalAdsResume, ToastDebug } from 'component';
 import { Navigator } from 'core';
 import AppStack from 'navigation';
@@ -41,7 +42,14 @@ const App: React.FC = () => {
 		SystemNavigationBar.immersive();
 		getConfigRemoteFirebase();
 	}, []);
-
+	const getConfigRemoteFirebase = async () => {
+		try {
+			const config = await ConfigApi.getConfig();
+			store.dispatch(setConfigFirebase(config?.data));
+		} catch (error: any) {
+			console.log(error.message);
+		}
+	};
 	const handleAppStateChange = async (nextAppState: any) => {
 		if (appState.current.match(/inactive|background/) && nextAppState === 'active') {
 			if (isFirst.current || data.isShowAds) {
@@ -73,22 +81,7 @@ const App: React.FC = () => {
 			showAdsRef.current?.close();
 		}
 	}, [isClosed]);
-	const getConfigRemoteFirebase = async () => {
-		try {
-			// await remoteConfig().setDefaults(); // setting default value
-			// await remoteConfig().fetch(10); // 10 seconds cache
-			const values = await remoteConfig().getAll(); //returns all values set in remote
-			console.log(values, 'get config remote');
-			const activated = await remoteConfig().fetchAndActivate(); //can read remote data if true
-			if (activated) {
-				console.log(activated, 'activated');
-				// const values = await remoteConfig().getAll(); //returns all values set in remote
-				// console.log(values);
-			}
-		} catch (error: any) {
-			console.log(error.message);
-		}
-	};
+
 	return (
 		<Provider store={store}>
 			<StatusBar

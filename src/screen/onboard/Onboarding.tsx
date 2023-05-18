@@ -17,6 +17,8 @@ import FastImage from 'react-native-fast-image';
 import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
 import LinearGradient from 'react-native-linear-gradient';
 import SystemNavigationBar from 'react-native-system-navigation-bar';
+import { useSelector } from 'react-redux';
+import { getConfigFirebaseSeletor } from 'selector/appSelector';
 import { Storage } from 'utils';
 import { keyBanner_onboarding } from 'utils/GoogleAds';
 
@@ -24,6 +26,8 @@ const Onboarding: React.FC<ScreenProps | any> = () => {
 	const [idx, setIdx] = useState<number>(0);
 	const [loading, setLoading] = useState<boolean>(true);
 	const scrollRef = useRef<any>();
+	const config = useSelector(getConfigFirebaseSeletor);
+	console.log(config, 'config');
 	const WelcomArr = [
 		{
 			id: 0,

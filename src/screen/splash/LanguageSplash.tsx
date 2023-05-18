@@ -4,28 +4,39 @@ import { images } from 'assets';
 import { Stacks } from 'common';
 import { Languages } from 'common/data';
 import { Buttons, Flex, Icon, NativeAds } from 'component';
-import { Navigator, Style, colors, screenHeight, screenWidth, sizes, strings } from 'core/index';
+import { colors, Navigator, screenHeight, screenWidth, sizes, strings, Style } from 'core/index';
 import { ScreenProps } from 'model';
 import React, { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import LinearGradient from 'react-native-linear-gradient';
+import { useSelector } from 'react-redux';
+import { getConfigFirebaseSeletor } from 'selector/appSelector';
 import { Device, Storage } from 'utils';
 import { keyNative_onboarding } from 'utils/GoogleAds';
 
 const LanguageSplash: React.FC<ScreenProps | any> = ({ navigation }) => {
 	const [language, setLanguage] = useState<string>(Languages?.[0].lang);
+	const config = useSelector(getConfigFirebaseSeletor);
+	const [optionsNativeAds, setOptionsNativeAds] = useState(false);
+	// const keyNativeRef = useRef<any>(false);
 
 	useEffect(() => {
 		navigation.setOptions({
 			headerShown: false,
 		});
+
 		Storage.getData(Storage.key.language).then((lang) => {
 			const appLanguage = lang || Languages?.[0]?.lang;
 			strings.setLanguage(appLanguage);
 			setLanguage(appLanguage);
 		});
 	}, []);
+
+	useEffect(() => {
+		const getKey = config?.find?.((x: any) => x.key === 'native_language');
+		setOptionsNativeAds(getKey?.options);
+	}, [optionsNativeAds]);
 
 	const setAppLanguage = (lan: string) => {
 		setLanguage(lan);
@@ -87,23 +98,26 @@ const LanguageSplash: React.FC<ScreenProps | any> = ({ navigation }) => {
 							})}
 						</View>
 					</ScrollView>
-
-					<View
-						style={[
-							Style.row_center,
-							Style.top24,
-							{
-								paddingBottom: sizes.s24,
-							},
-						]}
-					/>
-					<NativeAds
-						loadOnMount={false}
-						index={1}
-						type="image"
-						media={false}
-						keys={keyNative_onboarding}
-					/>
+					{optionsNativeAds ? (
+						<>
+							<View
+								style={[
+									Style.row_center,
+									Style.top24,
+									{
+										paddingBottom: sizes.s24,
+									},
+								]}
+							/>
+							<NativeAds
+								loadOnMount={false}
+								index={1}
+								type="image"
+								media={false}
+								keys={keyNative_onboarding}
+							/>
+						</>
+					) : null}
 				</View>
 			</LinearGradient>
 		</Flex>
