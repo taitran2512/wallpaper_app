@@ -26,11 +26,14 @@ import {
 	keyInterstitialApply,
 	keyInterstitialApplyHigh,
 } from 'utils/GoogleAds';
+import { IMAGE_URL } from 'utils/Https';
 
 const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 	const { data, index } = route?.params || {};
 	const [like, setLike] = useState<boolean>(false);
 	const [loading, setLoading] = useState<boolean>(true);
+	const slideRef = useRef<any>();
+
 	if (Platform.OS === 'android') {
 		if (UIManager.setLayoutAnimationEnabledExperimental) {
 			UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -79,11 +82,12 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 
 	const onHandleWallpaper = (type: string) => {
 		try {
+			const item: WallpaperType = data[slideRef.current?.currentIndex];
 			Navigator.showLoading();
 			modalRef.current.close();
 			WallpaperManageModule.setWallpaper(
 				{
-					uri: 'https://lh3.googleusercontent.com/a-/ACB-R5RNd8d1199_In0k7IAeTslQI_mKerHw_Gwf3yiF=s888',
+					uri: IMAGE_URL + item?.media?.url,
 				},
 				type,
 				(res?: any) => {
@@ -173,7 +177,7 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 
 	return (
 		<Flex style={styles.container}>
-			<SlideImage data={data} index={index} />
+			<SlideImage ref={slideRef} data={data} index={index} />
 			{setHeader()}
 			<ExampleScreen type={type} />
 			{showToast ? renderToastNotify() : null}

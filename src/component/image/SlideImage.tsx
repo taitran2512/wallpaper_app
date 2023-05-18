@@ -1,7 +1,14 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 import { colors, screenHeight, screenWidth } from 'core';
-import React, { useEffect, useRef } from 'react';
-import { FlatList, StyleProp, View, ViewStyle } from 'react-native';
+import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import {
+	FlatList,
+	NativeScrollEvent,
+	NativeSyntheticEvent,
+	StyleProp,
+	View,
+	ViewStyle,
+} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { imageSource } from 'utils';
 
@@ -11,13 +18,21 @@ interface Props {
 	index: number;
 }
 
-const SlideImage: React.FC<Props> = ({ data, style, index = 0 }) => {
+const SlideImage = forwardRef(({ data, style, index = 0 }: Props, ref: any) => {
 	const listRef = useRef<FlatList>();
+	const [idx, setIdx] = useState<number>(index);
+
 	useEffect(() => {
 		if (index) {
 			listRef?.current?.scrollToOffset({ animated: false, offset: screenWidth * index });
 		}
 	}, [index]);
+
+	useImperativeHandle(ref, () => ({ currentIndex: idx }));
+
+	const onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+		setIdx(Math.round(e.nativeEvent.contentOffset.x / screenWidth));
+	};
 	return (
 		<View style={style}>
 			<FlatList
@@ -29,8 +44,8 @@ const SlideImage: React.FC<Props> = ({ data, style, index = 0 }) => {
 				pagingEnabled
 				showsHorizontalScrollIndicator={false}
 				initialNumToRender={20}
+				onScroll={onScroll}
 				renderItem={({ item }) => {
-					console.log(imageSource(item?.media?.url), 'imageSource(item?.media?.url)');
 					return (
 						<FastImage
 							source={imageSource(item?.media?.url)}
@@ -47,6 +62,6 @@ const SlideImage: React.FC<Props> = ({ data, style, index = 0 }) => {
 			/>
 		</View>
 	);
-};
+});
 
 export default SlideImage;
