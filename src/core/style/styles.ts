@@ -73,6 +73,12 @@ export const Style = StyleSheet.create({
 		fontFamily: fonts.regular,
 		color: colors.white,
 	},
+	txt13_white: {
+		fontSize: sizes.s13,
+		lineHeight: sizes.s16,
+		fontFamily: fonts.regular,
+		color: colors.white,
+	},
 	txt12_secondary: {
 		fontSize: sizes.s12,
 		lineHeight: sizes.s16,
@@ -132,6 +138,18 @@ export const Style = StyleSheet.create({
 		lineHeight: sizes.s24,
 		fontFamily: fonts.regular,
 		color: colors.secondary_text,
+	},
+	txt18_white: {
+		fontSize: sizes.s18,
+		lineHeight: sizes.s25,
+		fontFamily: fonts.regular,
+		color: colors.white,
+	},
+	txt28: {
+		fontSize: sizes.s28,
+		lineHeight: sizes.s39,
+		fontFamily: fonts.regular,
+		color: colors.white,
 	},
 	regular: {
 		fontFamily: fonts.regular,

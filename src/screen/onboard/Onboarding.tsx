@@ -3,7 +3,7 @@ import { images } from 'assets';
 import { Flex, Skeleton } from 'component';
 import { colors, Navigator, screenHeight, screenWidth, sizes, strings, Style } from 'core/index';
 import { ScreenProps } from 'model';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
 	NativeScrollEvent,
 	NativeSyntheticEvent,
@@ -16,6 +16,7 @@ import {
 import FastImage from 'react-native-fast-image';
 import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
 import LinearGradient from 'react-native-linear-gradient';
+import SystemNavigationBar from 'react-native-system-navigation-bar';
 import { Storage } from 'utils';
 import { keyBanner_onboarding } from 'utils/GoogleAds';
 
@@ -74,7 +75,9 @@ const Onboarding: React.FC<ScreenProps | any> = () => {
 			/>
 		));
 	};
-
+	useEffect(() => {
+		SystemNavigationBar.immersive();
+	}, []);
 	return (
 		<Flex style={styles.container}>
 			<FastImage

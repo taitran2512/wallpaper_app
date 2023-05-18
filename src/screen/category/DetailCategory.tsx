@@ -3,23 +3,17 @@
 
 import { images } from 'assets';
 import { dataDetailCategory } from 'common/data';
-import { Flex, GridImageView, NavigationButton } from 'component';
+import { Flex, GridImageView, NavigationButton, Skeleton } from 'component';
 import { colors, sizes } from 'core/index';
 import { ScreenProps } from 'model';
-import React, { useEffect, useLayoutEffect, useState } from 'react';
-import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import React, { useLayoutEffect, useState } from 'react';
+import { StyleSheet, View } from 'react-native';
 import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
 import { keyBanner_category } from 'utils/GoogleAds';
 
 const DetailCategory: React.FC<ScreenProps> = ({ navigation, route }) => {
 	const cateogry: any = route?.params || {};
 	const [loading, setLoading] = useState<boolean>(true);
-
-	useEffect(() => {
-		setTimeout(() => {
-			setLoading(false);
-		}, 1500);
-	}, []);
 
 	const iniScreen = () => {
 		navigation.setOptions({
@@ -52,23 +46,22 @@ const DetailCategory: React.FC<ScreenProps> = ({ navigation, route }) => {
 		<Flex style={styles.container}>
 			<GridImageView data={dataDetailCategory} />
 			<View style={styles.viewBanner}>
-				{loading ? (
-					<ActivityIndicator color={colors.blue} size="large" />
-				) : (
-					<BannerAd
-						unitId={keyBanner_category}
-						size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-						requestOptions={{
-							requestNonPersonalizedAdsOnly: true,
-						}}
-						onAdLoaded={() => {
-							console.log('Advert loaded');
-						}}
-						onAdFailedToLoad={(error) => {
-							console.error('Advert failed to load: ', error);
-						}}
-					/>
-				)}
+				{loading && <Skeleton style={StyleSheet.absoluteFill} />}
+				<BannerAd
+					unitId={keyBanner_category}
+					size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+					requestOptions={{
+						requestNonPersonalizedAdsOnly: true,
+					}}
+					onAdLoaded={(e) => {
+						if (e) {
+							setLoading(false);
+						}
+					}}
+					onAdFailedToLoad={(error) => {
+						console.error('Advert failed to load: ', error);
+					}}
+				/>
 			</View>
 		</Flex>
 	);

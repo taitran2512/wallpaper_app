@@ -97,10 +97,9 @@ const styles = StyleSheet.create({
 		color: colors.white,
 	},
 	subtitle: {
+		...Style.txt13_white,
 		alignSelf: 'center',
 		textAlign: 'center',
-		color: colors.white,
-		fontSize: sizes.s13,
 	},
 	button: {
 		...Style.row,

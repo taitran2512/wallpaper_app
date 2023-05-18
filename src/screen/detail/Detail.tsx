@@ -3,8 +3,8 @@
 
 import { images } from 'assets';
 import { Screens } from 'common';
-import { ExampleScreen, Flex, Icon, ModalConfirm, SlideImage } from 'component';
-import { Navigator, Style, colors, screenHeight, sizes, strings } from 'core/index';
+import { ExampleScreen, Flex, Icon, ModalConfirm, Skeleton, SlideImage } from 'component';
+import { colors, Navigator, screenHeight, sizes, strings, Style } from 'core/index';
 import WallpaperManageModule from 'library/wallpaper/WallpaperManager';
 import { ScreenProps } from 'model';
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
@@ -19,13 +19,18 @@ import {
 	UIManager,
 	View,
 } from 'react-native';
+import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
 import { Device } from 'utils';
-import { keyInterstitialApply, keyInterstitialApplyHigh } from 'utils/GoogleAds';
+import {
+	keyBanner_category,
+	keyInterstitialApply,
+	keyInterstitialApplyHigh,
+} from 'utils/GoogleAds';
 
 const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 	const { data, index } = route?.params || {};
 	const [like, setLike] = useState<boolean>(false);
-
+	const [loading, setLoading] = useState<boolean>(true);
 	if (Platform.OS === 'android') {
 		if (UIManager.setLayoutAnimationEnabledExperimental) {
 			UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -173,6 +178,24 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 			<ExampleScreen type={type} />
 			{showToast ? renderToastNotify() : null}
 			{renderButtonBottom()}
+			<View style={styles.viewBanner}>
+				{loading && <Skeleton style={StyleSheet.absoluteFill} />}
+				<BannerAd
+					unitId={keyBanner_category}
+					size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+					requestOptions={{
+						requestNonPersonalizedAdsOnly: true,
+					}}
+					onAdLoaded={(e) => {
+						if (e) {
+							setLoading(false);
+						}
+					}}
+					onAdFailedToLoad={(error) => {
+						console.error('Advert failed to load: ', error);
+					}}
+				/>
+			</View>
 			<ModalConfirm ref={modalRef} title={strings.questionWallpaper} content="">
 				<View style={[Style.line, styles.line2]} />
 				<ItemOption
@@ -262,7 +285,7 @@ const styles = StyleSheet.create({
 		backgroundColor: colors.gradient5,
 		borderRadius: sizes.s8,
 		position: 'absolute',
-		bottom: 10,
+		bottom: sizes.s25,
 		left: 0,
 		right: 0,
 	},
@@ -277,7 +300,7 @@ const styles = StyleSheet.create({
 		position: 'absolute',
 		left: 0,
 		right: 0,
-		bottom: screenHeight * 0.25,
+		bottom: screenHeight * 0.26,
 	},
 	line: {
 		width: 1,
@@ -285,9 +308,8 @@ const styles = StyleSheet.create({
 		backgroundColor: colors.white,
 	},
 	txtSuccess: {
-		fontSize: sizes.s18,
+		...Style.txt18_white,
 		marginLeft: sizes.s34,
-		color: colors.white,
 	},
 	line2: {
 		marginVertical: sizes.s16,
@@ -296,14 +318,20 @@ const styles = StyleSheet.create({
 		paddingVertical: sizes.s2,
 	},
 	txtOption: {
-		fontWeight: 'bold',
+		...Style.txt16_bold,
 		color: colors.white,
-		fontSize: sizes.s16,
 		textAlign: 'center',
 	},
 	txtCancel: {
-		color: colors.white,
-		fontSize: sizes.s16,
+		...Style.txt16_white,
 		textAlign: 'center',
+	},
+	viewBanner: {
+		alignItems: 'center',
+		backgroundColor: colors.background_black,
+		position: 'absolute',
+		bottom: 0,
+		left: 0,
+		right: 0,
 	},
 });

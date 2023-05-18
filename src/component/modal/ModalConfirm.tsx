@@ -56,9 +56,8 @@ const styles = StyleSheet.create({
 		paddingHorizontal: sizes.s16,
 	},
 	title: {
-		fontSize: sizes.s14,
+		...Style.txt14_white,
 		textAlign: 'center',
-		color: colors.white,
 	},
 	subTitle: {
 		...Style.txt16_secondary,

@@ -1,25 +1,34 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { incrementCategoryAction } from 'action/appAction';
 import WallpaperApi from 'api/WallpaperApi';
 import { Screens } from 'common';
-import { categoryData } from 'common/data';
 import { Flex } from 'component';
-import { Navigator, colors, fonts, sizes } from 'core/index';
+import { colors, fonts, Navigator, sizes, strings, Style } from 'core/index';
 import { TabScreenProps } from 'model';
 import React, { memo, useEffect, useState } from 'react';
-import { FlatList, ImageBackground, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import {
+	ActivityIndicator,
+	FlatList,
+	ImageBackground,
+	StyleSheet,
+	Text,
+	TouchableOpacity,
+	View,
+} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { countCategory } from 'selector/appSelector';
 import { keyInterstitialOpenCate, keyInterstitialOpenCateHigh } from 'utils/GoogleAds';
+import { IMAGE_URL } from 'utils/Https';
 
 const Category = ({ navigation }: TabScreenProps) => {
 	const count = useSelector(countCategory);
 	const dispatch = useDispatch();
-
+	const [dataCate, setDataCate] = useState([]);
 	useEffect(() => {
 		getCategoryData();
 		navigation.setOptions({
 			headerShown: true,
-			title: 'Category',
+			title: strings.category,
 			headerLeft: undefined,
 			headerTitleStyle: {
 				color: 'white',
@@ -32,7 +41,14 @@ const Category = ({ navigation }: TabScreenProps) => {
 	const getCategoryData = async () => {
 		try {
 			const reponse = await WallpaperApi.getCategory();
-		} catch (error) {}
+			if (reponse.data) {
+				setDataCate(reponse?.data);
+			} else {
+				setDataCate([]);
+			}
+		} catch (error) {
+			setDataCate([]);
+		}
 	};
 
 	const detailCategory = (item: any) => {
@@ -52,24 +68,30 @@ const Category = ({ navigation }: TabScreenProps) => {
 		return (
 			<TouchableOpacity activeOpacity={0.8} onPress={() => detailCategory(item)}>
 				<ImageBackground
-					source={item.background}
+					source={{ uri: IMAGE_URL + item?.thumbnail?.url }}
 					style={styles.itemCategory}
 					resizeMode="cover">
 					<Text style={styles.itemTitle}>{item.name}</Text>
-					<Text style={styles.itemSubTitle}>{item.lenght} wallpapers</Text>
+					<Text style={styles.itemSubTitle}>{item.image_count || 0} wallpapers</Text>
 				</ImageBackground>
 			</TouchableOpacity>
 		);
 	};
-
+	if (!dataCate.length) {
+		return (
+			<View style={styles.viewLoading}>
+				<ActivityIndicator color={colors.gradient} size="large" />
+			</View>
+		);
+	}
 	return (
 		<Flex style={styles.container}>
 			<FlatList
-				data={categoryData}
+				data={dataCate}
 				renderItem={renderItem}
 				keyboardShouldPersistTaps="handled"
 				showsVerticalScrollIndicator={false}
-				keyExtractor={(e, index) => String(e?.id || index)}
+				keyExtractor={(e, index) => String(index)}
 			/>
 		</Flex>
 	);
@@ -82,20 +104,24 @@ const styles = StyleSheet.create({
 		flex: 1,
 		backgroundColor: colors.backgroundApp,
 	},
+	viewLoading: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+	},
 	itemCategory: {
 		paddingVertical: sizes.s20,
 		alignItems: 'center',
 		justifyContent: 'center',
+		marginBottom: sizes.s2,
+		marginHorizontal: sizes.s2,
 	},
 	itemTitle: {
-		fontSize: sizes.s30,
+		...Style.txt28,
 		marginBottom: sizes.s4,
-		fontWeight: '500',
-		color: colors.white,
 	},
 	itemSubTitle: {
-		fontSize: sizes.s18,
-		color: colors.white,
+		...Style.txt16_white,
 	},
 	viewBanner: {
 		alignItems: 'center',
