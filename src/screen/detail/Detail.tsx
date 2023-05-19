@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable react-hooks/exhaustive-deps */
 
+import WallpaperApi from 'api/WallpaperApi';
 import { images } from 'assets';
 import { Screens } from 'common';
 import { ExampleScreen, Flex, Icon, ModalConfirm, Skeleton, SlideImage } from 'component';
 import { colors, Navigator, screenHeight, sizes, strings, Style } from 'core/index';
 import WallpaperManageModule from 'library/wallpaper/WallpaperManager';
+import { remove } from 'lodash';
 import { ScreenProps } from 'model';
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import {
@@ -20,7 +22,7 @@ import {
 	View,
 } from 'react-native';
 import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
-import { Device } from 'utils';
+import { Device, Storage } from 'utils';
 import {
 	keyBanner_category,
 	keyInterstitialApply,
@@ -83,25 +85,26 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 	const onHandleWallpaper = (type: string) => {
 		try {
 			const item: WallpaperType = data[slideRef.current?.currentIndex];
-			Navigator.showLoading();
 			modalRef.current.close();
 			WallpaperManageModule.setWallpaper(
 				{
 					uri: IMAGE_URL + item?.media?.url,
 				},
 				type,
-				(res?: any) => {
+				async (res?: any) => {
 					if (res.status === 'success') {
 						showToastSuccess();
+						WallpaperApi.updateCountSetWallpaper(item?.id, item?.download_count + 1);
+						const listSetWallpaper: any[] =
+							(await Storage.getData(Storage.key.listSetWallpaper)) || [];
+						const newlistSetWallpaper = [item, ...listSetWallpaper];
+						Storage.setData(Storage.key.listSetWallpaper, newlistSetWallpaper);
 					}
 				}
 			);
 		} catch (error: any) {
-			Navigator.hideLoading();
 			hideToast();
 			Alert.alert('Alert', error);
-		} finally {
-			Navigator.hideLoading();
 		}
 	};
 
@@ -116,6 +119,16 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 	const onPressLike = async () => {
 		const newValue = !like;
 		setLike(newValue);
+		const item: WallpaperType = data[slideRef.current?.currentIndex];
+
+		const likedImageArray: any[] = (await Storage.getData(Storage.key.likedImageArray)) || [];
+		if (newValue) {
+			const newLikedImageArray = [item, ...likedImageArray];
+			Storage.setData(Storage.key.likedImageArray, newLikedImageArray);
+		} else {
+			remove(likedImageArray, (e) => e?.id === item?.id);
+			Storage.setData(Storage.key.likedImageArray, likedImageArray);
+		}
 	};
 
 	const setHeader = () => (
@@ -137,6 +150,7 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 			</View>
 		);
 	};
+
 	const onToggle = (types: string) => {
 		if (type === types) {
 			setType('');
@@ -144,6 +158,7 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 			setType(types);
 		}
 	};
+
 	const renderButtonBottom = () => {
 		return (
 			<View style={styles.viewGradient}>
@@ -289,7 +304,7 @@ const styles = StyleSheet.create({
 		backgroundColor: colors.gradient5,
 		borderRadius: sizes.s8,
 		position: 'absolute',
-		bottom: sizes.s25,
+		bottom: sizes.s35,
 		left: 0,
 		right: 0,
 	},

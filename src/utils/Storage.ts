@@ -10,6 +10,7 @@ export default class Storage {
 		likedImageArray: 'likedImageArray',
 		openAppAds: 'openAppAds',
 		openAppResume: 'openAppResume',
+		listSetWallpaper: 'listSetWallpaper',
 	};
 
 	static setData = async (key: string, value: any) => {

@@ -23,8 +23,17 @@ export default class WallpaperApi {
 			'filters[$and][0][category][name][$eq]': categoryName,
 			'pagination[page]': page,
 			'pagination[pageSize]': 15,
+			sort: 'download_count:desc',
 		};
-		const url = `${this.URL.Wallpaper}?page=${page}&pageSize=20&sort=name:ASC&filters[$and][0][category][name][$eq]=${categoryName}`;
+
 		return axiosClient.get(this.URL.Wallpaper, { params });
+	};
+
+	static updateCountSetWallpaper = (id: number, count: number) => {
+		const data = {
+			download_count: count,
+		};
+
+		return axiosClient.put(`${this.URL.Wallpaper}/${id}`, { data });
 	};
 }

@@ -1,16 +1,28 @@
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { dataDetailCategory } from 'common/data';
 import { screenOptionsStack } from 'common/nagivationOption';
 import { GridImageView, NavigationBackButton } from 'component';
 import { colors, fonts, sizes } from 'core/index';
 import { ScreenProps } from 'model';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text } from 'react-native';
+import { Storage } from 'utils';
 
 const Tab = createMaterialTopTabNavigator();
 const Favorite = ({ navigation }: ScreenProps) => {
+	const [likedData, setLikedData] = useState<WallpaperType[]>([]);
+	const [wallpaperData, setWallpaperData] = useState<WallpaperType[]>([]);
+
+	const getData = async () => {
+		const [data1, data2] = await Storage.getMultiData([
+			Storage.key.likedImageArray,
+			Storage.key.listSetWallpaper,
+		]);
+		setLikedData(data1 || []);
+		setWallpaperData(data2 || []);
+	};
+
 	useEffect(() => {
 		navigation.setOptions({
 			...screenOptionsStack,
@@ -20,10 +32,11 @@ const Favorite = ({ navigation }: ScreenProps) => {
 			headerTitleAlign: 'center',
 			headerShadowVisible: false,
 		});
+		getData();
 	}, []);
 
-	const Like = () => <GridImageView data={dataDetailCategory} />;
-	const Collection = () => <GridImageView data={dataDetailCategory} />;
+	const Like = () => <GridImageView data={likedData} />;
+	const Collection = () => <GridImageView data={wallpaperData} />;
 
 	return (
 		<Tab.Navigator
