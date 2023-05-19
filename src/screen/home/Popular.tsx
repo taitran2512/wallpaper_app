@@ -19,7 +19,7 @@ const Popular = ({ navigation }: TabScreenProps) => {
 		});
 	}, []);
 
-	return <GridImageView data={dataDetailCategory} />;
+	return <GridImageView data={dataDetailCategory} navigation={navigation} />;
 };
 
 export default Popular;

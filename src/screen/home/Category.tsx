@@ -5,9 +5,10 @@ import { Screens } from 'common';
 import { Flex } from 'component';
 import { colors, fonts, Navigator, sizes, strings, Style } from 'core/index';
 import { TabScreenProps } from 'model';
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useEffect, useRef, useState } from 'react';
 import {
 	ActivityIndicator,
+	Animated,
 	FlatList,
 	ImageBackground,
 	StyleSheet,
@@ -19,11 +20,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import { countCategory } from 'selector/appSelector';
 import { keyInterstitialOpenCate, keyInterstitialOpenCateHigh } from 'utils/GoogleAds';
 import { IMAGE_URL } from 'utils/Https';
+import { useHeaderHeight } from '@react-navigation/elements';
 
 const Category = ({ navigation }: TabScreenProps) => {
 	const count = useSelector(countCategory);
 	const dispatch = useDispatch();
 	const [dataCate, setDataCate] = useState<CategoryType[]>([]);
+	const yOffset = useRef(new Animated.Value(0)).current;
+	const headerOpacity = yOffset.interpolate({
+		inputRange: [0, 200],
+		outputRange: [1, 0.7],
+		extrapolate: 'clamp',
+	});
+	const headerHeight = useHeaderHeight();
 	useEffect(() => {
 		getCategoryData();
 		navigation.setOptions({
@@ -37,6 +46,25 @@ const Category = ({ navigation }: TabScreenProps) => {
 			},
 		});
 	}, []);
+
+	useEffect(() => {
+		navigation.setOptions({
+			headerStyle: {
+				opacity: headerOpacity,
+				backgroundColor: colors.backgroundApp,
+			},
+			headerBackground: () => (
+				<Animated.View
+					style={{
+						backgroundColor: colors.backgroundApp,
+						...StyleSheet.absoluteFillObject,
+						opacity: headerOpacity,
+					}}
+				/>
+			),
+			headerTransparent: true,
+		});
+	}, [headerOpacity, navigation]);
 
 	const getCategoryData = async () => {
 		try {
@@ -83,13 +111,27 @@ const Category = ({ navigation }: TabScreenProps) => {
 	}
 	return (
 		<Flex style={styles.container}>
-			<FlatList
+			<Animated.FlatList
 				data={dataCate}
 				renderItem={renderItem}
 				keyboardShouldPersistTaps="handled"
 				showsVerticalScrollIndicator={false}
 				keyExtractor={(e, index) => String(index)}
 				initialNumToRender={20}
+				contentContainerStyle={{ flexGrow: 1, paddingTop: headerHeight }}
+				onScroll={Animated.event(
+					[
+						{
+							nativeEvent: {
+								contentOffset: {
+									y: yOffset,
+								},
+							},
+						},
+					],
+					{ useNativeDriver: true }
+				)}
+				scrollEventThrottle={16}
 			/>
 		</Flex>
 	);

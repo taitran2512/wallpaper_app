@@ -78,7 +78,7 @@ const DetailCategory: React.FC<ScreenProps | TabScreenProps> = ({ navigation, ro
 
 	return (
 		<Flex style={styles.container}>
-			<GridImageView data={data} onEndReached={getData} />
+			<GridImageView data={data} onEndReached={getData} navigation={navigation} />
 			{!!categoryName && (
 				<View style={styles.viewBanner}>
 					{loading && <Skeleton style={StyleSheet.absoluteFill} />}

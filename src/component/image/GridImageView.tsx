@@ -2,14 +2,17 @@
 import { incrementImageAction } from 'action/appAction';
 import { Screens } from 'common';
 import { colors, Navigator, screenWidth, sizes } from 'core/index';
-import React from 'react';
-import { FlatList, PixelRatio, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { ScreenProps, TabScreenProps } from 'model';
+import React, { useEffect, useRef } from 'react';
+import { Animated, FlatList, PixelRatio, StyleSheet, TouchableOpacity, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { useDispatch, useSelector } from 'react-redux';
 import { countImageHomeSelector } from 'selector/appSelector';
 import { imageSource } from 'utils';
 import { keyInterstitialOpenImage, keyInterstitialOpenImageHigh } from 'utils/GoogleAds';
 import { IMAGE_URL } from 'utils/Https';
+import { useHeaderHeight } from '@react-navigation/elements';
+
 const numColumns = 3;
 const imageWidth = (screenWidth - sizes.s4) / numColumns;
 
@@ -17,11 +20,39 @@ interface Props {
 	data: WallpaperType[];
 	onPress?: any;
 	onEndReached?: any;
+	navigation: ScreenProps['navigation'] | TabScreenProps['navigation'];
 }
 
-const GridImageView: React.FC<Props> = ({ data, onPress, onEndReached }) => {
+const GridImageView: React.FC<Props> = ({ data, onPress, onEndReached, navigation }) => {
+	const yOffset = useRef(new Animated.Value(0)).current;
+	const headerOpacity = yOffset.interpolate({
+		inputRange: [0, 200],
+		outputRange: [1, 0.7],
+		extrapolate: 'clamp',
+	});
+	const headerHeight = useHeaderHeight();
+
 	const count = useSelector(countImageHomeSelector);
 	const dispatch = useDispatch();
+
+	useEffect(() => {
+		navigation.setOptions({
+			headerStyle: {
+				opacity: headerOpacity,
+				backgroundColor: colors.backgroundApp,
+			},
+			headerBackground: () => (
+				<Animated.View
+					style={{
+						backgroundColor: colors.backgroundApp,
+						...StyleSheet.absoluteFillObject,
+						opacity: headerOpacity,
+					}}
+				/>
+			),
+			headerTransparent: true,
+		});
+	}, [headerOpacity, navigation]);
 
 	const detailScreen = (index: number) => {
 		dispatch(incrementImageAction());
@@ -65,15 +96,29 @@ const GridImageView: React.FC<Props> = ({ data, onPress, onEndReached }) => {
 	const keyExtractor = (item: any, index: number) => index.toString();
 
 	return (
-		<FlatList
+		<Animated.FlatList
 			data={data}
 			renderItem={renderItem}
 			keyExtractor={keyExtractor}
 			numColumns={numColumns}
-			style={styles.container}
+			style={[styles.container]}
+			contentContainerStyle={{ flexGrow: 1, paddingTop: headerHeight }}
 			onEndReached={onEndReached}
 			onEndReachedThreshold={1.5}
 			initialNumToRender={20}
+			onScroll={Animated.event(
+				[
+					{
+						nativeEvent: {
+							contentOffset: {
+								y: yOffset,
+							},
+						},
+					},
+				],
+				{ useNativeDriver: true }
+			)}
+			scrollEventThrottle={16}
 		/>
 	);
 };
