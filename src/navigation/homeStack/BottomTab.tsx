@@ -8,7 +8,7 @@ import { TabScreenProps } from 'model';
 import React, { memo, useEffect, useState } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
-import { Category, DetailCategory, More, Popular } from 'screen/home';
+import { Category, DetailCategory, More } from 'screen/home';
 import { Device } from 'utils';
 import { keyBanner_category } from 'utils/GoogleAds';
 
