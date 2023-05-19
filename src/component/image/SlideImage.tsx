@@ -48,7 +48,7 @@ const SlideImage = forwardRef(({ data, style, index = 0 }: Props, ref: any) => {
 				renderItem={({ item }) => {
 					return (
 						<FastImage
-							source={imageSource(item?.media?.url)}
+							source={imageSource(item?.media?.formats?.large?.url)}
 							style={[
 								{
 									width: screenWidth,
