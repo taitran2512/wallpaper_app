@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 import { colors, screenHeight, screenWidth } from 'core';
+import { debounce } from 'lodash';
 import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import {
 	FlatList,
@@ -16,9 +17,10 @@ interface Props {
 	data: WallpaperType[];
 	style?: StyleProp<ViewStyle>;
 	index: number;
+	onIndexChange?: (index: number) => void;
 }
 
-const SlideImage = forwardRef(({ data, style, index = 0 }: Props, ref: any) => {
+const SlideImage = forwardRef(({ data, style, index = 0, onIndexChange }: Props, ref: any) => {
 	const listRef = useRef<FlatList>();
 	const [idx, setIdx] = useState<number>(index);
 
@@ -27,6 +29,10 @@ const SlideImage = forwardRef(({ data, style, index = 0 }: Props, ref: any) => {
 			listRef?.current?.scrollToOffset({ animated: false, offset: screenWidth * index });
 		}
 	}, [index]);
+
+	useEffect(() => {
+		onIndexChange?.(idx);
+	}, [idx]);
 
 	useImperativeHandle(ref, () => ({ currentIndex: idx }));
 
@@ -48,7 +54,7 @@ const SlideImage = forwardRef(({ data, style, index = 0 }: Props, ref: any) => {
 				renderItem={({ item }) => {
 					return (
 						<FastImage
-							source={imageSource(item?.media?.formats?.large?.url)}
+							source={imageSource(item?.media?.formats?.large?.url || item?.media?.url)}
 							style={[
 								{
 									width: screenWidth,

@@ -7,7 +7,7 @@ import { Screens } from 'common';
 import { ExampleScreen, Flex, Icon, ModalConfirm, Skeleton, SlideImage } from 'component';
 import { colors, Navigator, screenHeight, sizes, strings, Style } from 'core/index';
 import WallpaperManageModule from 'library/wallpaper/WallpaperManager';
-import { remove } from 'lodash';
+import { debounce, remove } from 'lodash';
 import { ScreenProps } from 'model';
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import {
@@ -137,6 +137,16 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 		}
 	};
 
+	const onIndexChange = debounce(async (idx: number) => {
+		const item: WallpaperType = data[idx];
+		const likedImageArray: any[] = (await Storage.getData(Storage.key.likedImageArray)) || [];
+		if (likedImageArray.find((e) => e.id === item.id)) {
+			setLike(true);
+		} else {
+			setLike(false);
+		}
+	}, 100);
+
 	const setHeader = () => (
 		<View style={[styles.header]}>
 			<TouchableOpacity style={styles.button} onPress={() => Navigator.goBack()}>
@@ -198,7 +208,7 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 
 	return (
 		<Flex style={styles.container}>
-			<SlideImage ref={slideRef} data={data} index={index} />
+			<SlideImage ref={slideRef} data={data} index={index} onIndexChange={onIndexChange} />
 			{setHeader()}
 			<ExampleScreen type={type} />
 			{showToast ? renderToastNotify() : null}

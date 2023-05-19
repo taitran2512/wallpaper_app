@@ -40,11 +40,11 @@ const GridImageView: React.FC<Props> = ({ data, onPress, onEndReached }) => {
 		let url = IMAGE_URL;
 		const pixelRatio = PixelRatio.get();
 		if (pixelRatio < 2) {
-			url += item?.media?.formats?.small?.url;
+			url += item?.media?.formats?.small?.url || item?.media?.formats?.thumbnail?.url;
 		} else if (pixelRatio < 3) {
-			url += item?.media?.formats?.medium?.url;
+			url += item?.media?.formats?.medium?.url || item?.media?.formats?.thumbnail?.url;
 		} else {
-			url += item?.media?.formats?.large?.url;
+			url += item?.media?.formats?.large?.url || item?.media?.formats?.thumbnail?.url;
 		}
 		return (
 			<View
@@ -73,6 +73,7 @@ const GridImageView: React.FC<Props> = ({ data, onPress, onEndReached }) => {
 			style={styles.container}
 			onEndReached={onEndReached}
 			onEndReachedThreshold={1.5}
+			initialNumToRender={20}
 		/>
 	);
 };

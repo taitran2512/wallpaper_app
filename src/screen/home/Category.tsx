@@ -89,6 +89,7 @@ const Category = ({ navigation }: TabScreenProps) => {
 				keyboardShouldPersistTaps="handled"
 				showsVerticalScrollIndicator={false}
 				keyExtractor={(e, index) => String(index)}
+				initialNumToRender={20}
 			/>
 		</Flex>
 	);

@@ -1,6 +1,7 @@
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { useIsFocused } from '@react-navigation/native';
 import { screenOptionsStack } from 'common/nagivationOption';
 import { GridImageView, NavigationBackButton } from 'component';
 import { colors, fonts, sizes } from 'core/index';
@@ -13,7 +14,7 @@ const Tab = createMaterialTopTabNavigator();
 const Favorite = ({ navigation }: ScreenProps) => {
 	const [likedData, setLikedData] = useState<WallpaperType[]>([]);
 	const [wallpaperData, setWallpaperData] = useState<WallpaperType[]>([]);
-
+	const isFocused = useIsFocused();
 	const getData = async () => {
 		const [data1, data2] = await Storage.getMultiData([
 			Storage.key.likedImageArray,
@@ -32,8 +33,11 @@ const Favorite = ({ navigation }: ScreenProps) => {
 			headerTitleAlign: 'center',
 			headerShadowVisible: false,
 		});
-		getData();
 	}, []);
+
+	useEffect(() => {
+		isFocused && getData();
+	}, [isFocused]);
 
 	const Like = () => <GridImageView data={likedData} />;
 	const Collection = () => <GridImageView data={wallpaperData} />;
