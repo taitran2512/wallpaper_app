@@ -97,6 +97,9 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 						WallpaperApi.updateCountSetWallpaper(item?.id, item?.download_count + 1);
 						const listSetWallpaper: any[] =
 							(await Storage.getData(Storage.key.listSetWallpaper)) || [];
+						if (listSetWallpaper.find((e) => e.id === item.id)) {
+							return;
+						}
 						const newlistSetWallpaper = [item, ...listSetWallpaper];
 						Storage.setData(Storage.key.listSetWallpaper, newlistSetWallpaper);
 					}
@@ -123,6 +126,9 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 
 		const likedImageArray: any[] = (await Storage.getData(Storage.key.likedImageArray)) || [];
 		if (newValue) {
+			if (likedImageArray.find((e) => e.id === item.id)) {
+				return;
+			}
 			const newLikedImageArray = [item, ...likedImageArray];
 			Storage.setData(Storage.key.likedImageArray, newLikedImageArray);
 		} else {

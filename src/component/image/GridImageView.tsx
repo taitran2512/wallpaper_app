@@ -48,11 +48,9 @@ const GridImageView: React.FC<Props> = ({ data, onPress, onEndReached }) => {
 		}
 		return (
 			<View
-				style={
-					data.length > 3 && {
-						flex: index === data.length - 1 ? numColumns - 1 : 1,
-					}
-				}>
+				style={{
+					flex: 1 / numColumns,
+				}}>
 				<TouchableOpacity
 					onPress={() =>
 						onPress ? onPress?.(IMAGE_URL + item?.media?.url) : detailScreen(index)
