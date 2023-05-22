@@ -21,6 +21,7 @@ const Splash = () => {
 		strings.setLanguage(appLanguage);
 		onboardRef.current = onboard;
 	});
+
 	appOpenAd.addAdEventsListener(({ type }) => {
 		console.log(type, 'type');
 		if (type === 'loaded') {

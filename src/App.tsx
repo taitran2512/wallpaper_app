@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import remoteConfig from '@react-native-firebase/remote-config';
 import { setConfigFirebase } from 'action/appAction';
-import ConfigApi from 'api/ConfigApi';
 import { Loading, ModalAdsResume, ToastDebug } from 'component';
 import { Navigator } from 'core';
 import AppStack from 'navigation';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { AppState, StatusBar, UIManager } from 'react-native';
 import 'react-native-gesture-handler';
 import { useAppOpenAd } from 'react-native-google-mobile-ads';
@@ -25,7 +25,7 @@ const App: React.FC = () => {
 		keywords: [],
 	});
 	const isFirst = useRef(true);
-
+	const [loading, setLoading] = useState<boolean>(true);
 	useEffect(() => {
 		setTimeout(() => {
 			SplashScreen.hide();
@@ -42,10 +42,12 @@ const App: React.FC = () => {
 		SystemNavigationBar.immersive();
 		getConfigRemoteFirebase();
 	}, []);
+
 	const getConfigRemoteFirebase = async () => {
 		try {
-			const config = await ConfigApi.getConfig();
+			const config = await remoteConfig().getAll();
 			store.dispatch(setConfigFirebase(config?.data));
+			setLoading(false);
 		} catch (error: any) {
 			console.log(error.message);
 		}
@@ -81,7 +83,9 @@ const App: React.FC = () => {
 			showAdsRef.current?.close();
 		}
 	}, [isClosed]);
-
+	if (!loading) {
+		return null;
+	}
 	return (
 		<Provider store={store}>
 			<StatusBar
