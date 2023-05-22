@@ -39,8 +39,8 @@ const Favorite = ({ navigation }: ScreenProps) => {
 		isFocused && getData();
 	}, [isFocused]);
 
-	const Like = () => <GridImageView data={likedData} navigation={navigation} />;
-	const Collection = () => <GridImageView data={wallpaperData} navigation={navigation} />;
+	const Like = () => <GridImageView data={likedData} />;
+	const Collection = () => <GridImageView data={wallpaperData} />;
 
 	return (
 		<Tab.Navigator

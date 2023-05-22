@@ -20,7 +20,7 @@ interface Props {
 	data: WallpaperType[];
 	onPress?: any;
 	onEndReached?: any;
-	navigation: ScreenProps['navigation'] | TabScreenProps['navigation'];
+	navigation?: ScreenProps['navigation'] | TabScreenProps['navigation'];
 }
 
 const GridImageView: React.FC<Props> = ({ data, onPress, onEndReached, navigation }) => {
@@ -36,22 +36,23 @@ const GridImageView: React.FC<Props> = ({ data, onPress, onEndReached, navigatio
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		navigation.setOptions({
-			headerStyle: {
-				opacity: headerOpacity,
-				backgroundColor: colors.backgroundApp,
-			},
-			headerBackground: () => (
-				<Animated.View
-					style={{
-						backgroundColor: colors.backgroundApp,
-						...StyleSheet.absoluteFillObject,
-						opacity: headerOpacity,
-					}}
-				/>
-			),
-			headerTransparent: true,
-		});
+		if (navigation)
+			navigation.setOptions({
+				headerStyle: {
+					opacity: headerOpacity,
+					backgroundColor: colors.backgroundApp,
+				},
+				headerBackground: () => (
+					<Animated.View
+						style={{
+							backgroundColor: colors.backgroundApp,
+							...StyleSheet.absoluteFillObject,
+							opacity: headerOpacity,
+						}}
+					/>
+				),
+				headerTransparent: true,
+			});
 	}, [headerOpacity, navigation]);
 
 	const detailScreen = (index: number) => {
