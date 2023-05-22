@@ -1,17 +1,17 @@
 /* eslint-disable react-native/no-inline-styles */
+import { useHeaderHeight } from '@react-navigation/elements';
 import { incrementImageAction } from 'action/appAction';
 import { Screens } from 'common';
 import { colors, Navigator, screenWidth, sizes } from 'core/index';
 import { ScreenProps, TabScreenProps } from 'model';
 import React, { useEffect, useRef } from 'react';
-import { Animated, FlatList, PixelRatio, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Animated, PixelRatio, StyleSheet, TouchableOpacity, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { useDispatch, useSelector } from 'react-redux';
 import { countImageHomeSelector } from 'selector/appSelector';
 import { imageSource } from 'utils';
 import { keyInterstitialOpenImage, keyInterstitialOpenImageHigh } from 'utils/GoogleAds';
 import { IMAGE_URL } from 'utils/Https';
-import { useHeaderHeight } from '@react-navigation/elements';
 
 const numColumns = 3;
 const imageWidth = (screenWidth - sizes.s4) / numColumns;
@@ -36,7 +36,7 @@ const GridImageView: React.FC<Props> = ({ data, onPress, onEndReached, navigatio
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		if (navigation)
+		if (navigation) {
 			navigation.setOptions({
 				headerStyle: {
 					opacity: headerOpacity,
@@ -53,6 +53,7 @@ const GridImageView: React.FC<Props> = ({ data, onPress, onEndReached, navigatio
 				),
 				headerTransparent: true,
 			});
+		}
 	}, [headerOpacity, navigation]);
 
 	const detailScreen = (index: number) => {
@@ -103,7 +104,7 @@ const GridImageView: React.FC<Props> = ({ data, onPress, onEndReached, navigatio
 			keyExtractor={keyExtractor}
 			numColumns={numColumns}
 			style={[styles.container]}
-			contentContainerStyle={{ flexGrow: 1, paddingTop: headerHeight }}
+			contentContainerStyle={{ flexGrow: 1, paddingTop: navigation ? headerHeight : 0 }}
 			onEndReached={onEndReached}
 			onEndReachedThreshold={1.5}
 			initialNumToRender={20}
