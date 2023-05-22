@@ -56,3 +56,6 @@ export const canOpenUrl = (url: string, name?: string) => {
 		Alert.alert('Error', `Can't open ${name}`);
 	}
 };
+export let configRemoteFirebase: any = {
+	data: {},
+};

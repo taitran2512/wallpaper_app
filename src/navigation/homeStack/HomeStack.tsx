@@ -2,18 +2,18 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { screenOptionsStack } from 'common/nagivationOption';
 import { colors, Navigator } from 'core';
 import React, { memo, useCallback } from 'react';
+import { Platform } from 'react-native';
 import { enableScreens } from 'react-native-screens';
 import SystemNavigationBar from 'react-native-system-navigation-bar';
 import * as HomeScreen from 'screen/home';
 import BottomTab from './BottomTab';
-import { Platform } from 'react-native';
 
 enableScreens();
 const Stack = createNativeStackNavigator();
 
 const HomeStack: React.FC = () => {
 	const renderStackScreen = useCallback(() => {
-		SystemNavigationBar.immersive();
+		SystemNavigationBar.stickyImmersive();
 		return Object.keys(HomeScreen).map((key: string, index: number) => (
 			<Stack.Screen
 				key={String(index)}
@@ -43,7 +43,6 @@ const HomeStack: React.FC = () => {
 				options={{
 					...screenOptionsStack,
 					headerShown: true,
-					title: 'Popular',
 					headerTitleAlign: 'center',
 					headerShadowVisible: false,
 					headerStyle: {

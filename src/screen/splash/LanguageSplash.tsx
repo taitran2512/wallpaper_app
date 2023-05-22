@@ -3,13 +3,21 @@
 import { images } from 'assets';
 import { Stacks } from 'common';
 import { Languages } from 'common/data';
-import { Buttons, Flex, Icon, NativeAds } from 'component';
+import { Flex, Icon, NativeAds } from 'component';
 import { colors, Navigator, screenHeight, screenWidth, sizes, strings, Style } from 'core/index';
 import { ScreenProps } from 'model';
 import React, { useEffect, useState } from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import {
+	ImageBackground,
+	ScrollView,
+	StyleSheet,
+	Text,
+	TouchableOpacity,
+	View,
+} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import LinearGradient from 'react-native-linear-gradient';
+import SystemNavigationBar from 'react-native-system-navigation-bar';
 import { useSelector } from 'react-redux';
 import { getConfigFirebaseSeletor } from 'selector/appSelector';
 import { Device, Storage } from 'utils';
@@ -36,6 +44,7 @@ const LanguageSplash: React.FC<ScreenProps | any> = ({ navigation }) => {
 	useEffect(() => {
 		const getKey = config?.find?.((x: any) => x.key === 'native_language');
 		setOptionsNativeAds(getKey?.options);
+		SystemNavigationBar.stickyImmersive();
 	}, [optionsNativeAds]);
 
 	const setAppLanguage = (lan: string) => {
@@ -80,44 +89,48 @@ const LanguageSplash: React.FC<ScreenProps | any> = ({ navigation }) => {
 							</View>
 							{Languages.map((item, index) => {
 								return (
-									<Buttons
+									<TouchableOpacity
+										activeOpacity={0.8}
 										key={index}
-										onPress={() => setAppLanguage(item.lang)}
-										style={[Style.row_between, Style.top16, Style.ph16]}>
-										<Text style={[Style.h6, { color: colors.white }]}>{item.name}</Text>
-										<Icon
-											source={
-												language === item.lang
-													? images.ic_checkbox_checked
-													: images.ic_checkbox
-											}
-											size={sizes.s24}
-										/>
-									</Buttons>
+										style={[Style.ph16, Style.top16]}
+										onPress={() => setAppLanguage(item.lang)}>
+										<ImageBackground
+											source={images.backgroun_btn_lang}
+											style={[styles.button, Style.row_between, Style.ph16]}
+											resizeMode="stretch">
+											<Text style={[Style.h6, { color: colors.white }]}>
+												{item.name}
+											</Text>
+											<Icon
+												source={
+													language === item.lang
+														? images.ic_checkbox_checked
+														: images.ic_checkbox
+												}
+												size={sizes.s24}
+											/>
+										</ImageBackground>
+									</TouchableOpacity>
 								);
 							})}
 						</View>
 					</ScrollView>
-					{optionsNativeAds ? (
-						<>
-							<View
-								style={[
-									Style.row_center,
-									Style.top24,
-									{
-										paddingBottom: sizes.s24,
-									},
-								]}
-							/>
-							<NativeAds
-								loadOnMount={false}
-								index={1}
-								type="image"
-								media={false}
-								keys={keyNative_onboarding}
-							/>
-						</>
-					) : null}
+					<View
+						style={[
+							Style.row_center,
+							Style.top24,
+							{
+								paddingBottom: sizes.s24,
+							},
+						]}
+					/>
+					<NativeAds
+						loadOnMount={false}
+						index={1}
+						type="image"
+						media={false}
+						keys={keyNative_onboarding}
+					/>
 				</View>
 			</LinearGradient>
 		</Flex>
@@ -170,5 +183,11 @@ const styles = StyleSheet.create({
 	viewBanner: {
 		marginHorizontal: sizes.s16,
 		alignItems: 'center',
+	},
+	button: {
+		...Style.row,
+		height: sizes.s50,
+		flex: 0,
+		marginHorizontal: -16,
 	},
 });

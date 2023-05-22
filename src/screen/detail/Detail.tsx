@@ -298,7 +298,7 @@ const styles = StyleSheet.create({
 		marginTop: Device.setHeaderHeight(sizes.s16),
 	},
 	button: {
-		backgroundColor: colors.gradient5,
+		backgroundColor: colors.gradient,
 		height: sizes.s36,
 		width: sizes.s36,
 		borderRadius: sizes.s8,

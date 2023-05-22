@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { dataDetailCategory } from 'common/data';
 import { GridImageView } from 'component';
-import { fonts, sizes } from 'core/index';
+import { fonts, sizes, strings } from 'core/index';
 import { TabScreenProps } from 'model';
 import React, { useEffect } from 'react';
 
@@ -9,7 +9,7 @@ const Popular = ({ navigation }: TabScreenProps) => {
 	useEffect(() => {
 		navigation.setOptions({
 			headerShown: true,
-			title: 'Popular',
+			title: strings.popular,
 			headerLeft: undefined,
 			headerTitleStyle: {
 				color: 'white',

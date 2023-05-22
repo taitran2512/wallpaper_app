@@ -26,4 +26,5 @@ export const hi = {
 	cancel: 'रद्द करें',
 	success: 'सफलता',
 	wallpaper: 'वॉलपेपर',
+	menu: 'मेन्यू',
 };

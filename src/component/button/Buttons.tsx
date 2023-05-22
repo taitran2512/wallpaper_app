@@ -31,8 +31,7 @@ const Buttons: React.FC<Props> = ({ title, onPress, children, blurStyle, style }
 					blurStyle,
 				]}
 				blurType="light"
-				blurAmount={10}
-				blurRadius={20}
+				blurAmount={20}
 				overlayColor="transparent"
 			/>
 			{children || <Text style={styles.title}>{title}</Text>}

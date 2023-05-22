@@ -80,7 +80,7 @@ const Onboarding: React.FC<ScreenProps | any> = () => {
 		));
 	};
 	useEffect(() => {
-		SystemNavigationBar.immersive();
+		SystemNavigationBar.stickyImmersive();
 	}, []);
 	return (
 		<Flex style={styles.container}>

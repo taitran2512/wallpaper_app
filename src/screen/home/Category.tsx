@@ -1,4 +1,7 @@
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react-hooks/exhaustive-deps */
+import { useHeaderHeight } from '@react-navigation/elements';
 import { incrementCategoryAction } from 'action/appAction';
 import WallpaperApi from 'api/WallpaperApi';
 import { Screens } from 'common';
@@ -9,7 +12,6 @@ import React, { memo, useEffect, useRef, useState } from 'react';
 import {
 	ActivityIndicator,
 	Animated,
-	FlatList,
 	ImageBackground,
 	StyleSheet,
 	Text,
@@ -18,9 +20,9 @@ import {
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { countCategory } from 'selector/appSelector';
+import { imageSource } from 'utils';
 import { keyInterstitialOpenCate, keyInterstitialOpenCateHigh } from 'utils/GoogleAds';
 import { IMAGE_URL } from 'utils/Https';
-import { useHeaderHeight } from '@react-navigation/elements';
 
 const Category = ({ navigation }: TabScreenProps) => {
 	const count = useSelector(countCategory);
@@ -50,8 +52,8 @@ const Category = ({ navigation }: TabScreenProps) => {
 	useEffect(() => {
 		navigation.setOptions({
 			headerStyle: {
-				opacity: headerOpacity,
-				backgroundColor: colors.backgroundApp,
+				// opacity: headerOpacity,
+				backgroundColor: colors.gradient5,
 			},
 			headerBackground: () => (
 				<Animated.View
@@ -93,11 +95,20 @@ const Category = ({ navigation }: TabScreenProps) => {
 		return (
 			<TouchableOpacity activeOpacity={0.8} onPress={() => detailCategory(item)}>
 				<ImageBackground
-					source={{ uri: IMAGE_URL + item?.thumbnail?.url }}
+					source={imageSource(IMAGE_URL + item?.thumbnail?.url)}
 					style={styles.itemCategory}
 					resizeMode="cover">
-					<Text style={styles.itemTitle}>{item.name}</Text>
-					<Text style={styles.itemSubTitle}>{item.image_count || 0} wallpapers</Text>
+					<View
+						style={{
+							backgroundColor: 'rgba(34, 34, 34, 0.15)',
+							alignItems: 'center',
+							width: '100%',
+							height: 'auto',
+							paddingVertical: sizes.s20,
+						}}>
+						<Text style={styles.itemTitle}>{item.name}</Text>
+						<Text style={styles.itemSubTitle}>{item.image_count || 0} wallpapers</Text>
+					</View>
 				</ImageBackground>
 			</TouchableOpacity>
 		);
@@ -151,7 +162,7 @@ const styles = StyleSheet.create({
 		backgroundColor: colors.backgroundApp,
 	},
 	itemCategory: {
-		paddingVertical: sizes.s20,
+		// paddingVertical: sizes.s20,
 		alignItems: 'center',
 		justifyContent: 'center',
 		marginBottom: sizes.s2,

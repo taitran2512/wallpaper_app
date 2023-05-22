@@ -58,7 +58,7 @@ const DrawerContent = () => {
 				}}>
 				<Text
 					style={[screenOptionsStack.headerTitleStyle, Style.txtCenter, { color: 'white' }]}>
-					Menu
+					{strings.menu}
 				</Text>
 			</View>
 			{DATA.map((item, index) => (

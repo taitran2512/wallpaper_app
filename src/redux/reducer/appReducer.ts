@@ -10,7 +10,7 @@ export interface AppState {
 const initialState: AppState = {
 	countShowAds: 0,
 	countShowAdsHome: 0,
-	config: [],
+	config: null,
 };
 
 export const appReducer = (state = initialState, action: AnyAction) => {

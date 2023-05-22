@@ -25,4 +25,5 @@ export const en = {
 	cancel: 'Cancel',
 	success: 'Success',
 	wallpaper: 'Wallpapers',
+	menu: 'Menu',
 };

@@ -26,4 +26,5 @@ export const es = {
 	cancel: 'Cancelar',
 	success: 'Éxito',
 	wallpaper: 'Fondos de pantalla',
+	menu: 'Menú',
 };

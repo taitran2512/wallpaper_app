@@ -1,8 +1,9 @@
+/* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react-native/no-inline-styles */
 import { useHeaderHeight } from '@react-navigation/elements';
 import { incrementImageAction } from 'action/appAction';
 import { Screens } from 'common';
-import { colors, Navigator, screenWidth, sizes } from 'core/index';
+import { colors, Navigator, screenWidth, sizes, strings } from 'core/index';
 import { ScreenProps, TabScreenProps } from 'model';
 import React, { useEffect, useRef } from 'react';
 import { Animated, PixelRatio, StyleSheet, TouchableOpacity, View } from 'react-native';
@@ -39,9 +40,10 @@ const GridImageView: React.FC<Props> = ({ data, onPress, onEndReached, navigatio
 		if (navigation) {
 			navigation.setOptions({
 				headerStyle: {
-					opacity: headerOpacity,
+					// opacity: headerOpacity,
 					backgroundColor: colors.backgroundApp,
 				},
+				title: strings.popular,
 				headerBackground: () => (
 					<Animated.View
 						style={{

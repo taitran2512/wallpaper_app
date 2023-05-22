@@ -3,13 +3,19 @@
 import { images } from 'assets';
 import { Stacks } from 'common';
 import { Languages } from 'common/data';
-import { Buttons, Flex, Icon, NativeAds } from 'component';
-import { Navigator, Style, colors, screenHeight, screenWidth, sizes, strings } from 'core/index';
+import { Flex, Icon, NativeAds } from 'component';
+import { colors, Navigator, screenHeight, screenWidth, sizes, strings, Style } from 'core/index';
 import { ScreenProps } from 'model';
 import React, { useEffect, useState } from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import {
+	ImageBackground,
+	ScrollView,
+	StyleSheet,
+	Text,
+	TouchableOpacity,
+	View,
+} from 'react-native';
 import FastImage from 'react-native-fast-image';
-import LinearGradient from 'react-native-linear-gradient';
 import { Device, Storage } from 'utils';
 import { keyNative_onboarding } from 'utils/GoogleAds';
 
@@ -43,14 +49,7 @@ const Language: React.FC<ScreenProps | any> = ({ navigation }) => {
 				source={images.onboarding}
 				style={[StyleSheet.absoluteFill, styles.background]}
 			/>
-			<LinearGradient
-				style={{ flex: 1 }}
-				colors={[
-					'rgba(0, 0, 0, 0.01)',
-					'rgba(0, 0, 0, 0.2)',
-					'rgba(0, 0, 0, 0.5)',
-					'rgba(0, 0, 0, 0.7)',
-				]}>
+			<View style={{ flex: 1 }}>
 				<View style={styles.container}>
 					<ScrollView
 						showsHorizontalScrollIndicator={false}
@@ -69,20 +68,28 @@ const Language: React.FC<ScreenProps | any> = ({ navigation }) => {
 							</View>
 							{Languages.map((item, index) => {
 								return (
-									<Buttons
+									<TouchableOpacity
+										activeOpacity={0.8}
 										key={index}
-										onPress={() => setAppLanguage(item.lang)}
-										style={[Style.row_between, Style.top16, Style.ph16]}>
-										<Text style={[Style.h6, { color: colors.white }]}>{item.name}</Text>
-										<Icon
-											source={
-												language === item.lang
-													? images.ic_checkbox_checked
-													: images.ic_checkbox
-											}
-											size={sizes.s24}
-										/>
-									</Buttons>
+										style={[Style.ph16, Style.top16]}
+										onPress={() => setAppLanguage(item.lang)}>
+										<ImageBackground
+											source={images.backgroun_btn_lang}
+											style={[styles.button, Style.row_between, Style.ph16]}
+											resizeMode="stretch">
+											<Text style={[Style.h6, { color: colors.white }]}>
+												{item.name}
+											</Text>
+											<Icon
+												source={
+													language === item.lang
+														? images.ic_checkbox_checked
+														: images.ic_checkbox
+												}
+												size={sizes.s24}
+											/>
+										</ImageBackground>
+									</TouchableOpacity>
 								);
 							})}
 						</View>
@@ -97,6 +104,7 @@ const Language: React.FC<ScreenProps | any> = ({ navigation }) => {
 							},
 						]}
 					/>
+
 					<NativeAds
 						loadOnMount={false}
 						index={1}
@@ -105,7 +113,7 @@ const Language: React.FC<ScreenProps | any> = ({ navigation }) => {
 						keys={keyNative_onboarding}
 					/>
 				</View>
-			</LinearGradient>
+			</View>
 		</Flex>
 	);
 };
@@ -156,5 +164,11 @@ const styles = StyleSheet.create({
 	viewBanner: {
 		marginHorizontal: sizes.s16,
 		alignItems: 'center',
+	},
+	button: {
+		...Style.row,
+		height: sizes.s50,
+		flex: 0,
+		marginHorizontal: -16,
 	},
 });

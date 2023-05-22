@@ -26,4 +26,5 @@ export const fr = {
 	cancel: 'Annuler',
 	success: 'Succès',
 	wallpaper: 'Papiers peints',
+	menu: 'Menu',
 };

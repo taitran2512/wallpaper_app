@@ -26,4 +26,5 @@ export const pt = {
 	cancel: 'Cancelar',
 	success: 'Sucesso',
 	wallpaper: 'Papéis de parede',
+	menu: 'Menu',
 };

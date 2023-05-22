@@ -26,4 +26,5 @@ export const de = {
 	cancel: 'Abbrechen',
 	success: 'Erfolgreich',
 	wallpaper: 'Hintergrundbilder',
+	menu: 'Speisekarte',
 };
