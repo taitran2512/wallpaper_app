@@ -1,4 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
+import remoteConfig from '@react-native-firebase/remote-config';
 import { images } from 'assets';
 import { Flex, Skeleton } from 'component';
 import { colors, Navigator, screenHeight, screenWidth, sizes, strings, Style } from 'core/index';
@@ -17,8 +18,6 @@ import FastImage from 'react-native-fast-image';
 import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
 import LinearGradient from 'react-native-linear-gradient';
 import SystemNavigationBar from 'react-native-system-navigation-bar';
-import { useSelector } from 'react-redux';
-import { getConfigFirebaseSeletor } from 'selector/appSelector';
 import { Storage } from 'utils';
 import { keyBanner_onboarding } from 'utils/GoogleAds';
 
@@ -26,8 +25,7 @@ const Onboarding: React.FC<ScreenProps | any> = () => {
 	const [idx, setIdx] = useState<number>(0);
 	const [loading, setLoading] = useState<boolean>(true);
 	const scrollRef = useRef<any>();
-	const config = useSelector(getConfigFirebaseSeletor);
-	console.log(config, 'config');
+	const [hide, setHide] = useState<boolean>(true);
 	const WelcomArr = [
 		{
 			id: 0,
@@ -81,7 +79,22 @@ const Onboarding: React.FC<ScreenProps | any> = () => {
 	};
 	useEffect(() => {
 		SystemNavigationBar.stickyImmersive();
-	}, []);
+		getConfigRemote();
+	}, [hide]);
+
+	const getConfigRemote = () => {
+		remoteConfig()
+			.setDefaults({
+				banner_onboarding: false,
+			})
+			.then(() => remoteConfig()?.fetch(300))
+			.then(() => remoteConfig()?.fetchAndActivate());
+		const isBannerOnboarding: any = remoteConfig()?.getValue('banner_onboarding').asBoolean();
+		setHide(isBannerOnboarding);
+		if (isBannerOnboarding) {
+			setLoading(false);
+		}
+	};
 	return (
 		<Flex style={styles.container}>
 			<FastImage
@@ -130,21 +143,23 @@ const Onboarding: React.FC<ScreenProps | any> = () => {
 
 					<View style={styles.viewBanner}>
 						{loading && <Skeleton style={StyleSheet.absoluteFill} />}
-						<BannerAd
-							unitId={keyBanner_onboarding}
-							size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-							requestOptions={{
-								requestNonPersonalizedAdsOnly: true,
-							}}
-							onAdLoaded={(e) => {
-								if (e) {
-									setLoading(false);
-								}
-							}}
-							onAdFailedToLoad={(error) => {
-								console.error('Advert failed to load: ', error);
-							}}
-						/>
+						{hide && (
+							<BannerAd
+								unitId={keyBanner_onboarding}
+								size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+								requestOptions={{
+									requestNonPersonalizedAdsOnly: true,
+								}}
+								onAdLoaded={(e) => {
+									if (e) {
+										setLoading(false);
+									}
+								}}
+								onAdFailedToLoad={(error) => {
+									console.error('Advert failed to load: ', error);
+								}}
+							/>
+						)}
 					</View>
 				</View>
 			</LinearGradient>

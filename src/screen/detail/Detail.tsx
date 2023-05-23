@@ -84,6 +84,7 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 
 	const onHandleWallpaper = (type: string) => {
 		try {
+			Navigator.showLoading();
 			const item: WallpaperType = data[slideRef.current?.currentIndex];
 			modalRef.current.close();
 			WallpaperManageModule.setWallpaper(
@@ -93,6 +94,7 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 				type,
 				async (res?: any) => {
 					if (res.status === 'success') {
+						Navigator.hideLoading();
 						showToastSuccess();
 						WallpaperApi.updateCountSetWallpaper(item?.id, item?.download_count + 1);
 						const listSetWallpaper: any[] =

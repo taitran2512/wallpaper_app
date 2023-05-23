@@ -98,7 +98,7 @@ const Language: React.FC<ScreenProps | any> = ({ navigation }) => {
 					<View
 						style={[
 							Style.row_center,
-							Style.top24,
+							Style.top8,
 							{
 								paddingBottom: sizes.s24,
 							},

@@ -30,8 +30,7 @@ const App: React.FC = () => {
 	const getConfigRemoteFirebase = async () => {
 		try {
 			await remoteConfig();
-			await remoteConfig().fetchAndActivate();
-			await remoteConfig().fetch(100);
+			await remoteConfig().fetch(300);
 			const config = await remoteConfig().getAll();
 			LogUtil.i(config);
 			if (config) {
