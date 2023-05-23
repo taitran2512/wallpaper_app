@@ -33,4 +33,5 @@ export const images = {
 	ic_more: require('./images/ic_more.png'),
 	ic_more_selected: require('./images/ic_more_selected.png'),
 	bg_btn_language: require('./images/bg_btn_language.png'),
+	blur_view: require('./images/blur_view.png'),
 };

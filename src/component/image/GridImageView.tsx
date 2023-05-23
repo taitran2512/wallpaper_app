@@ -1,11 +1,12 @@
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react-native/no-inline-styles */
+import remoteConfig from '@react-native-firebase/remote-config';
 import { useHeaderHeight } from '@react-navigation/elements';
 import { incrementImageAction } from 'action/appAction';
 import { Screens } from 'common';
 import { colors, Navigator, screenWidth, sizes, strings } from 'core/index';
 import { ScreenProps, TabScreenProps } from 'model';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Animated, PixelRatio, StyleSheet, TouchableOpacity, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { useDispatch, useSelector } from 'react-redux';
@@ -32,7 +33,8 @@ const GridImageView: React.FC<Props> = ({ data, onPress, onEndReached, navigatio
 		extrapolate: 'clamp',
 	});
 	const headerHeight = useHeaderHeight();
-
+	const [hideAds1, setHideAds1] = useState<boolean>(false);
+	const [hideAds2, setHideAds2] = useState<boolean>(false);
 	const count = useSelector(countImageHomeSelector);
 	const dispatch = useDispatch();
 
@@ -49,25 +51,48 @@ const GridImageView: React.FC<Props> = ({ data, onPress, onEndReached, navigatio
 						style={{
 							backgroundColor: colors.backgroundApp,
 							...StyleSheet.absoluteFillObject,
-							opacity: headerOpacity,
+							// opacity: headerOpacity,
 						}}
 					/>
 				),
 				headerTransparent: true,
 			});
 		}
+		getConfigRemote();
 	}, [headerOpacity, navigation]);
 
+	const getConfigRemote = () => {
+		remoteConfig()
+			.setDefaults({
+				inter_open_image_high: false,
+				inter_open_image: false,
+			})
+			.then(() => remoteConfig()?.fetch(0))
+			.then(() => remoteConfig()?.fetchAndActivate());
+		const ads1: any = remoteConfig()?.getValue('inter_open_image_high').asBoolean();
+		const ads2: any = remoteConfig()?.getValue('inter_open_image').asBoolean();
+
+		setHideAds1(ads1);
+		setHideAds2(ads2);
+	};
 	const detailScreen = (index: number) => {
 		dispatch(incrementImageAction());
 		Navigator.navigate(Screens.Detail, { data: data, index });
 		if (count % 2 !== 0) {
-			Navigator.navigate(Screens.GoogleInterstitialsAds, {
-				key: keyInterstitialOpenImageHigh,
-				key2: keyInterstitialOpenImage,
-				type: 'image_high',
-			});
-			return;
+			if (hideAds1) {
+				Navigator.navigate(Screens.GoogleInterstitialsAds, {
+					key: keyInterstitialOpenImageHigh,
+					type: 'image_high',
+				});
+				return;
+			}
+			if (hideAds2) {
+				Navigator.navigate(Screens.GoogleInterstitialsAds, {
+					key: keyInterstitialOpenImage,
+					type: 'image_high',
+				});
+				return;
+			}
 		}
 	};
 
@@ -81,6 +106,7 @@ const GridImageView: React.FC<Props> = ({ data, onPress, onEndReached, navigatio
 		} else {
 			url += item?.media?.formats?.large?.url || item?.media?.formats?.thumbnail?.url;
 		}
+
 		return (
 			<View
 				style={{
@@ -98,7 +124,6 @@ const GridImageView: React.FC<Props> = ({ data, onPress, onEndReached, navigatio
 	};
 
 	const keyExtractor = (item: any, index: number) => index.toString();
-
 	return (
 		<Animated.FlatList
 			data={data}

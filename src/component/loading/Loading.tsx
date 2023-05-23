@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 	},
 	child: {
-		backgroundColor: colors.gradient5,
+		backgroundColor: colors.gradient1,
 		borderRadius: sizes.s16,
 		padding: sizes.s36,
 		justifyContent: 'center',

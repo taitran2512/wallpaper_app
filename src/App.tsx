@@ -1,10 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import remoteConfig from '@react-native-firebase/remote-config';
-import { setConfigFirebase } from 'action/appAction';
 import { Loading, ModalAdsResume, ToastDebug } from 'component';
 import { Navigator } from 'core';
 import AppStack from 'navigation';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { AppState, StatusBar, UIManager } from 'react-native';
 import 'react-native-gesture-handler';
 import { useAppOpenAd } from 'react-native-google-mobile-ads';
@@ -12,9 +11,8 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import SplashScreen from 'react-native-splash-screen';
 import SystemNavigationBar from 'react-native-system-navigation-bar';
 import { Provider } from 'react-redux';
-import { configRemoteFirebase, Device } from 'utils';
+import { Device } from 'utils';
 import { keyOnAppResume } from 'utils/GoogleAds';
-import LogUtil from 'utils/LogUtil';
 import store from './redux/store';
 
 export let data = { isShowAds: false };
@@ -26,18 +24,17 @@ const App: React.FC = () => {
 		keywords: [],
 	});
 	const isFirst = useRef(true);
-	const [getConfig, setGetConfig] = useState<boolean>(false);
+	const openResumeRef = useRef(false);
 	const getConfigRemoteFirebase = async () => {
 		try {
 			await remoteConfig();
+			await remoteConfig().setDefaults({
+				open_resume: false,
+			});
 			await remoteConfig().fetch(0);
-			const config = await remoteConfig().getAll();
-			LogUtil.i(config);
-			if (config) {
-				setGetConfig(true);
-				store.dispatch(setConfigFirebase(config));
-				configRemoteFirebase.data = config;
-			}
+			await remoteConfig()?.fetchAndActivate();
+			const openResume: any = remoteConfig()?.getValue('open_resume').asBoolean();
+			openResumeRef.current = openResume;
 		} catch (error: any) {
 			console.log(error.message);
 		}
@@ -63,9 +60,11 @@ const App: React.FC = () => {
 		if (appState.current.match(/inactive|background/) && nextAppState === 'active') {
 			if (isFirst.current || data.isShowAds) {
 				isFirst.current = false;
-			} else {
+			}
+			if (openResumeRef.current) {
 				showAdsRef.current?.open();
 				show();
+				return;
 			}
 		}
 		appState.current = nextAppState;
@@ -90,9 +89,7 @@ const App: React.FC = () => {
 			showAdsRef.current?.close();
 		}
 	}, [isClosed]);
-	if (!getConfig) {
-		return null;
-	}
+
 	return (
 		<Provider store={store}>
 			<StatusBar

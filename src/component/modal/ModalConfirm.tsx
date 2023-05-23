@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
 		paddingHorizontal: sizes.s24,
 	},
 	modal: {
-		backgroundColor: colors.gradient,
+		backgroundColor: colors.gradient1,
 		borderRadius: sizes.s16,
 		paddingVertical: sizes.s16,
 		paddingHorizontal: sizes.s16,

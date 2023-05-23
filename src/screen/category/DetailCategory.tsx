@@ -1,5 +1,6 @@
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react-hooks/exhaustive-deps */
+import remoteConfig from '@react-native-firebase/remote-config';
 
 import WallpaperApi from 'api/WallpaperApi';
 import { images } from 'assets';
@@ -17,7 +18,7 @@ const DetailCategory: React.FC<ScreenProps | TabScreenProps> = ({ navigation, ro
 	const [loading, setLoading] = useState<boolean>(true);
 	const [data, setData] = useState<WallpaperType[]>([]);
 	const page = useRef<number>(0);
-
+	const [hideBanner, setHideBanner] = useState<boolean>(false);
 	const iniScreen = () => {
 		if (categoryName) {
 			navigation.setOptions({
@@ -55,6 +56,16 @@ const DetailCategory: React.FC<ScreenProps | TabScreenProps> = ({ navigation, ro
 		}
 	};
 
+	const getConfigRemote = () => {
+		remoteConfig()
+			.setDefaults({
+				banner_category: false,
+			})
+			.then(() => remoteConfig()?.fetch(0))
+			.then(() => remoteConfig()?.fetchAndActivate());
+		const banner: any = remoteConfig()?.getValue('banner_category').asBoolean();
+		setHideBanner(banner);
+	};
 	const getData = debounce(async () => {
 		try {
 			// get full data, no more can get
@@ -62,7 +73,7 @@ const DetailCategory: React.FC<ScreenProps | TabScreenProps> = ({ navigation, ro
 				return;
 			}
 
-			page.current += 1;
+			// page.current += 1;
 			const response = await WallpaperApi.getListWallpaperByCategory(categoryName, page.current);
 			setData([...data, ...response?.data]);
 			if (response?.meta?.pagination?.page === response.meta?.pagination?.pageCount) {
@@ -74,12 +85,13 @@ const DetailCategory: React.FC<ScreenProps | TabScreenProps> = ({ navigation, ro
 	useLayoutEffect(() => {
 		iniScreen();
 		getData();
+		getConfigRemote();
 	}, []);
 
 	return (
 		<Flex style={styles.container}>
 			<GridImageView data={data} onEndReached={getData} navigation={navigation} />
-			{!!categoryName && (
+			{!!categoryName && hideBanner && (
 				<View style={styles.viewBanner}>
 					{loading && <Skeleton style={StyleSheet.absoluteFill} />}
 					<BannerAd

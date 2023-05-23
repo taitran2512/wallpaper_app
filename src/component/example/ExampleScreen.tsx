@@ -1,8 +1,9 @@
+import { images } from 'assets';
 import { colors, screenWidth, sizes, strings, Style } from 'core/index';
 import { format } from 'date-fns';
 import { enUS, vi } from 'date-fns/locale';
 import React, { memo } from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { FlatList, ImageBackground, StyleSheet, Text, View } from 'react-native';
 
 interface Props {
 	type: string;
@@ -13,7 +14,14 @@ const ExampleScreen = (props: Props) => {
 	const renderItem = ({ index }: any) => {
 		return (
 			<View style={styles.viewItemExample}>
-				<View key={index} style={styles.itemExample} />
+				<ImageBackground
+					source={images.blur_view}
+					blurRadius={5}
+					resizeMode="cover"
+					imageStyle={{ borderRadius: sizes.s8 }}
+					key={index}
+					style={styles.itemExample}
+				/>
 			</View>
 		);
 	};
@@ -47,7 +55,12 @@ const ExampleScreen = (props: Props) => {
 					{Array(3)
 						.fill(0)
 						.map((item, index) => (
-							<View key={index} style={styles.itemExample2} />
+							<ImageBackground
+								key={index}
+								resizeMode="cover"
+								source={images.blur_view}
+								style={styles.itemExample2}
+							/>
 						))}
 				</View>
 			);
@@ -78,14 +91,13 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 	},
 	itemExample: {
-		backgroundColor: colors.gradient5,
+		// backgroundColor: colors.gradient5,
 		width: itemWidth,
 		height: itemWidth,
-		borderRadius: sizes.s8,
 		marginVertical: sizes.s16,
 	},
 	itemExample2: {
-		backgroundColor: colors.gradient4,
+		// backgroundColor: colors.gradient4,
 		width: screenWidth * 0.9,
 		height: sizes.s60,
 		borderRadius: sizes.s8,

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable react-hooks/exhaustive-deps */
-
+import remoteConfig from '@react-native-firebase/remote-config';
 import WallpaperApi from 'api/WallpaperApi';
 import { images } from 'assets';
 import { Screens } from 'common';
@@ -23,11 +23,7 @@ import {
 } from 'react-native';
 import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
 import { Device, Storage } from 'utils';
-import {
-	keyBanner_category,
-	keyInterstitialApply,
-	keyInterstitialApplyHigh,
-} from 'utils/GoogleAds';
+import { keyBanner_home, keyInterstitialApply, keyInterstitialApplyHigh } from 'utils/GoogleAds';
 import { IMAGE_URL } from 'utils/Https';
 
 const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
@@ -35,7 +31,9 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 	const [like, setLike] = useState<boolean>(false);
 	const [loading, setLoading] = useState<boolean>(true);
 	const slideRef = useRef<any>();
-
+	const [hideBanner, setHideBanner] = useState<boolean>(false);
+	const [hideAds1, setHideAds1] = useState<boolean>(false);
+	const [hideAds2, setHideAds2] = useState<boolean>(false);
 	if (Platform.OS === 'android') {
 		if (UIManager.setLayoutAnimationEnabledExperimental) {
 			UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -72,11 +70,20 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 			setType('');
 			setTimeout(() => {
 				setShowToast(false);
-				Navigator.navigate(Screens.GoogleInterstitialsAds, {
-					key: keyInterstitialApplyHigh,
-					key2: keyInterstitialApply,
-					type: 'apply_high',
-				});
+				if (hideAds1) {
+					Navigator.navigate(Screens.GoogleInterstitialsAds, {
+						key: keyInterstitialApplyHigh,
+						type: 'apply_high',
+					});
+					return;
+				}
+				if (hideAds2) {
+					Navigator.navigate(Screens.GoogleInterstitialsAds, {
+						key: keyInterstitialApply,
+						type: 'apply_high',
+					});
+					return;
+				}
 			}, 1000);
 		}
 		return;
@@ -208,6 +215,30 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 		);
 	};
 
+	useEffect(() => {
+		getConfigRemote();
+	}, [hideBanner]);
+
+	const getConfigRemote = () => {
+		remoteConfig()
+			.setDefaults({
+				banner_home: false,
+				inter_apply: false,
+				inter_apply_high: false,
+			})
+			.then(() => remoteConfig()?.fetch(0))
+			.then(() => remoteConfig()?.fetchAndActivate());
+		const isBanner: any = remoteConfig()?.getValue('banner_home').asBoolean();
+		const ads1: any = remoteConfig()?.getValue('inter_apply_high').asBoolean();
+		const ads2: any = remoteConfig()?.getValue('inter_apply').asBoolean();
+
+		setHideBanner(isBanner);
+		setHideAds1(ads1);
+		setHideAds2(ads2);
+		if (isBanner) {
+			setLoading(false);
+		}
+	};
 	return (
 		<Flex style={styles.container}>
 			<SlideImage ref={slideRef} data={data} index={index} onIndexChange={onIndexChange} />
@@ -215,24 +246,27 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 			<ExampleScreen type={type} />
 			{showToast ? renderToastNotify() : null}
 			{renderButtonBottom()}
-			<View style={styles.viewBanner}>
-				{loading && <Skeleton style={StyleSheet.absoluteFill} />}
-				<BannerAd
-					unitId={keyBanner_category}
-					size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-					requestOptions={{
-						requestNonPersonalizedAdsOnly: true,
-					}}
-					onAdLoaded={(e) => {
-						if (e) {
-							setLoading(false);
-						}
-					}}
-					onAdFailedToLoad={(error) => {
-						console.error('Advert failed to load: ', error);
-					}}
-				/>
-			</View>
+			{hideBanner && (
+				<View style={styles.viewBanner}>
+					{loading && <Skeleton style={StyleSheet.absoluteFill} />}
+					<BannerAd
+						unitId={keyBanner_home}
+						size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+						requestOptions={{
+							requestNonPersonalizedAdsOnly: true,
+						}}
+						onAdLoaded={(e) => {
+							if (e) {
+								setLoading(false);
+							}
+						}}
+						onAdFailedToLoad={(error) => {
+							console.error('Advert failed to load: ', error);
+						}}
+					/>
+				</View>
+			)}
+
 			<ModalConfirm ref={modalRef} title={strings.questionWallpaper} content="">
 				<View style={[Style.line, styles.line2]} />
 				<ItemOption
@@ -300,7 +334,7 @@ const styles = StyleSheet.create({
 		marginTop: Device.setHeaderHeight(sizes.s16),
 	},
 	button: {
-		backgroundColor: colors.gradient,
+		backgroundColor: 'rgba(255, 255, 255, 0.1)',
 		height: sizes.s36,
 		width: sizes.s36,
 		borderRadius: sizes.s8,
@@ -319,7 +353,7 @@ const styles = StyleSheet.create({
 		paddingVertical: sizes.s16,
 		marginHorizontal: sizes.s16,
 		marginBottom: sizes.s35,
-		backgroundColor: colors.gradient5,
+		backgroundColor: colors.gradient1,
 		borderRadius: sizes.s8,
 		position: 'absolute',
 		bottom: sizes.s35,
@@ -332,7 +366,7 @@ const styles = StyleSheet.create({
 		paddingHorizontal: sizes.s24,
 		paddingVertical: sizes.s16,
 		marginHorizontal: sizes.s16,
-		backgroundColor: colors.gradient5,
+		backgroundColor: colors.gradient1,
 		borderRadius: sizes.s8,
 		position: 'absolute',
 		left: 0,

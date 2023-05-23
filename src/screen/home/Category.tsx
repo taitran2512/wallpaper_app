@@ -1,6 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react-hooks/exhaustive-deps */
+import remoteConfig from '@react-native-firebase/remote-config';
 import { useHeaderHeight } from '@react-navigation/elements';
 import { incrementCategoryAction } from 'action/appAction';
 import WallpaperApi from 'api/WallpaperApi';
@@ -18,6 +19,7 @@ import {
 	TouchableOpacity,
 	View,
 } from 'react-native';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { countCategory } from 'selector/appSelector';
 import { imageSource } from 'utils';
@@ -27,6 +29,9 @@ import { IMAGE_URL } from 'utils/Https';
 const Category = ({ navigation }: TabScreenProps) => {
 	const count = useSelector(countCategory);
 	const dispatch = useDispatch();
+	const [hideAds1, setHideAds1] = useState<boolean>(false);
+	const [hideAds2, setHideAds2] = useState<boolean>(false);
+
 	const [dataCate, setDataCate] = useState<CategoryType[]>([]);
 	const yOffset = useRef(new Animated.Value(0)).current;
 	const headerOpacity = yOffset.interpolate({
@@ -53,21 +58,38 @@ const Category = ({ navigation }: TabScreenProps) => {
 		navigation.setOptions({
 			headerStyle: {
 				// opacity: headerOpacity,
-				backgroundColor: colors.gradient5,
+				backgroundColor: colors.backgroundApp,
 			},
 			headerBackground: () => (
 				<Animated.View
 					style={{
 						backgroundColor: colors.backgroundApp,
 						...StyleSheet.absoluteFillObject,
-						opacity: headerOpacity,
+						// opacity: headerOpacity,
 					}}
 				/>
 			),
 			headerTransparent: true,
 		});
 	}, [headerOpacity, navigation]);
+	useEffect(() => {
+		getConfigRemote();
+	}, [hideAds1, hideAds2]);
 
+	const getConfigRemote = () => {
+		remoteConfig()
+			.setDefaults({
+				inter_open_cate_high: false,
+				inter_open_cate: false,
+			})
+			.then(() => remoteConfig()?.fetch(0))
+			.then(() => remoteConfig()?.fetchAndActivate());
+		const ads1: any = remoteConfig()?.getValue('inter_open_cate_high').asBoolean();
+		const ads2: any = remoteConfig()?.getValue('inter_open_cate').asBoolean();
+
+		setHideAds1(ads1);
+		setHideAds2(ads2);
+	};
 	const getCategoryData = async () => {
 		try {
 			const reponse = await WallpaperApi.getCategory();
@@ -83,11 +105,20 @@ const Category = ({ navigation }: TabScreenProps) => {
 		dispatch(incrementCategoryAction());
 		Navigator.navigate(Screens.DetailCategory, { categoryName: item?.name });
 		if (count % 2 !== 0) {
-			Navigator.navigate(Screens.GoogleInterstitialsAds, {
-				key: keyInterstitialOpenCateHigh,
-				key2: keyInterstitialOpenCate,
-				type: 'category_high',
-			});
+			if (hideAds1) {
+				Navigator.navigate(Screens.GoogleInterstitialsAds, {
+					key: keyInterstitialOpenCateHigh,
+					type: 'category_high',
+				});
+				return;
+			}
+			if (hideAds2) {
+				Navigator.navigate(Screens.GoogleInterstitialsAds, {
+					key: keyInterstitialOpenCate,
+					type: 'category_high',
+				});
+				return;
+			}
 		}
 	};
 

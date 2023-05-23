@@ -14,7 +14,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { enableScreens } from 'react-native-screens';
 import { Dialog, Modals } from 'screen/modal';
 import { Onboarding } from 'screen/onboard';
-import { GoogleInterstitialsAdsSplash, LanguageSplash, Splash } from 'screen/splash';
+import { AdsOpen, GoogleInterstitialsAdsSplash, LanguageSplash, Splash } from 'screen/splash';
 import Device from 'utils/Device';
 import HomeStack from './homeStack/HomeStack';
 
@@ -52,6 +52,7 @@ const AppStack: React.FC = () => {
 			<Stack.Navigator screenOptions={screenOptionsNativeStack}>
 				<Stack.Screen name={Stacks.Splash} component={Splash} />
 				<Stack.Screen name={Stacks.LanguageSplash} component={LanguageSplash} />
+				<Stack.Screen name={Stacks.AdsOpen} component={AdsOpen} />
 				<Stack.Screen
 					name={Stacks.GoogleInterstitialsAdsSplash}
 					component={GoogleInterstitialsAdsSplash}

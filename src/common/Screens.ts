@@ -17,4 +17,5 @@ export const Stacks = {
 	HomeStack: 'HomeStack',
 	Modals: 'Modals',
 	Dialog: 'Dialog',
+	AdsOpen: 'AdsOpen',
 };

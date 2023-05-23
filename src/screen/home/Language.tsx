@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
+import remoteConfig from '@react-native-firebase/remote-config';
 import { images } from 'assets';
 import { Stacks } from 'common';
 import { Languages } from 'common/data';
@@ -16,12 +17,13 @@ import {
 	View,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
+import SystemNavigationBar from 'react-native-system-navigation-bar';
 import { Device, Storage } from 'utils';
 import { keyNative_onboarding } from 'utils/GoogleAds';
 
 const Language: React.FC<ScreenProps | any> = ({ navigation }) => {
 	const [language, setLanguage] = useState<string>('');
-
+	const [optionsNativeAds, setOptionsNativeAds] = useState<boolean>(false);
 	useEffect(() => {
 		navigation.setOptions({
 			headerShown: false,
@@ -42,7 +44,20 @@ const Language: React.FC<ScreenProps | any> = ({ navigation }) => {
 	const onSetLang = () => {
 		Navigator.replace(Stacks.HomeStack);
 	};
-
+	useEffect(() => {
+		SystemNavigationBar.stickyImmersive();
+		getConfigRemote();
+	}, [optionsNativeAds]);
+	const getConfigRemote = () => {
+		remoteConfig()
+			.setDefaults({
+				native_language: false,
+			})
+			.then(() => remoteConfig()?.fetch(0))
+			.then(() => remoteConfig()?.fetchAndActivate());
+		const isNativeLanguage: any = remoteConfig()?.getValue('native_language').asBoolean();
+		setOptionsNativeAds(isNativeLanguage);
+	};
 	return (
 		<Flex style={styles.container}>
 			<FastImage
@@ -104,14 +119,15 @@ const Language: React.FC<ScreenProps | any> = ({ navigation }) => {
 							},
 						]}
 					/>
-
-					<NativeAds
-						loadOnMount={false}
-						index={1}
-						type="image"
-						media={false}
-						keys={keyNative_onboarding}
-					/>
+					{optionsNativeAds && (
+						<NativeAds
+							loadOnMount={false}
+							index={1}
+							type="image"
+							media={false}
+							keys={keyNative_onboarding}
+						/>
+					)}
 				</View>
 			</View>
 		</Flex>

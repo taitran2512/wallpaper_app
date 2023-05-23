@@ -9,7 +9,6 @@ import { data } from '../../../App';
 const GoogleInterstitialsAds: React.FC<ScreenProps> = ({ navigation, route }) => {
 	const { key = '', key2 = '' } = route.params || {};
 	const [changeKey, setChangeKey] = useState<string>(key);
-	console.log(changeKey, 'changeKey');
 	const { isClosed, isLoaded, load, show, error } = useInterstitialAd(changeKey, {
 		requestNonPersonalizedAdsOnly: true,
 	});
