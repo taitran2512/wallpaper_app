@@ -40,23 +40,23 @@ const NativeAds = ({ index, media = false, type = 'image', loadOnMount = true, k
 		 * If you have recently created AdMob IDs for your ads, it might take
 		 * a few days until the ads will start showing.
 		 */
-		console.log('AD', 'FAILED', event.error.message);
+		// console.log('AD', 'FAILED', event.error.message);
 	};
 
 	const onAdLoaded = () => {
-		console.log('AD', 'LOADED', 'Ad has loaded successfully');
+		// console.log('AD', 'LOADED', 'Ad has loaded successfully');
 	};
 
 	const onAdClicked = () => {
-		console.log('AD', 'CLICK', 'User has clicked the Ad');
+		// console.log('AD', 'CLICK', 'User has clicked the Ad');
 	};
 
 	const onAdImpression = () => {
-		console.log('AD', 'IMPRESSION', 'Ad impression recorded');
+		// console.log('AD', 'IMPRESSION', 'Ad impression recorded');
 	};
 
 	const onNativeAdLoaded = (event: any) => {
-		console.log('AD', 'RECIEVED', 'Unified ad  Recieved', event);
+		// console.log('AD', 'RECIEVED', 'Unified ad  Recieved', event);
 		setLoading(false);
 		setLoaded(true);
 		setError(false);
@@ -64,7 +64,7 @@ const NativeAds = ({ index, media = false, type = 'image', loadOnMount = true, k
 	};
 
 	const onAdLeftApplication = () => {
-		console.log('AD', 'LEFT', 'Ad left application');
+		// console.log('AD', 'LEFT', 'Ad left application');
 	};
 
 	const onViewableItemsChanged = useCallback(
@@ -83,7 +83,7 @@ const NativeAds = ({ index, media = false, type = 'image', loadOnMount = true, k
 					setLoading(true);
 					setLoaded(false);
 					setError(false);
-					console.log('AD', 'IN VIEW', 'Loading ' + index);
+					// console.log('AD', 'IN VIEW', 'Loading ' + index);
 					nativeAdRef.current?.loadAd();
 				} else {
 					/**
@@ -93,9 +93,9 @@ const NativeAds = ({ index, media = false, type = 'image', loadOnMount = true, k
 					 * to server.
 					 */
 					if (loaded) {
-						console.log('AD', 'IN VIEW', 'Loaded ' + index);
+						// console.log('AD', 'IN VIEW', 'Loaded ' + index);
 					} else {
-						console.log('AD', 'NOT IN VIEW', index);
+						// console.log('AD', 'NOT IN VIEW', index);
 					}
 				}
 			});

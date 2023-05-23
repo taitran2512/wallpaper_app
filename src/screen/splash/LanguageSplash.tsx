@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
+import remoteConfig from '@react-native-firebase/remote-config';
 import { images } from 'assets';
 import { Stacks } from 'common';
 import { Languages } from 'common/data';
@@ -18,16 +19,12 @@ import {
 import FastImage from 'react-native-fast-image';
 import LinearGradient from 'react-native-linear-gradient';
 import SystemNavigationBar from 'react-native-system-navigation-bar';
-import { useSelector } from 'react-redux';
-import { getConfigFirebaseSeletor } from 'selector/appSelector';
 import { Device, Storage } from 'utils';
 import { keyNative_onboarding } from 'utils/GoogleAds';
 
 const LanguageSplash: React.FC<ScreenProps | any> = ({ navigation }) => {
 	const [language, setLanguage] = useState<string>(Languages?.[0].lang);
-	const config = useSelector(getConfigFirebaseSeletor);
-	const [optionsNativeAds, setOptionsNativeAds] = useState(false);
-	// const keyNativeRef = useRef<any>(false);
+	const [optionsNativeAds, setOptionsNativeAds] = useState<boolean>(false);
 
 	useEffect(() => {
 		navigation.setOptions({
@@ -42,9 +39,8 @@ const LanguageSplash: React.FC<ScreenProps | any> = ({ navigation }) => {
 	}, []);
 
 	useEffect(() => {
-		const getKey = config?.find?.((x: any) => x.key === 'native_language');
-		setOptionsNativeAds(getKey?.options);
 		SystemNavigationBar.stickyImmersive();
+		getConfigRemote();
 	}, [optionsNativeAds]);
 
 	const setAppLanguage = (lan: string) => {
@@ -56,7 +52,16 @@ const LanguageSplash: React.FC<ScreenProps | any> = ({ navigation }) => {
 	const onSetLang = () => {
 		Navigator.replace(Stacks.Onboarding);
 	};
-
+	const getConfigRemote = () => {
+		remoteConfig()
+			.setDefaults({
+				native_language: false,
+			})
+			.then(() => remoteConfig()?.fetch(0))
+			.then(() => remoteConfig()?.fetchAndActivate());
+		const isNativeLanguage: any = remoteConfig()?.getValue('native_language').asBoolean();
+		setOptionsNativeAds(isNativeLanguage);
+	};
 	return (
 		<Flex style={styles.container}>
 			<FastImage
@@ -124,13 +129,15 @@ const LanguageSplash: React.FC<ScreenProps | any> = ({ navigation }) => {
 							},
 						]}
 					/>
-					<NativeAds
-						loadOnMount={false}
-						index={1}
-						type="image"
-						media={false}
-						keys={keyNative_onboarding}
-					/>
+					{optionsNativeAds && (
+						<NativeAds
+							loadOnMount={false}
+							index={1}
+							type="image"
+							media={false}
+							keys={keyNative_onboarding}
+						/>
+					)}
 				</View>
 			</LinearGradient>
 		</Flex>

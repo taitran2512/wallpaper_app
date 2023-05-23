@@ -87,7 +87,7 @@ const Onboarding: React.FC<ScreenProps | any> = () => {
 			.setDefaults({
 				banner_onboarding: false,
 			})
-			.then(() => remoteConfig()?.fetch(300))
+			.then(() => remoteConfig()?.fetch(0))
 			.then(() => remoteConfig()?.fetchAndActivate());
 		const isBannerOnboarding: any = remoteConfig()?.getValue('banner_onboarding').asBoolean();
 		setHide(isBannerOnboarding);

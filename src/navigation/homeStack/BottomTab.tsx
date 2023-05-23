@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/no-unstable-nested-components */
+import remoteConfig from '@react-native-firebase/remote-config';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { images } from 'assets';
 import { Skeleton } from 'component';
@@ -15,6 +16,8 @@ import { keyBanner_category } from 'utils/GoogleAds';
 const Tab = createBottomTabNavigator();
 
 const BottomTab = ({ navigation }: TabScreenProps) => {
+	const [bannerHome, setBannerHome] = useState<boolean>(false);
+	const [loading, setLoading] = useState<boolean>(true);
 	const TabScreen = [
 		{
 			name: strings.popular,
@@ -38,6 +41,21 @@ const BottomTab = ({ navigation }: TabScreenProps) => {
 			},
 		},
 	];
+
+	const getConfigRemote = () => {
+		remoteConfig()
+			.setDefaults({
+				banner_home: false,
+			})
+			.then(() => remoteConfig()?.fetch(0))
+			.then(() => remoteConfig()?.fetchAndActivate());
+		const isBannerHome: any = remoteConfig()?.getValue('banner_home').asBoolean();
+		setBannerHome(isBannerHome);
+	};
+
+	useEffect(() => {
+		getConfigRemote();
+	}, [bannerHome]);
 
 	useEffect(() => {
 		navigation.setOptions({
@@ -88,29 +106,30 @@ const BottomTab = ({ navigation }: TabScreenProps) => {
 			/>
 		));
 	};
-	const [loading, setLoading] = useState<boolean>(true);
 
 	return (
 		<View style={styles.container}>
 			<Tab.Navigator>{renderTabScreen()}</Tab.Navigator>
-			<View style={styles.viewBanner}>
-				{loading && <Skeleton style={StyleSheet.absoluteFill} />}
-				<BannerAd
-					unitId={keyBanner_category}
-					size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-					requestOptions={{
-						requestNonPersonalizedAdsOnly: true,
-					}}
-					onAdLoaded={(e: any) => {
-						if (e) {
-							setLoading(false);
-						}
-					}}
-					onAdFailedToLoad={(error) => {
-						console.error('Advert failed to load: ', error);
-					}}
-				/>
-			</View>
+			{bannerHome && (
+				<View style={styles.viewBanner}>
+					{loading && <Skeleton style={StyleSheet.absoluteFill} />}
+					<BannerAd
+						unitId={keyBanner_category}
+						size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+						requestOptions={{
+							requestNonPersonalizedAdsOnly: true,
+						}}
+						onAdLoaded={(e: any) => {
+							if (e) {
+								setLoading(false);
+							}
+						}}
+						onAdFailedToLoad={(error) => {
+							console.error('Advert failed to load: ', error);
+						}}
+					/>
+				</View>
+			)}
 		</View>
 	);
 };
