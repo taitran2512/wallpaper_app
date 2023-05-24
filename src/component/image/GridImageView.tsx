@@ -4,7 +4,7 @@ import remoteConfig from '@react-native-firebase/remote-config';
 import { useHeaderHeight } from '@react-navigation/elements';
 import { incrementImageAction } from 'action/appAction';
 import { Screens } from 'common';
-import { colors, Navigator, strings } from 'core/index';
+import { colors, Navigator } from 'core/index';
 import { ScreenProps, TabScreenProps } from 'model';
 import React, { useEffect, useRef, useState } from 'react';
 import { Animated, PixelRatio, StyleSheet } from 'react-native';
@@ -42,7 +42,6 @@ const GridImageView: React.FC<Props> = ({ data, onEndReached, navigation }) => {
 					// opacity: headerOpacity,
 					backgroundColor: colors.backgroundApp,
 				},
-				title: strings.popular,
 				headerBackground: () => (
 					<Animated.View
 						style={{
