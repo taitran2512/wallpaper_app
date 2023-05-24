@@ -6,7 +6,7 @@ import WallpaperApi from 'api/WallpaperApi';
 import { images } from 'assets';
 import { Flex, GridImageView, NavigationButton, Skeleton } from 'component';
 import { colors, fonts, sizes } from 'core/index';
-import { isEmpty } from 'lodash';
+import { debounce, isEmpty } from 'lodash';
 import { ScreenProps, TabScreenProps } from 'model';
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -72,8 +72,8 @@ const DetailCategory: React.FC<ScreenProps | TabScreenProps> = ({ navigation, ro
 		try {
 			page.current += 1;
 			const response = await WallpaperApi.getListWallpaperByCategory(categoryName, page.current);
-			const newData = [...data, ...response?.data].filter((e) => !isEmpty(e.media));
-			setData([...newData]);
+			const newData = response?.data.filter((e) => !isEmpty(e.media));
+			setData((oldData) => [...oldData, ...newData]);
 			// if (response?.meta?.pagination?.page === response.meta?.pagination?.pageCount) {
 			// 	page.current = -1;
 			// }
@@ -95,7 +95,7 @@ const DetailCategory: React.FC<ScreenProps | TabScreenProps> = ({ navigation, ro
 					if (page.current === -1) {
 						return;
 					}
-					getData();
+					debounce(getData, 200);
 				}}
 				navigation={navigation}
 			/>

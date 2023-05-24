@@ -103,7 +103,7 @@ const Category = ({ navigation }: TabScreenProps) => {
 
 	const detailCategory = (item: CategoryType) => {
 		dispatch(incrementCategoryAction());
-		Navigator.navigate(Screens.DetailCategory, { categoryName: item?.name });
+		Navigator.push(Screens.DetailCategory, { categoryName: item?.name });
 		if (count % 2 !== 0) {
 			if (hideAds1) {
 				Navigator.navigate(Screens.GoogleInterstitialsAds, {
