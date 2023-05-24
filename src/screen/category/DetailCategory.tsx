@@ -74,9 +74,9 @@ const DetailCategory: React.FC<ScreenProps | TabScreenProps> = ({ navigation, ro
 			const response = await WallpaperApi.getListWallpaperByCategory(categoryName, page.current);
 			const newData = [...data, ...response?.data].filter((e) => !isEmpty(e.media));
 			setData([...newData]);
-			if (response?.meta?.pagination?.page === response.meta?.pagination?.pageCount) {
-				page.current = -1;
-			}
+			// if (response?.meta?.pagination?.page === response.meta?.pagination?.pageCount) {
+			// 	page.current = -1;
+			// }
 		} catch (error) {}
 	};
 

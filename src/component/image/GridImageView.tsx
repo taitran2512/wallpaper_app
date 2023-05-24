@@ -118,7 +118,7 @@ const GridImageView: React.FC<Props> = ({ data, onEndReached, navigation }) => {
 			style={[styles.container]}
 			contentContainerStyle={{ flexGrow: 1, paddingTop: navigation ? headerHeight : 0 }}
 			onEndReached={onEndReached}
-			onEndReachedThreshold={1.5}
+			onEndReachedThreshold={0.5}
 			initialNumToRender={20}
 			onScroll={Animated.event(
 				[
