@@ -7,13 +7,12 @@ import { Screens } from 'common';
 import { colors, Navigator, screenWidth, sizes, strings } from 'core/index';
 import { ScreenProps, TabScreenProps } from 'model';
 import React, { useEffect, useRef, useState } from 'react';
-import { Animated, PixelRatio, StyleSheet, TouchableOpacity, View } from 'react-native';
-import FastImage from 'react-native-fast-image';
+import { Animated, PixelRatio, StyleSheet } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { countImageHomeSelector } from 'selector/appSelector';
-import { imageSource } from 'utils';
 import { keyInterstitialOpenImage, keyInterstitialOpenImageHigh } from 'utils/GoogleAds';
 import { IMAGE_URL } from 'utils/Https';
+import ItemImage from './ItemImage';
 
 const numColumns = 3;
 const imageWidth = (screenWidth - sizes.s4) / numColumns;
@@ -107,23 +106,11 @@ const GridImageView: React.FC<Props> = ({ data, onPress, onEndReached, navigatio
 			url += item?.media?.formats?.large?.url || item?.media?.formats?.thumbnail?.url;
 		}
 
-		return (
-			<View
-				style={{
-					flex: 1 / numColumns,
-				}}>
-				<TouchableOpacity
-					onPress={() =>
-						onPress ? onPress?.(IMAGE_URL + item?.media?.url) : detailScreen(index)
-					}
-					activeOpacity={0.8}>
-					<FastImage style={styles.image} source={imageSource(url)} />
-				</TouchableOpacity>
-			</View>
-		);
+		return <ItemImage url={url} onPress={() => detailScreen(index)} />;
 	};
 
 	const keyExtractor = (item: any, index: number) => index.toString();
+
 	return (
 		<Animated.FlatList
 			data={data}
@@ -158,10 +145,5 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: colors.background_black,
-	},
-	image: {
-		width: imageWidth,
-		height: (imageWidth / 9) * 16,
-		marginBottom: sizes.s2,
 	},
 });

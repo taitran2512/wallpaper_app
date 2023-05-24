@@ -6,7 +6,6 @@ import WallpaperApi from 'api/WallpaperApi';
 import { images } from 'assets';
 import { Flex, GridImageView, NavigationButton, Skeleton } from 'component';
 import { colors, fonts, sizes } from 'core/index';
-import { debounce } from 'lodash';
 import { ScreenProps, TabScreenProps } from 'model';
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -66,21 +65,16 @@ const DetailCategory: React.FC<ScreenProps | TabScreenProps> = ({ navigation, ro
 		const banner: any = remoteConfig()?.getValue('banner_category').asBoolean();
 		setHideBanner(banner);
 	};
-	const getData = debounce(async () => {
+	const getData = async () => {
 		try {
-			// get full data, no more can get
-			if (page.current === -1) {
-				return;
-			}
-
-			// page.current += 1;
+			page.current += 1;
 			const response = await WallpaperApi.getListWallpaperByCategory(categoryName, page.current);
 			setData([...data, ...response?.data]);
 			if (response?.meta?.pagination?.page === response.meta?.pagination?.pageCount) {
 				page.current = -1;
 			}
 		} catch (error) {}
-	}, 500);
+	};
 
 	useLayoutEffect(() => {
 		iniScreen();
@@ -90,7 +84,17 @@ const DetailCategory: React.FC<ScreenProps | TabScreenProps> = ({ navigation, ro
 
 	return (
 		<Flex style={styles.container}>
-			<GridImageView data={data} onEndReached={getData} navigation={navigation} />
+			<GridImageView
+				data={data}
+				onEndReached={() => {
+					// get full data, no more can get
+					if (page.current === -1) {
+						return;
+					}
+					getData();
+				}}
+				navigation={navigation}
+			/>
 			{!!categoryName && hideBanner && (
 				<View style={styles.viewBanner}>
 					{loading && <Skeleton style={StyleSheet.absoluteFill} />}
