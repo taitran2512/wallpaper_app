@@ -103,9 +103,6 @@ const GridImageView: React.FC<Props> = ({ data, onEndReached, navigation }) => {
 		} else {
 			url += item?.media?.formats?.large?.url || item?.media?.formats?.thumbnail?.url;
 		}
-		if (!url) {
-			return null;
-		}
 
 		return <ItemImage url={url} onPress={() => detailScreen(index)} />;
 	};
