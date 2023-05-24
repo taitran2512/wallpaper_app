@@ -4,18 +4,16 @@ import remoteConfig from '@react-native-firebase/remote-config';
 import { useHeaderHeight } from '@react-navigation/elements';
 import { incrementImageAction } from 'action/appAction';
 import { Screens } from 'common';
-import { colors, Navigator, screenWidth, sizes, strings } from 'core/index';
+import { colors, Navigator, strings } from 'core/index';
 import { ScreenProps, TabScreenProps } from 'model';
 import React, { useEffect, useRef, useState } from 'react';
 import { Animated, PixelRatio, StyleSheet } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { countImageHomeSelector } from 'selector/appSelector';
 import { keyInterstitialOpenImage, keyInterstitialOpenImageHigh } from 'utils/GoogleAds';
-import { IMAGE_URL } from 'utils/Https';
 import ItemImage from './ItemImage';
 
 const numColumns = 3;
-const imageWidth = (screenWidth - sizes.s4) / numColumns;
 
 interface Props {
 	data: WallpaperType[];
@@ -24,7 +22,7 @@ interface Props {
 	navigation?: ScreenProps['navigation'] | TabScreenProps['navigation'];
 }
 
-const GridImageView: React.FC<Props> = ({ data, onPress, onEndReached, navigation }) => {
+const GridImageView: React.FC<Props> = ({ data, onEndReached, navigation }) => {
 	const yOffset = useRef(new Animated.Value(0)).current;
 	const headerOpacity = yOffset.interpolate({
 		inputRange: [0, 200],
@@ -96,7 +94,7 @@ const GridImageView: React.FC<Props> = ({ data, onPress, onEndReached, navigatio
 	};
 
 	const renderItem = ({ item, index }: { item: WallpaperType; index: number }) => {
-		let url = IMAGE_URL;
+		let url = '';
 		const pixelRatio = PixelRatio.get();
 		if (pixelRatio < 2) {
 			url += item?.media?.formats?.small?.url || item?.media?.formats?.thumbnail?.url;
@@ -104,6 +102,9 @@ const GridImageView: React.FC<Props> = ({ data, onPress, onEndReached, navigatio
 			url += item?.media?.formats?.medium?.url || item?.media?.formats?.thumbnail?.url;
 		} else {
 			url += item?.media?.formats?.large?.url || item?.media?.formats?.thumbnail?.url;
+		}
+		if (!url) {
+			return null;
 		}
 
 		return <ItemImage url={url} onPress={() => detailScreen(index)} />;
