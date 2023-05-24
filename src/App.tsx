@@ -60,16 +60,19 @@ const App: React.FC = () => {
 		if (appState.current.match(/inactive|background/) && nextAppState === 'active') {
 			if (isFirst.current || data.isShowAds) {
 				isFirst.current = false;
-			}
-			if (openResumeRef.current) {
-				showAdsRef.current?.open();
-				show();
-				return;
+			} else {
+				showAdd();
 			}
 		}
 		appState.current = nextAppState;
 	};
-
+	const showAdd = () => {
+		if (openResumeRef.current) {
+			showAdsRef.current?.open();
+			show();
+		}
+		return;
+	};
 	useEffect(() => {
 		if (isLoaded) {
 			const sub = AppState.addEventListener('change', handleAppStateChange);
