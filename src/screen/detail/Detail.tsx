@@ -5,7 +5,7 @@ import WallpaperApi from 'api/WallpaperApi';
 import { images } from 'assets';
 import { Screens } from 'common';
 import { ExampleScreen, Flex, Icon, ModalConfirm, Skeleton, SlideImage } from 'component';
-import { colors, Navigator, screenHeight, sizes, strings, Style } from 'core/index';
+import { Navigator, Style, colors, screenHeight, sizes, strings } from 'core/index';
 import WallpaperManageModule from 'library/wallpaper/WallpaperManager';
 import { debounce, remove } from 'lodash';
 import { ScreenProps } from 'model';
@@ -25,7 +25,7 @@ import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
 import { Device, Storage } from 'utils';
 import { keyBanner_home, keyInterstitialApply, keyInterstitialApplyHigh } from 'utils/GoogleAds';
 import { IMAGE_URL } from 'utils/Https';
-
+import { data as Ads } from '../.././App';
 const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 	const { data, index } = route?.params || {};
 	const [like, setLike] = useState<boolean>(false);
@@ -71,6 +71,7 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 			setTimeout(() => {
 				setShowToast(false);
 				if (hideAds1) {
+					Ads.isShowAds = true;
 					Navigator.navigate(Screens.GoogleInterstitialsAds, {
 						key: keyInterstitialApplyHigh,
 						type: 'apply_high',
@@ -78,6 +79,7 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 					return;
 				}
 				if (hideAds2) {
+					Ads.isShowAds = true;
 					Navigator.navigate(Screens.GoogleInterstitialsAds, {
 						key: keyInterstitialApply,
 						type: 'apply_high',
@@ -95,10 +97,23 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 			const item: WallpaperType = data[slideRef.current?.currentIndex];
 			modalRef.current.close();
 			if (type === 'both') {
-				WallpaperManageModule.setWallpaper({ uri: IMAGE_URL + item?.media?.url }, 'home');
-				WallpaperManageModule.setWallpaper({ uri: IMAGE_URL + item?.media?.url }, 'lock');
+				WallpaperManageModule.setWallpaper(
+					{ uri: IMAGE_URL + item?.media?.url },
+					'home',
+					() => {
+						WallpaperManageModule.setWallpaper(
+							{ uri: IMAGE_URL + item?.media?.url },
+							'lock',
+							() => {}
+						);
+					}
+				);
 			} else {
-				WallpaperManageModule.setWallpaper({ uri: IMAGE_URL + item?.media?.url }, type);
+				WallpaperManageModule.setWallpaper(
+					{ uri: IMAGE_URL + item?.media?.url },
+					type,
+					() => {}
+				);
 			}
 
 			Navigator.hideLoading();
