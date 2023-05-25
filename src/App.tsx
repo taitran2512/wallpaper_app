@@ -25,7 +25,6 @@ const App: React.FC = () => {
 		requestNonPersonalizedAdsOnly: true,
 		keywords: [],
 	});
-	console.log(error, 'error');
 	const isFirst = useRef(true);
 	const openResumeRef = useRef(false);
 	const getConfigRemoteFirebase = async () => {
