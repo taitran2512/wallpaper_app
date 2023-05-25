@@ -19,7 +19,7 @@ export let data = { isShowAds: false };
 const App: React.FC = () => {
 	const appState = useRef<any>(AppState.currentState);
 	const showAdsRef = useRef<any>();
-	const { isClosed, isLoaded, load, show } = useAppOpenAd(keyOnAppResume, {
+	const { isClosed, isLoaded, load, show, error } = useAppOpenAd(keyOnAppResume, {
 		requestNonPersonalizedAdsOnly: true,
 		keywords: [],
 	});
@@ -50,6 +50,12 @@ const App: React.FC = () => {
 			}
 		}
 	}, []);
+
+	useEffect(() => {
+		if (error) {
+			showAdsRef.current?.close();
+		}
+	}, [error]);
 
 	useEffect(() => {
 		SystemNavigationBar.stickyImmersive();
