@@ -25,7 +25,7 @@ import { countCategory } from 'selector/appSelector';
 import { imageSource } from 'utils';
 import { keyInterstitialOpenCate, keyInterstitialOpenCateHigh } from 'utils/GoogleAds';
 import { IMAGE_URL } from 'utils/Https';
-
+import { data } from '../../App';
 const Category = ({ navigation }: TabScreenProps) => {
 	const count = useSelector(countCategory);
 	const dispatch = useDispatch();
@@ -106,6 +106,7 @@ const Category = ({ navigation }: TabScreenProps) => {
 		Navigator.push(Screens.DetailCategory, { categoryName: item?.name });
 		if (count % 2 !== 0) {
 			if (hideAds1) {
+				data.isShowAds = true;
 				Navigator.navigate(Screens.GoogleInterstitialsAds, {
 					key: keyInterstitialOpenCateHigh,
 					type: 'category_high',
@@ -113,6 +114,7 @@ const Category = ({ navigation }: TabScreenProps) => {
 				return;
 			}
 			if (hideAds2) {
+				data.isShowAds = true;
 				Navigator.navigate(Screens.GoogleInterstitialsAds, {
 					key: keyInterstitialOpenCate,
 					type: 'category_high',
