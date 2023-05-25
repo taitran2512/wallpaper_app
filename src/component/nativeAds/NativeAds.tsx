@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
-import { Skeleton } from 'component';
 import { colors, sizes } from 'core/index';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, DeviceEventEmitter, StyleSheet, Text, View } from 'react-native';
@@ -175,7 +174,6 @@ const NativeAds = ({ index, media = false, type = 'image', loadOnMount = true, k
 				customControlsRequested: true,
 			}}
 			repository={'imageAd'}>
-			{loading && <Skeleton style={StyleSheet.absoluteFill} />}
 			<View
 				style={{
 					width: '100%',

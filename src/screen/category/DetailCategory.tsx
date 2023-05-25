@@ -101,7 +101,7 @@ const DetailCategory: React.FC<ScreenProps | TabScreenProps> = ({ navigation, ro
 			/>
 			{!!categoryName && hideBanner && (
 				<View style={styles.viewBanner}>
-					{loading && <Skeleton style={StyleSheet.absoluteFill} />}
+					{loading ? <Skeleton style={StyleSheet.absoluteFill} /> : null}
 					<BannerAd
 						unitId={keyBanner_category}
 						size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
@@ -115,6 +115,11 @@ const DetailCategory: React.FC<ScreenProps | TabScreenProps> = ({ navigation, ro
 						}}
 						onAdFailedToLoad={(error) => {
 							console.error('Advert failed to load: ', error);
+							if (error) {
+								setTimeout(() => {
+									setLoading(false);
+								}, 500);
+							}
 						}}
 					/>
 				</View>

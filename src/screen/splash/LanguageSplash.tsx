@@ -62,6 +62,7 @@ const LanguageSplash: React.FC<ScreenProps | any> = ({ navigation }) => {
 		const isNativeLanguage: any = remoteConfig()?.getValue('native_language').asBoolean();
 		setOptionsNativeAds(isNativeLanguage);
 	};
+	console.log(optionsNativeAds, 'optionsNativeAds');
 	return (
 		<Flex style={styles.container}>
 			<FastImage

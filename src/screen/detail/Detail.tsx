@@ -68,36 +68,34 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 	const hideToast = () => {
 		if (showToast) {
 			setType('');
-			setShowToast(false);
-			if (hideAds1) {
-				Ads.isShowAds = true;
-				setTimeout(() => {
+			setTimeout(() => {
+				setShowToast(false);
+				if (hideAds1) {
+					Ads.isShowAds = true;
 					Navigator.navigate(Screens.GoogleInterstitialsAds, {
 						key: keyInterstitialApplyHigh,
 						type: 'apply_high',
 					});
-				}, 500);
-				return;
-			}
-			if (hideAds2) {
-				setTimeout(() => {
+					return;
+				}
+				if (hideAds2) {
 					Ads.isShowAds = true;
 					Navigator.navigate(Screens.GoogleInterstitialsAds, {
 						key: keyInterstitialApply,
 						type: 'apply_high',
 					});
-				}, 500);
-				return;
-			}
+					return;
+				}
+			}, 1000);
 		}
 		return;
 	};
 
 	const onHandleWallpaper = async (type: string) => {
 		try {
+			modalRef.current.close();
 			Navigator.showLoading();
 			const item: WallpaperType = data[slideRef.current?.currentIndex];
-			modalRef.current.close();
 			if (type === 'both') {
 				WallpaperManageModule.setWallpaper(
 					{ uri: IMAGE_URL + item?.media?.url },
@@ -106,20 +104,20 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 						WallpaperManageModule.setWallpaper(
 							{ uri: IMAGE_URL + item?.media?.url },
 							'lock',
-							() => {}
+							() => {
+								Navigator.hideLoading();
+								showToastSuccess();
+							}
 						);
 					}
 				);
 			} else {
-				WallpaperManageModule.setWallpaper(
-					{ uri: IMAGE_URL + item?.media?.url },
-					type,
-					() => {}
-				);
+				WallpaperManageModule.setWallpaper({ uri: IMAGE_URL + item?.media?.url }, type, () => {
+					Navigator.hideLoading();
+					showToastSuccess();
+				});
 			}
 
-			Navigator.hideLoading();
-			showToastSuccess();
 			WallpaperApi.updateCountSetWallpaper(item?.id, item?.download_count + 1);
 			const listSetWallpaper: any[] =
 				(await Storage.getData(Storage.key.listSetWallpaper)) || [];
@@ -249,9 +247,9 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 		setHideBanner(isBanner);
 		setHideAds1(ads1);
 		setHideAds2(ads2);
-		if (isBanner) {
-			setLoading(false);
-		}
+		// if (isBanner) {
+		// 	setLoading(false);
+		// }
 	};
 	return (
 		<Flex style={styles.container}>
@@ -260,9 +258,10 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 			<ExampleScreen type={type} />
 			{showToast ? renderToastNotify() : null}
 			{renderButtonBottom()}
-			{hideBanner && (
-				<View style={styles.viewBanner}>
-					{loading && <Skeleton style={StyleSheet.absoluteFill} />}
+			{loading && <Skeleton style={StyleSheet.absoluteFill} />}
+			<View style={styles.viewBanner}>
+				{loading && <Skeleton style={StyleSheet.absoluteFill} />}
+				{hideBanner && (
 					<BannerAd
 						unitId={keyBanner_home}
 						size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
@@ -278,9 +277,8 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 							console.error('Advert failed to load: ', error);
 						}}
 					/>
-				</View>
-			)}
-
+				)}
+			</View>
 			<ModalConfirm ref={modalRef} title={strings.questionWallpaper} content="">
 				<View style={[Style.line, styles.line2]} />
 				<ItemOption

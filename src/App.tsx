@@ -1,3 +1,5 @@
+/* eslint-disable no-catch-shadow */
+/* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable react-hooks/exhaustive-deps */
 import remoteConfig from '@react-native-firebase/remote-config';
 import { Loading, ModalAdsResume, ToastDebug } from 'component';
@@ -23,6 +25,7 @@ const App: React.FC = () => {
 		requestNonPersonalizedAdsOnly: true,
 		keywords: [],
 	});
+	console.log(error, 'error');
 	const isFirst = useRef(true);
 	const openResumeRef = useRef(false);
 	const getConfigRemoteFirebase = async () => {
@@ -77,7 +80,6 @@ const App: React.FC = () => {
 			showAdsRef.current?.open();
 			show();
 		}
-		return;
 	};
 	useEffect(() => {
 		if (isLoaded) {

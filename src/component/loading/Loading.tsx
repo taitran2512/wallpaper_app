@@ -1,8 +1,6 @@
 import { colors, sizes } from 'core';
 import React, { PureComponent } from 'react';
-import { Animated, StyleSheet, View } from 'react-native';
-
-import LoadingDots from './LoadingDots';
+import { ActivityIndicator, Animated, StyleSheet, View } from 'react-native';
 
 interface Props {}
 
@@ -61,7 +59,7 @@ export default class Loading extends PureComponent<Props, States> {
 					<Animated.View style={[StyleSheet.absoluteFill, { opacity: this.animate }]}>
 						<View style={styles.container}>
 							<View style={styles.child}>
-								<LoadingDots />
+								<ActivityIndicator color={colors.blue} size="large" />
 							</View>
 						</View>
 					</Animated.View>

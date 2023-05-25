@@ -91,9 +91,6 @@ const Onboarding: React.FC<ScreenProps | any> = () => {
 			.then(() => remoteConfig()?.fetchAndActivate());
 		const isBannerOnboarding: any = remoteConfig()?.getValue('banner_onboarding').asBoolean();
 		setHide(isBannerOnboarding);
-		if (isBannerOnboarding) {
-			setLoading(false);
-		}
 	};
 	return (
 		<Flex style={styles.container}>
@@ -157,6 +154,11 @@ const Onboarding: React.FC<ScreenProps | any> = () => {
 								}}
 								onAdFailedToLoad={(error) => {
 									console.error('Advert failed to load: ', error);
+									if (error) {
+										setTimeout(() => {
+											setLoading(false);
+										}, 500);
+									}
 								}}
 							/>
 						)}
