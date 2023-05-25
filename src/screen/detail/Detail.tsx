@@ -5,7 +5,7 @@ import WallpaperApi from 'api/WallpaperApi';
 import { images } from 'assets';
 import { Screens } from 'common';
 import { ExampleScreen, Flex, Icon, ModalConfirm, Skeleton, SlideImage } from 'component';
-import { Navigator, Style, colors, screenHeight, sizes, strings } from 'core/index';
+import { colors, Navigator, screenHeight, sizes, strings, Style } from 'core/index';
 import WallpaperManageModule from 'library/wallpaper/WallpaperManager';
 import { debounce, remove } from 'lodash';
 import { ScreenProps } from 'model';
@@ -68,25 +68,27 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 	const hideToast = () => {
 		if (showToast) {
 			setType('');
-			setTimeout(() => {
-				setShowToast(false);
-				if (hideAds1) {
-					Ads.isShowAds = true;
+			setShowToast(false);
+			if (hideAds1) {
+				Ads.isShowAds = true;
+				setTimeout(() => {
 					Navigator.navigate(Screens.GoogleInterstitialsAds, {
 						key: keyInterstitialApplyHigh,
 						type: 'apply_high',
 					});
-					return;
-				}
-				if (hideAds2) {
+				}, 500);
+				return;
+			}
+			if (hideAds2) {
+				setTimeout(() => {
 					Ads.isShowAds = true;
 					Navigator.navigate(Screens.GoogleInterstitialsAds, {
 						key: keyInterstitialApply,
 						type: 'apply_high',
 					});
-					return;
-				}
-			}, 1000);
+				}, 500);
+				return;
+			}
 		}
 		return;
 	};

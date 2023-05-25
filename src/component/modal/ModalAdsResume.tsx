@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { colors, Style } from 'core/index';
-import React, { forwardRef, memo, useImperativeHandle, useState } from 'react';
+import React, { forwardRef, memo, useEffect, useImperativeHandle, useState } from 'react';
 import { ActivityIndicator, Modal, StyleSheet, View } from 'react-native';
 
 interface Props {
@@ -20,7 +20,14 @@ const ModalAdsResume: React.FC<Props> = forwardRef((props: Props, ref: any) => {
 		open: () => open(),
 		close: (callBack: () => void) => close(callBack),
 	}));
-
+	useEffect(() => {
+		const timeout = setTimeout(() => {
+			close();
+		}, 5000);
+		return () => {
+			clearTimeout(timeout);
+		};
+	}, []);
 	return (
 		<Modal visible={showModel} animationType="fade" statusBarTranslucent transparent>
 			<View style={styles.container}>
