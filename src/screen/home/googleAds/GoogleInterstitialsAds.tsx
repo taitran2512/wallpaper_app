@@ -1,15 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { colors, Navigator, Style } from 'core/index';
 import { ScreenProps } from 'model';
-import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, View } from 'react-native';
+import React, { useEffect } from 'react';
+import { ActivityIndicator, AppState, View } from 'react-native';
 import { useInterstitialAd } from 'react-native-google-mobile-ads';
 import { data } from '../../../App';
 
 const GoogleInterstitialsAds: React.FC<ScreenProps> = ({ navigation, route }) => {
-	const { key = '', key2 = '' } = route.params || {};
-	const [changeKey, setChangeKey] = useState<string>(key);
-	const { isClosed, isLoaded, load, show, error } = useInterstitialAd(changeKey, {
+	const { key = '' } = route.params || {};
+	const { isClosed, isLoaded, load, show, error } = useInterstitialAd(key, {
 		requestNonPersonalizedAdsOnly: true,
 	});
 
@@ -19,6 +18,19 @@ const GoogleInterstitialsAds: React.FC<ScreenProps> = ({ navigation, route }) =>
 		});
 	};
 
+	const handleAppStateChange = async (nextAppState: any) => {
+		if (nextAppState === 'active') {
+			show();
+		}
+	};
+	useEffect(() => {
+		if (isLoaded) {
+			const sub = AppState.addEventListener('change', handleAppStateChange);
+			return () => {
+				sub.remove();
+			};
+		}
+	}, [isLoaded]);
 	useEffect(() => {
 		data.isShowAds = true;
 		initScreen();
@@ -31,7 +43,10 @@ const GoogleInterstitialsAds: React.FC<ScreenProps> = ({ navigation, route }) =>
 	}, [isLoaded]);
 	useEffect(() => {
 		if (error) {
-			setChangeKey(key2);
+			Navigator.goBack();
+			setTimeout(() => {
+				data.isShowAds = false;
+			}, 500);
 		}
 	}, [error]);
 	useEffect(() => {

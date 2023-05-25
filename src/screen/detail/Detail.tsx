@@ -68,6 +68,9 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 	const hideToast = () => {
 		if (showToast) {
 			setType('');
+
+			// setTimeout
+
 			setTimeout(() => {
 				setShowToast(false);
 				if (hideAds1) {
@@ -93,6 +96,7 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 
 	const onHandleWallpaper = async (type: string) => {
 		try {
+			data.isShowAds = true;
 			modalRef.current.close();
 			Navigator.showLoading();
 			const item: WallpaperType = data[slideRef.current?.currentIndex];
@@ -107,13 +111,18 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 							() => {
 								Navigator.hideLoading();
 								showToastSuccess();
+								Ads.isShowAds = true;
 							}
 						);
 					}
 				);
+				// setTimeout(() => {
+				// 	data.isShowAds = false;
+				// }, 500);
 			} else {
 				WallpaperManageModule.setWallpaper({ uri: IMAGE_URL + item?.media?.url }, type, () => {
 					Navigator.hideLoading();
+					Ads.isShowAds = true;
 					showToastSuccess();
 				});
 			}

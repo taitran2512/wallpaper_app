@@ -21,7 +21,6 @@ const AdsOpen: React.FC<ScreenProps | any> = () => {
 		onboardRef.current = onboard;
 	});
 	appOpenAd.addAdEventsListener(({ type }) => {
-		console.log(type, 'type');
 		if (type === 'loaded') {
 			appOpenAd.show();
 			return;

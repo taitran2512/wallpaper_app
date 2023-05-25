@@ -17,7 +17,9 @@ import { Device, Storage } from 'utils';
 import { keyOnAppResume } from 'utils/GoogleAds';
 import store from './redux/store';
 
-export let data = { isShowAds: false };
+export let data = {
+	isShowAds: false,
+};
 const App: React.FC = () => {
 	const appState = useRef<any>(AppState.currentState);
 	const showAdsRef = useRef<any>();
@@ -25,6 +27,7 @@ const App: React.FC = () => {
 		requestNonPersonalizedAdsOnly: true,
 		keywords: [],
 	});
+	console.log(error);
 	const isFirst = useRef(true);
 	const openResumeRef = useRef(false);
 

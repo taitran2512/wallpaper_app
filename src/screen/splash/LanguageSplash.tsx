@@ -42,7 +42,7 @@ const LanguageSplash: React.FC<ScreenProps | any> = ({ navigation }) => {
 	useEffect(() => {
 		SystemNavigationBar.stickyImmersive();
 		getConfigRemote();
-	}, [optionsNativeAds]);
+	}, []);
 
 	const setAppLanguage = (lan: string) => {
 		setLanguage(lan);
@@ -65,7 +65,6 @@ const LanguageSplash: React.FC<ScreenProps | any> = ({ navigation }) => {
 		const isNativeLanguage: any = remoteConfig()?.getValue('native_language').asBoolean();
 		setOptionsNativeAds(isNativeLanguage);
 	};
-	console.log(optionsNativeAds, 'optionsNativeAds');
 	return (
 		<Flex style={styles.container}>
 			<FastImage
