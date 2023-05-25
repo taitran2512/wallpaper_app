@@ -89,31 +89,28 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 		return;
 	};
 
-	const onHandleWallpaper = (type: string) => {
+	const onHandleWallpaper = async (type: string) => {
 		try {
 			Navigator.showLoading();
 			const item: WallpaperType = data[slideRef.current?.currentIndex];
 			modalRef.current.close();
-			WallpaperManageModule.setWallpaper(
-				{
-					uri: IMAGE_URL + item?.media?.url,
-				},
-				type,
-				async (res?: any) => {
-					if (res.status === 'success') {
-						Navigator.hideLoading();
-						showToastSuccess();
-						WallpaperApi.updateCountSetWallpaper(item?.id, item?.download_count + 1);
-						const listSetWallpaper: any[] =
-							(await Storage.getData(Storage.key.listSetWallpaper)) || [];
-						if (listSetWallpaper.find((e) => e.id === item.id)) {
-							return;
-						}
-						const newlistSetWallpaper = [item, ...listSetWallpaper];
-						Storage.setData(Storage.key.listSetWallpaper, newlistSetWallpaper);
-					}
-				}
-			);
+			if (type === 'both') {
+				WallpaperManageModule.setWallpaper({ uri: IMAGE_URL + item?.media?.url }, 'home');
+				WallpaperManageModule.setWallpaper({ uri: IMAGE_URL + item?.media?.url }, 'lock');
+			} else {
+				WallpaperManageModule.setWallpaper({ uri: IMAGE_URL + item?.media?.url }, type);
+			}
+
+			Navigator.hideLoading();
+			showToastSuccess();
+			WallpaperApi.updateCountSetWallpaper(item?.id, item?.download_count + 1);
+			const listSetWallpaper: any[] =
+				(await Storage.getData(Storage.key.listSetWallpaper)) || [];
+			if (listSetWallpaper.find((e) => e.id === item.id)) {
+				return;
+			}
+			const newlistSetWallpaper = [item, ...listSetWallpaper];
+			Storage.setData(Storage.key.listSetWallpaper, newlistSetWallpaper);
 		} catch (error: any) {
 			hideToast();
 			Alert.alert('Alert', error);
