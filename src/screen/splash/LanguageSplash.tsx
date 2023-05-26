@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import remoteConfig from '@react-native-firebase/remote-config';
@@ -24,7 +25,7 @@ import { keyNative_onboarding } from 'utils/GoogleAds';
 
 const LanguageSplash: React.FC<ScreenProps | any> = ({ navigation }) => {
 	const [language, setLanguage] = useState<string>(Languages?.[0].lang);
-	const [optionsNativeAds, setOptionsNativeAds] = useState<boolean>(false);
+	const [optionsNativeAds, setOptionsNativeAds] = useState<boolean>(true);
 
 	useEffect(() => {
 		navigation.setOptions({
@@ -41,7 +42,6 @@ const LanguageSplash: React.FC<ScreenProps | any> = ({ navigation }) => {
 	useEffect(() => {
 		SystemNavigationBar.stickyImmersive();
 		getConfigRemote();
-		console.log(optionsNativeAds, 'optionsNativeAds');
 	}, [optionsNativeAds]);
 
 	const setAppLanguage = (lan: string) => {
@@ -53,13 +53,15 @@ const LanguageSplash: React.FC<ScreenProps | any> = ({ navigation }) => {
 	const onSetLang = () => {
 		Navigator.replace(Stacks.Onboarding);
 	};
-	const getConfigRemote = () => {
-		remoteConfig()
-			.setDefaults({
-				native_language: true,
-			})
-			.then(() => remoteConfig()?.fetch(0))
-			.then(() => remoteConfig()?.fetchAndActivate());
+	const getConfigRemote = async () => {
+		remoteConfig().setDefaults({
+			native_language: true,
+		});
+		const res = await Promise.all([
+			remoteConfig()?.fetch(0),
+			remoteConfig().ensureInitialized(),
+			remoteConfig()?.fetchAndActivate(),
+		]);
 		const isNativeLanguage: any = remoteConfig()?.getValue('native_language').asBoolean();
 		setOptionsNativeAds(isNativeLanguage);
 	};
@@ -131,15 +133,13 @@ const LanguageSplash: React.FC<ScreenProps | any> = ({ navigation }) => {
 							},
 						]}
 					/>
-					{optionsNativeAds && (
-						<NativeAds
-							loadOnMount={false}
-							index={1}
-							type="image"
-							media={false}
-							keys={keyNative_onboarding}
-						/>
-					)}
+					<NativeAds
+						loadOnMount={false}
+						index={1}
+						type="image"
+						media={false}
+						keys={keyNative_onboarding}
+					/>
 				</View>
 			</LinearGradient>
 		</Flex>

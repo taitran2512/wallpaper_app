@@ -13,7 +13,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import SplashScreen from 'react-native-splash-screen';
 import SystemNavigationBar from 'react-native-system-navigation-bar';
 import { Provider } from 'react-redux';
-import { Device } from 'utils';
+import { Device, Storage } from 'utils';
 import { keyOnAppResume } from 'utils/GoogleAds';
 import store from './redux/store';
 
@@ -27,6 +27,7 @@ const App: React.FC = () => {
 	});
 	const isFirst = useRef(true);
 	const openResumeRef = useRef(false);
+
 	const getConfigRemoteFirebase = async () => {
 		try {
 			await remoteConfig();
@@ -62,6 +63,7 @@ const App: React.FC = () => {
 	useEffect(() => {
 		SystemNavigationBar.stickyImmersive();
 		getConfigRemoteFirebase();
+		Storage.setData('FIRST OPEN APP', 'true');
 	}, []);
 
 	const handleAppStateChange = async (nextAppState: any) => {

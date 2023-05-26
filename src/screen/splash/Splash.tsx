@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import remoteConfig from '@react-native-firebase/remote-config';
 import { Stacks } from 'common';
@@ -8,30 +9,27 @@ import SystemNavigationBar from 'react-native-system-navigation-bar';
 import { Storage } from 'utils';
 
 const Splash = () => {
-	const openAdsRef = useRef(false);
-	const interShowRef = useRef(false);
+	const openAdsRef = useRef(true);
+	const interShowRef = useRef(true);
 	const onboardRef = useRef<any>(null);
 
-	useEffect(() => {
-		SystemNavigationBar.stickyImmersive();
-		getConfigRemote();
-	}, []);
+	const getConfigRemote = async () => {
+		await remoteConfig().setDefaults({
+			open_splash: true,
+			inter_splash: false,
+		});
+		const res = await Promise.all([
+			remoteConfig()?.fetch(0),
+			remoteConfig().ensureInitialized(),
+			remoteConfig()?.fetchAndActivate(),
+		]);
 
-	const getConfigRemote = () => {
-		remoteConfig()
-			.setDefaults({
-				open_splash: true,
-				inter_splash: false,
-			})
-			.then(() => remoteConfig()?.fetch(0))
-			.then(() => remoteConfig()?.fetchAndActivate());
 		const openSplash: any = remoteConfig()?.getValue('open_splash').asBoolean();
 		const interSplash: any = remoteConfig()?.getValue('inter_splash').asBoolean();
-
 		openAdsRef.current = openSplash;
 		interShowRef.current = interSplash;
+
 		Storage.getMultiData([Storage.key.language, Storage.key.onboarding]).then((data) => {
-			console.log(data, 'data');
 			const [lang, onboard] = data;
 			const appLanguage = lang || 'en';
 			strings.setLanguage(appLanguage);
@@ -39,6 +37,12 @@ const Splash = () => {
 			handleOpenAds();
 		});
 	};
+
+	useEffect(() => {
+		SystemNavigationBar.stickyImmersive();
+		getConfigRemote();
+	}, []);
+
 	const handleOpenAds = () => {
 		if (openAdsRef.current) {
 			Navigator.replace(Stacks.AdsOpen);
