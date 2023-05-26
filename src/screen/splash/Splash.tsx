@@ -20,7 +20,7 @@ const Splash = () => {
 	const getConfigRemote = () => {
 		remoteConfig()
 			.setDefaults({
-				open_splash: false,
+				open_splash: true,
 				inter_splash: false,
 			})
 			.then(() => remoteConfig()?.fetch(0))

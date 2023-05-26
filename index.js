@@ -1,11 +1,12 @@
 /**
  * @format
  */
+import remoteConfig from '@react-native-firebase/remote-config';
 import { AppRegistry, LogBox, Text } from 'react-native';
 import { AdManager } from 'react-native-admob-native-ads';
 import { name as appName } from './app.json';
 import App from './src/App';
-import { objScreen, Screens } from './src/common';
+import { Screens, objScreen } from './src/common';
 // get screen name from import
 for (let key in objScreen) {
 	Screens[key] = key;
@@ -14,7 +15,7 @@ for (let key in objScreen) {
 AdManager.setRequestConfiguration({
 	tagForChildDirectedTreatment: false,
 });
-
+remoteConfig();
 // image test ad
 AdManager.registerRepository({
 	name: 'imageAd',

@@ -5,7 +5,7 @@ import { images } from 'assets';
 import { Stacks } from 'common';
 import { Languages } from 'common/data';
 import { Flex, Icon, NativeAds } from 'component';
-import { colors, Navigator, screenHeight, screenWidth, sizes, strings, Style } from 'core/index';
+import { Navigator, Style, colors, screenHeight, screenWidth, sizes, strings } from 'core/index';
 import { ScreenProps } from 'model';
 import React, { useEffect, useState } from 'react';
 import {
@@ -41,6 +41,7 @@ const LanguageSplash: React.FC<ScreenProps | any> = ({ navigation }) => {
 	useEffect(() => {
 		SystemNavigationBar.stickyImmersive();
 		getConfigRemote();
+		console.log(optionsNativeAds, 'optionsNativeAds');
 	}, [optionsNativeAds]);
 
 	const setAppLanguage = (lan: string) => {
@@ -55,7 +56,7 @@ const LanguageSplash: React.FC<ScreenProps | any> = ({ navigation }) => {
 	const getConfigRemote = () => {
 		remoteConfig()
 			.setDefaults({
-				native_language: false,
+				native_language: true,
 			})
 			.then(() => remoteConfig()?.fetch(0))
 			.then(() => remoteConfig()?.fetchAndActivate());
