@@ -6,9 +6,8 @@ import { Icon } from 'component';
 import { colors, Navigator, sizes, strings, Style } from 'core/index';
 import React from 'react';
 import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { canOpenUrl, Device } from 'utils';
+import { Device } from 'utils';
 import { urlPolicy, urlTermOfService } from 'utils/GoogleAds';
-import { data } from '../../App';
 
 const DrawerContent = () => {
 	const DATA = [
@@ -22,11 +21,10 @@ const DrawerContent = () => {
 			title: strings.tof,
 			icon: images.ic_term,
 			onPress: () => {
-				data.isShowAds = true;
-				canOpenUrl(urlTermOfService, strings.tof);
-				setTimeout(() => {
-					data.isShowAds = false;
-				}, 500);
+				Navigator.navigate(Screens.Webview, {
+					link: urlTermOfService,
+					title: strings.tof,
+				});
 			},
 		},
 		{
@@ -38,11 +36,15 @@ const DrawerContent = () => {
 			title: strings.policy,
 			icon: images.ic_lock,
 			onPress: () => {
-				data.isShowAds = true;
-				canOpenUrl(urlPolicy, strings.policy);
-				setTimeout(() => {
-					data.isShowAds = false;
-				}, 500);
+				// data.isShowAds = true;
+				// canOpenUrl(urlPolicy, strings.policy);
+				// setTimeout(() => {
+				// 	data.isShowAds = false;
+				// }, 500);
+				Navigator.navigate(Screens.Webview, {
+					link: urlPolicy,
+					title: strings.policy,
+				});
 			},
 		},
 	];
