@@ -20,6 +20,7 @@ import FastImage from 'react-native-fast-image';
 import SystemNavigationBar from 'react-native-system-navigation-bar';
 import { Device, Storage } from 'utils';
 import { keyNative_onboarding } from 'utils/GoogleAds';
+import { data } from '../../App';
 
 const Language: React.FC<ScreenProps | any> = ({ navigation }) => {
 	const [language, setLanguage] = useState<string>('');
@@ -33,6 +34,7 @@ const Language: React.FC<ScreenProps | any> = ({ navigation }) => {
 			strings.setLanguage(appLanguage || 'en');
 			setLanguage(appLanguage || 'en');
 		});
+		data.isShowAds = true;
 	}, []);
 
 	const setAppLanguage = (lan: string) => {
@@ -58,6 +60,7 @@ const Language: React.FC<ScreenProps | any> = ({ navigation }) => {
 		const isNativeLanguage: any = remoteConfig()?.getValue('native_language').asBoolean();
 		setOptionsNativeAds(isNativeLanguage);
 	};
+
 	return (
 		<Flex style={styles.container}>
 			<FastImage

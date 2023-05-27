@@ -9,6 +9,7 @@
 		"start": "react-native start",
 		"test": "jest",
 		"apk-dev": "cd android && ./gradlew assembleRelease",
+		"aab-dev": "cd android && ./gradlew bundleRelease",
 		"key-sha-dev": "keytool -keystore android/app/debug.keystore -list -v",
 		"key-sha-prod": "keytool -keystore android/app/keystore -list -v",
 		"get-key-signin-report": "cd android && ./gradlew signinReport"

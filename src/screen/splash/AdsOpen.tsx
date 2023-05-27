@@ -20,6 +20,7 @@ const AdsOpen: React.FC<ScreenProps | any> = () => {
 		strings.setLanguage(appLanguage);
 		onboardRef.current = onboard;
 	});
+
 	appOpenAd.addAdEventsListener(({ type }) => {
 		if (type === 'loaded') {
 			appOpenAd.show();
@@ -29,11 +30,11 @@ const AdsOpen: React.FC<ScreenProps | any> = () => {
 			if (onboardRef.current) {
 				setTimeout(() => {
 					Navigator.goHome();
-				}, 500);
+				}, 1000);
 			} else {
 				setTimeout(() => {
 					Navigator.replace(Stacks.LanguageSplash);
-				}, 500);
+				}, 1000);
 				return;
 			}
 			return;

@@ -20,6 +20,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import SystemNavigationBar from 'react-native-system-navigation-bar';
 import { Storage } from 'utils';
 import { keyBanner_onboarding } from 'utils/GoogleAds';
+import { data } from '../../App';
 
 const Onboarding: React.FC<ScreenProps | any> = () => {
 	const [idx, setIdx] = useState<number>(0);
@@ -137,7 +138,7 @@ const Onboarding: React.FC<ScreenProps | any> = () => {
 							</TouchableOpacity>
 						</View>
 					</View>
-
+					{/* <TouchableWithoutFeedback onPress={() => console.log('hello')}> */}
 					<View style={styles.viewBanner}>
 						{loading && <Skeleton style={StyleSheet.absoluteFill} />}
 						{hide && (
@@ -152,6 +153,12 @@ const Onboarding: React.FC<ScreenProps | any> = () => {
 										setLoading(false);
 									}
 								}}
+								onAdOpened={() => {
+									data.isShowAds = true;
+									setTimeout(() => {
+										data.isShowAds = false;
+									}, 1000);
+								}}
 								onAdFailedToLoad={(error) => {
 									console.error('Advert failed to load: ', error);
 									if (error) {
@@ -163,6 +170,7 @@ const Onboarding: React.FC<ScreenProps | any> = () => {
 							/>
 						)}
 					</View>
+					{/* </TouchableWithoutFeedback> */}
 				</View>
 			</LinearGradient>
 		</Flex>

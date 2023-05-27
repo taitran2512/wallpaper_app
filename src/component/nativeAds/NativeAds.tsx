@@ -47,7 +47,7 @@ const NativeAds = ({ index, media = false, type = 'image', loadOnMount = true, k
 	};
 
 	const onAdClicked = () => {
-		// console.log('AD', 'CLICK', 'User has clicked the Ad');
+		console.log('AD', 'CLICK', 'User has clicked the Ad');
 	};
 
 	const onAdImpression = () => {
@@ -251,12 +251,15 @@ const NativeAds = ({ index, media = false, type = 'image', loadOnMount = true, k
 					</View>
 				</View>
 				{/* <ImageView source={images.banner} style={{ width: 50, height: 50 }} /> */}
+				{/* <TouchableOpacity onPress={() => console.log('eee')}> */}
 				<CallToActionView
 					style={styles.btnAds}
 					buttonAndroidStyle={styles.buttonStyle}
 					allCaps
 					textStyle={styles.txtBtnAds}
 				/>
+				{/* </TouchableOpacity> */}
+
 				{media ? <NativeMediaView /> : null}
 			</View>
 		</NativeAdView>

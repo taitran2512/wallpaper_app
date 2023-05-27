@@ -27,7 +27,6 @@ const App: React.FC = () => {
 		requestNonPersonalizedAdsOnly: true,
 		keywords: [],
 	});
-	console.log(error);
 	const isFirst = useRef(true);
 	const openResumeRef = useRef(false);
 

@@ -6,7 +6,7 @@ import { images } from 'assets';
 import { Stacks } from 'common';
 import { Languages } from 'common/data';
 import { Flex, Icon, NativeAds } from 'component';
-import { Navigator, Style, colors, screenHeight, screenWidth, sizes, strings } from 'core/index';
+import { colors, Navigator, screenHeight, screenWidth, sizes, strings, Style } from 'core/index';
 import { ScreenProps } from 'model';
 import React, { useEffect, useState } from 'react';
 import {
@@ -22,12 +22,16 @@ import LinearGradient from 'react-native-linear-gradient';
 import SystemNavigationBar from 'react-native-system-navigation-bar';
 import { Device, Storage } from 'utils';
 import { keyNative_onboarding } from 'utils/GoogleAds';
+import { data } from '../../App';
 
 const LanguageSplash: React.FC<ScreenProps | any> = ({ navigation }) => {
 	const [language, setLanguage] = useState<string>(Languages?.[0].lang);
 	const [optionsNativeAds, setOptionsNativeAds] = useState<boolean>(true);
+	SystemNavigationBar.stickyImmersive();
 
 	useEffect(() => {
+		data.isShowAds = true;
+		console.log(data, 'data');
 		navigation.setOptions({
 			headerShown: false,
 		});
@@ -37,10 +41,6 @@ const LanguageSplash: React.FC<ScreenProps | any> = ({ navigation }) => {
 			strings.setLanguage(appLanguage);
 			setLanguage(appLanguage);
 		});
-	}, []);
-
-	useEffect(() => {
-		SystemNavigationBar.stickyImmersive();
 		getConfigRemote();
 	}, []);
 
@@ -65,6 +65,7 @@ const LanguageSplash: React.FC<ScreenProps | any> = ({ navigation }) => {
 		const isNativeLanguage: any = remoteConfig()?.getValue('native_language').asBoolean();
 		setOptionsNativeAds(isNativeLanguage);
 	};
+
 	return (
 		<Flex style={styles.container}>
 			<FastImage

@@ -9,10 +9,10 @@ import { colors, fonts, sizes } from 'core/index';
 import { debounce, isEmpty } from 'lodash';
 import { ScreenProps, TabScreenProps } from 'model';
 import React, { useLayoutEffect, useRef, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
 import { keyBanner_category } from 'utils/GoogleAds';
-
+import { data as OpenAds } from '../../App';
 const DetailCategory: React.FC<ScreenProps | TabScreenProps> = ({ navigation, route }) => {
 	const { categoryName }: any = route?.params || {};
 	const [loading, setLoading] = useState<boolean>(true);
@@ -100,29 +100,37 @@ const DetailCategory: React.FC<ScreenProps | TabScreenProps> = ({ navigation, ro
 				navigation={navigation}
 			/>
 			{!!categoryName && hideBanner && (
-				<View style={styles.viewBanner}>
-					{loading ? <Skeleton style={StyleSheet.absoluteFill} /> : null}
-					<BannerAd
-						unitId={keyBanner_category}
-						size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-						requestOptions={{
-							requestNonPersonalizedAdsOnly: true,
-						}}
-						onAdLoaded={(e) => {
-							if (e) {
-								setLoading(false);
-							}
-						}}
-						onAdFailedToLoad={(error) => {
-							console.error('Advert failed to load: ', error);
-							if (error) {
-								setTimeout(() => {
+				<TouchableOpacity onPress={() => console.log('heeee')}>
+					<View style={styles.viewBanner}>
+						{loading ? <Skeleton style={StyleSheet.absoluteFill} /> : null}
+						<BannerAd
+							unitId={keyBanner_category}
+							size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+							requestOptions={{
+								requestNonPersonalizedAdsOnly: true,
+							}}
+							onAdLoaded={(e) => {
+								if (e) {
 									setLoading(false);
-								}, 500);
-							}
-						}}
-					/>
-				</View>
+								}
+							}}
+							onAdOpened={() => {
+								OpenAds.isShowAds = true;
+								setTimeout(() => {
+									OpenAds.isShowAds = false;
+								}, 1000);
+							}}
+							onAdFailedToLoad={(error) => {
+								console.error('Advert failed to load: ', error);
+								if (error) {
+									setTimeout(() => {
+										setLoading(false);
+									}, 500);
+								}
+							}}
+						/>
+					</View>
+				</TouchableOpacity>
 			)}
 		</Flex>
 	);

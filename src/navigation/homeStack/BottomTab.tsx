@@ -12,7 +12,7 @@ import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
 import { Category, DetailCategory, More } from 'screen/home';
 import { Device } from 'utils';
 import { keyBanner_category } from 'utils/GoogleAds';
-
+import { data } from '../../App';
 const Tab = createBottomTabNavigator();
 
 const BottomTab = ({ navigation }: TabScreenProps) => {
@@ -123,6 +123,12 @@ const BottomTab = ({ navigation }: TabScreenProps) => {
 							if (e) {
 								setLoading(false);
 							}
+						}}
+						onAdOpened={() => {
+							data.isShowAds = true;
+							setTimeout(() => {
+								data.isShowAds = false;
+							}, 1000);
 						}}
 						onAdFailedToLoad={(error) => {
 							console.error('Advert failed to load: ', error);
