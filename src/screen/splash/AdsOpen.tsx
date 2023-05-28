@@ -40,7 +40,7 @@ const AdsOpen: React.FC<ScreenProps | any> = () => {
 			return;
 		}
 		if (type === 'error') {
-			Navigator.replace(Stacks.LanguageSplash);
+			Navigator.replace(Stacks.GoogleInterstitialsAdsSplash);
 			return;
 		}
 	});

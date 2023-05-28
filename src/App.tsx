@@ -20,9 +20,7 @@ import store from './redux/store';
 export let data = {
 	isShowAds: false,
 };
-export let nativeLangauge = {
-	isEnable: false,
-};
+
 const App: React.FC = () => {
 	const appState = useRef<any>(AppState.currentState);
 	const showAdsRef = useRef<any>();
@@ -72,8 +70,6 @@ const App: React.FC = () => {
 	}, []);
 
 	const handleAppStateChange = async (nextAppState: any) => {
-		console.log(nativeLangauge, 'active');
-
 		if (appState.current.match(/inactive|background/) && nextAppState === 'active') {
 			if (isFirst.current || data.isShowAds) {
 				isFirst.current = false;

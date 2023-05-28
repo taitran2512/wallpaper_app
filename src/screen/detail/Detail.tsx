@@ -179,7 +179,15 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 
 	const setHeader = () => (
 		<View style={[styles.header]}>
-			<TouchableOpacity style={styles.button} onPress={() => Navigator.goBack()}>
+			<TouchableOpacity style={styles.button} onPress={() => navigation.goBack()}>
+				{/* <BlurView
+					style={[StyleSheet.absoluteFill]}
+					blurType="light"
+					blurAmount={10}
+					blurRadius={25}
+					overlayColor="transparent"
+					reducedTransparencyFallbackColor="white"
+				/> */}
 				<Image source={images.ic_back_arrow} style={Style.icon16} />
 			</TouchableOpacity>
 			<TouchableOpacity onPress={onPressLike}>
@@ -208,6 +216,13 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 	const renderButtonBottom = () => {
 		return (
 			<View style={styles.viewGradient}>
+				{/* <BlurView
+					style={[StyleSheet.absoluteFill]}
+					blurType="light"
+					blurAmount={10}
+					overlayColor="transparent"
+					reducedTransparencyFallbackColor="white"
+				/> */}
 				<TouchableOpacity
 					style={styles.item}
 					activeOpacity={0.8}
@@ -238,7 +253,7 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 
 	useEffect(() => {
 		getConfigRemote();
-	}, [hideBanner]);
+	}, []);
 
 	const getConfigRemote = () => {
 		remoteConfig()
@@ -362,6 +377,7 @@ const styles = StyleSheet.create({
 		borderRadius: sizes.s8,
 		alignItems: 'center',
 		justifyContent: 'center',
+		overflow: 'hidden',
 	},
 	item: {
 		alignItems: 'center',
@@ -371,6 +387,7 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		justifyContent: 'space-around',
 		alignItems: 'center',
+		overflow: 'hidden',
 		paddingHorizontal: sizes.s8,
 		paddingVertical: sizes.s16,
 		marginHorizontal: sizes.s16,

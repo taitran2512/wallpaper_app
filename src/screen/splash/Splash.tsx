@@ -1,5 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import remoteConfig from '@react-native-firebase/remote-config';
 import { Stacks } from 'common';
 import { colors, Navigator, strings, Style } from 'core/index';
@@ -18,17 +19,20 @@ const Splash = () => {
 			open_splash: true,
 			inter_splash: false,
 		});
-		const res = await Promise.all([
-			remoteConfig()?.fetch(0),
-			remoteConfig().ensureInitialized(),
-			remoteConfig()?.fetchAndActivate(),
-		]);
+		try {
+			const res = await Promise.all([
+				remoteConfig()?.fetch(0),
+				remoteConfig().ensureInitialized(),
+				remoteConfig()?.fetchAndActivate(),
+			]);
+		} catch (error) {
+			console.log(error);
+		}
 
 		const openSplash: any = remoteConfig()?.getValue('open_splash').asBoolean();
 		const interSplash: any = remoteConfig()?.getValue('inter_splash').asBoolean();
 		openAdsRef.current = openSplash;
 		interShowRef.current = interSplash;
-
 		Storage.getMultiData([Storage.key.language, Storage.key.onboarding]).then((data) => {
 			const [lang, onboard] = data;
 			const appLanguage = lang || 'en';

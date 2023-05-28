@@ -10,7 +10,6 @@ import NativeAdView, {
 	CallToActionView,
 	HeadlineView,
 	IconView,
-	NativeMediaView,
 	StarRatingView,
 	StoreView,
 	TaglineView,
@@ -47,7 +46,7 @@ const NativeAds = ({ index, media = false, type = 'image', loadOnMount = true, k
 	};
 
 	const onAdLoaded = () => {
-		// console.log('AD', 'LOADED', 'Ad has loaded successfully');
+		console.log('AD', 'LOADED', 'Ad has loaded successfully');
 	};
 
 	const onAdClicked = () => {
@@ -67,7 +66,7 @@ const NativeAds = ({ index, media = false, type = 'image', loadOnMount = true, k
 	};
 
 	const onAdLeftApplication = () => {
-		// console.log('AD', 'LEFT', 'Ad left application');
+		console.log('AD', 'LEFT', 'Ad left application');
 	};
 
 	const onViewableItemsChanged = useCallback(
@@ -161,20 +160,19 @@ const NativeAds = ({ index, media = false, type = 'image', loadOnMount = true, k
 
 		init();
 	}, []);
-	console.log(hideNative, 'hideNative');
 	return (
 		<NativeAdView
 			ref={nativeAdRef}
 			onAdLoaded={onAdLoaded}
 			onAdFailedToLoad={onAdFailedToLoad}
 			onAdLeftApplication={onAdLeftApplication}
-			onAdClicked={onAdClicked}
+			onAdClicked={() => console.log('hello')}
+			onAdOpened={() => console.log('hello')}
 			onAdImpression={onAdImpression}
 			onNativeAdLoaded={onNativeAdLoaded}
 			requestNonPersonalizedAdsOnly={true}
 			refreshInterval={60000 * 2}
-			// adUnitID={'ca-app-pub-6548166688052880/8131685939'} // TEST adUnitID
-			style={styles.container}
+			style={[styles.container, !hideNative ? { backgroundColor: '#D9D9D9' } : null]}
 			videoOptions={{
 				customControlsRequested: true,
 			}}
@@ -257,25 +255,24 @@ const NativeAds = ({ index, media = false, type = 'image', loadOnMount = true, k
 						</View>
 					</View>
 					{/* <ImageView source={images.banner} style={{ width: 50, height: 50 }} /> */}
-					{/* <TouchableOpacity onPress={() => console.log('eee')}> */}
+
 					<CallToActionView
 						style={styles.btnAds}
 						buttonAndroidStyle={styles.buttonStyle}
 						allCaps
 						textStyle={styles.txtBtnAds}
 					/>
-					{/* </TouchableOpacity> */}
 
-					{media ? <NativeMediaView /> : null}
+					{/* {media ? <NativeMediaView /> : null} */}
 				</View>
 			)}
 		</NativeAdView>
 	);
 };
 export default React.memo(NativeAds);
+
 const styles = StyleSheet.create({
 	container: {
-		// backgroundColor: '#D9D9D9',
 		marginHorizontal: sizes.s16,
 		marginBottom: sizes.s16,
 		borderRadius: sizes.s10,

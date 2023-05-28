@@ -12,6 +12,7 @@ const GoogleInterstitialsAds: React.FC<ScreenProps | any> = ({ navigation }) => 
 	const { isClosed, isLoaded, load, show, error } = useInterstitialAd(keyInterstitialSplash, {
 		requestNonPersonalizedAdsOnly: true,
 	});
+
 	const onboardRef = useRef<any>(null);
 	Storage.getMultiData([Storage.key.language, Storage.key.onboarding]).then((data) => {
 		console.log(data, 'data');
@@ -54,7 +55,13 @@ const GoogleInterstitialsAds: React.FC<ScreenProps | any> = ({ navigation }) => 
 
 	useEffect(() => {
 		if (error) {
-			Navigator.goHome();
+			if (onboardRef.current) {
+				Navigator.goHome();
+			} else {
+				setTimeout(() => {
+					Navigator.replace(Stacks.LanguageSplash);
+				}, 500);
+			}
 		}
 	}, [error]);
 

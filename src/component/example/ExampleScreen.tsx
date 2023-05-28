@@ -1,3 +1,5 @@
+/* eslint-disable react-native/no-inline-styles */
+import { BlurView } from '@react-native-community/blur';
 import { images } from 'assets';
 import { colors, screenWidth, sizes, strings, Style } from 'core/index';
 import { format } from 'date-fns';
@@ -16,12 +18,19 @@ const ExampleScreen = (props: Props) => {
 			<View style={styles.viewItemExample}>
 				<ImageBackground
 					source={images.blur_view}
-					blurRadius={5}
 					resizeMode="cover"
-					imageStyle={{ borderRadius: sizes.s8 }}
 					key={index}
-					style={styles.itemExample}
-				/>
+					imageStyle={{ borderRadius: sizes.s8, overflow: 'hidden' }}
+					style={styles.itemExample}>
+					{/* <BlurView
+						style={[StyleSheet.absoluteFill]}
+						blurType="light"
+						blurAmount={10}
+						blurRadius={25}
+						overlayColor=""
+						reducedTransparencyFallbackColor="white"
+					/> */}
+				</ImageBackground>
 			</View>
 		);
 	};
@@ -59,8 +68,15 @@ const ExampleScreen = (props: Props) => {
 								key={index}
 								resizeMode="cover"
 								source={images.blur_view}
-								style={styles.itemExample2}
-							/>
+								style={styles.itemExample2}>
+								<BlurView
+									style={[StyleSheet.absoluteFill]}
+									blurType="light"
+									blurAmount={10}
+									overlayColor="transparent"
+									reducedTransparencyFallbackColor="white"
+								/>
+							</ImageBackground>
 						))}
 				</View>
 			);
@@ -89,19 +105,20 @@ const styles = StyleSheet.create({
 		flex: 1,
 		alignSelf: 'center',
 		alignItems: 'center',
+		overflow: 'hidden',
 	},
 	itemExample: {
-		// backgroundColor: colors.gradient5,
 		width: itemWidth,
 		height: itemWidth,
 		marginVertical: sizes.s16,
+		overflow: 'hidden',
 	},
 	itemExample2: {
-		// backgroundColor: colors.gradient4,
 		width: screenWidth * 0.9,
 		height: sizes.s60,
 		borderRadius: sizes.s8,
 		marginVertical: sizes.s16,
+		overflow: 'hidden',
 	},
 	textTime: {
 		textAlign: 'center',

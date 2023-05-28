@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/no-unstable-nested-components */
 import remoteConfig from '@react-native-firebase/remote-config';
@@ -6,7 +7,7 @@ import { images } from 'assets';
 import { Skeleton } from 'component';
 import { colors, fonts, Navigator, screenHeight, sizes, strings, Style } from 'core';
 import { TabScreenProps } from 'model';
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useCallback, useEffect, useState } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
 import { Category, DetailCategory, More } from 'screen/home';
@@ -55,7 +56,7 @@ const BottomTab = ({ navigation }: TabScreenProps) => {
 
 	useEffect(() => {
 		getConfigRemote();
-	}, [bannerHome]);
+	}, []);
 
 	useEffect(() => {
 		navigation.setOptions({
@@ -106,12 +107,15 @@ const BottomTab = ({ navigation }: TabScreenProps) => {
 			/>
 		));
 	};
-
+	const onAdFailedToLoad = useCallback((error: any) => {
+		console.error('Advert failed to load: ', error);
+		setBannerHome(false);
+	}, []);
 	return (
 		<View style={styles.container}>
 			<Tab.Navigator>{renderTabScreen()}</Tab.Navigator>
 			{bannerHome && (
-				<View style={styles.viewBanner}>
+				<View style={[styles.viewBanner, !bannerHome && { height: 0 }]}>
 					{loading && <Skeleton style={StyleSheet.absoluteFill} />}
 					<BannerAd
 						unitId={keyBanner_category}
@@ -130,9 +134,7 @@ const BottomTab = ({ navigation }: TabScreenProps) => {
 								data.isShowAds = false;
 							}, 1000);
 						}}
-						onAdFailedToLoad={(error) => {
-							console.error('Advert failed to load: ', error);
-						}}
+						onAdFailedToLoad={onAdFailedToLoad}
 					/>
 				</View>
 			)}

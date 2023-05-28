@@ -21,7 +21,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import SystemNavigationBar from 'react-native-system-navigation-bar';
 import { Device, Storage } from 'utils';
 import { keyNative_onboarding } from 'utils/GoogleAds';
-import { data, nativeLangauge } from '../../App';
+import { data } from '../../App';
 
 const LanguageSplash: React.FC<ScreenProps | any> = ({ navigation }) => {
 	const [language, setLanguage] = useState<string>(Languages?.[0].lang);
@@ -30,10 +30,7 @@ const LanguageSplash: React.FC<ScreenProps | any> = ({ navigation }) => {
 
 	useEffect(() => {
 		data.isShowAds = true;
-		nativeLangauge.isEnable = true;
-		// setTimeout(() => {
-		// 	data.isShowAds = false;
-		// }, 500);
+
 		navigation.setOptions({
 			headerShown: false,
 		});
@@ -60,19 +57,20 @@ const LanguageSplash: React.FC<ScreenProps | any> = ({ navigation }) => {
 		remoteConfig().setDefaults({
 			native_language: true,
 		});
-		const res = await Promise.all([
-			remoteConfig()?.fetch(0),
-			remoteConfig().ensureInitialized(),
-			remoteConfig()?.fetchAndActivate(),
-			remoteConfig()?.getValue('native_language').asBoolean(),
-		]);
-		setOptionsNativeAds(res?.[3]);
+		try {
+			const res = await Promise.all([
+				remoteConfig()?.fetch(0),
+				remoteConfig().ensureInitialized(),
+				remoteConfig()?.fetchAndActivate(),
+				remoteConfig()?.getValue('native_language').asBoolean(),
+			]);
+			setOptionsNativeAds(res?.[3]);
+		} catch (error) {
+			setOptionsNativeAds(false);
+			console.log(error);
+		}
 	};
-	useEffect(() => {
-		return () => {
-			console.log('unmount');
-		};
-	}, []);
+
 	return (
 		<Flex style={styles.container}>
 			<FastImage

@@ -124,7 +124,7 @@ const DetailCategory: React.FC<ScreenProps | TabScreenProps> = ({ navigation, ro
 								console.error('Advert failed to load: ', error);
 								if (error) {
 									setTimeout(() => {
-										setLoading(false);
+										setHideBanner(false);
 									}, 500);
 								}
 							}}
