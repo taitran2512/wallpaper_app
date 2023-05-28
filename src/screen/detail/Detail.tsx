@@ -30,6 +30,8 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 	const { data, index } = route?.params || {};
 	const [like, setLike] = useState<boolean>(false);
 	const [loading, setLoading] = useState<boolean>(true);
+	const [loadingDetail, setLoadingDetail] = useState<boolean>(true);
+
 	const slideRef = useRef<any>();
 	const [hideBanner, setHideBanner] = useState<boolean>(false);
 	const [hideAds1, setHideAds1] = useState<boolean>(false);
@@ -96,7 +98,7 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 
 	const onHandleWallpaper = async (type: string) => {
 		try {
-			data.isShowAds = true;
+			Ads.isShowAds = true;
 			modalRef.current.close();
 			Navigator.showLoading();
 			const item: WallpaperType = data[slideRef.current?.currentIndex];
@@ -116,9 +118,6 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 						);
 					}
 				);
-				// setTimeout(() => {
-				// 	data.isShowAds = false;
-				// }, 500);
 			} else {
 				WallpaperManageModule.setWallpaper({ uri: IMAGE_URL + item?.media?.url }, type, () => {
 					Navigator.hideLoading();
@@ -143,6 +142,7 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 
 	useLayoutEffect(() => {
 		initScreen();
+		setLoadingDetail(false);
 	}, []);
 
 	useEffect(() => {
@@ -256,9 +256,6 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 		setHideBanner(isBanner);
 		setHideAds1(ads1);
 		setHideAds2(ads2);
-		// if (isBanner) {
-		// 	setLoading(false);
-		// }
 	};
 	return (
 		<Flex style={styles.container}>
@@ -267,27 +264,31 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 			<ExampleScreen type={type} />
 			{showToast ? renderToastNotify() : null}
 			{renderButtonBottom()}
-			{loading && <Skeleton style={StyleSheet.absoluteFill} />}
-			<View style={styles.viewBanner}>
-				{loading && <Skeleton style={StyleSheet.absoluteFill} />}
-				{hideBanner && (
-					<BannerAd
-						unitId={keyBanner_home}
-						size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-						requestOptions={{
-							requestNonPersonalizedAdsOnly: true,
-						}}
-						onAdLoaded={(e) => {
-							if (e) {
-								setLoading(false);
-							}
-						}}
-						onAdFailedToLoad={(error) => {
-							console.error('Advert failed to load: ', error);
-						}}
-					/>
-				)}
-			</View>
+			{loadingDetail && <Skeleton style={StyleSheet.absoluteFill} />}
+			{hideBanner && (
+				<View style={styles.viewBanner}>
+					{loading && <Skeleton style={StyleSheet.absoluteFill} />}
+					{hideBanner && (
+						<BannerAd
+							unitId={keyBanner_home}
+							size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+							requestOptions={{
+								requestNonPersonalizedAdsOnly: true,
+							}}
+							onAdLoaded={(e) => {
+								if (e) {
+									setLoading(false);
+								}
+							}}
+							onAdFailedToLoad={(error) => {
+								setHideBanner(false);
+								console.error('Advert failed to load: ', error);
+							}}
+						/>
+					)}
+				</View>
+			)}
+
 			<ModalConfirm ref={modalRef} title={strings.questionWallpaper} content="">
 				<View style={[Style.line, styles.line2]} />
 				<ItemOption
