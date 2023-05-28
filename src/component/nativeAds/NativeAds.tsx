@@ -22,6 +22,7 @@ const NativeAds = ({ index, media = false, type = 'image', loadOnMount = true, k
 	const [loading, setLoading] = useState(false);
 	const [loaded, setLoaded] = useState(false);
 	const [error, setError] = useState(false);
+	const [hideNative, setHideNative] = useState(false);
 	const onAdFailedToLoad = (event: any) => {
 		setError(true);
 		setLoading(false);
@@ -39,7 +40,10 @@ const NativeAds = ({ index, media = false, type = 'image', loadOnMount = true, k
 		 * If you have recently created AdMob IDs for your ads, it might take
 		 * a few days until the ads will start showing.
 		 */
-		// console.log('AD', 'FAILED', event.error.message);
+		if (event.error.message) {
+			setHideNative(true);
+		}
+		console.log('AD', 'FAILED', event.error.message);
 	};
 
 	const onAdLoaded = () => {
@@ -157,6 +161,7 @@ const NativeAds = ({ index, media = false, type = 'image', loadOnMount = true, k
 
 		init();
 	}, []);
+	console.log(hideNative, 'hideNative');
 	return (
 		<NativeAdView
 			ref={nativeAdRef}
@@ -174,101 +179,103 @@ const NativeAds = ({ index, media = false, type = 'image', loadOnMount = true, k
 				customControlsRequested: true,
 			}}
 			repository={'imageAd'}>
-			<View
-				style={{
-					width: '100%',
-					alignItems: 'center',
-				}}>
+			{!hideNative && (
 				<View
 					style={{
 						width: '100%',
-						height: '100%',
-						backgroundColor: '#f0f0f0',
-						position: 'absolute',
-						justifyContent: 'center',
 						alignItems: 'center',
-						opacity: !loading && !error && loaded ? 0 : 1,
-						zIndex: !loading && !error && loaded ? 0 : 10,
 					}}>
-					{loading && <ActivityIndicator size={28} color="#a9a9a9" />}
-					{error && <Text style={{ color: '#a9a9a9' }}>:-(</Text>}
-				</View>
-
-				<View
-					style={{
-						width: '100%',
-						flexDirection: 'row',
-						justifyContent: 'space-between',
-						alignItems: 'flex-start',
-						paddingVertical: sizes.s16,
-						paddingHorizontal: sizes.s16,
-						opacity: loading || error || !loaded ? 0 : 1,
-					}}>
-					<IconView style={styles.logoAds} />
 					<View
 						style={{
-							flexGrow: 1,
-							flexShrink: 1,
-							paddingHorizontal: 6,
+							width: '100%',
+							height: '100%',
+							backgroundColor: '#f0f0f0',
+							position: 'absolute',
+							justifyContent: 'center',
+							alignItems: 'center',
+							opacity: !loading && !error && loaded ? 0 : 1,
+							zIndex: !loading && !error && loaded ? 0 : 10,
 						}}>
-						<HeadlineView
-							style={{
-								fontWeight: 'bold',
-								fontSize: sizes.s14,
-								color: 'rgba(29, 36, 51, 1)',
-							}}
-						/>
-						<TaglineView
-							numberOfLines={2}
-							style={{
-								color: 'rgba(29, 36, 51, 1)',
-								fontSize: sizes.s14,
-							}}
-						/>
-						<AdvertiserView
-							style={{
-								fontSize: sizes.s14,
-								color: 'rgba(29, 36, 51, 1)',
-							}}
-						/>
+						{loading && <ActivityIndicator size={28} color="#a9a9a9" />}
+						{error && <Text style={{ color: '#a9a9a9' }}>:-(</Text>}
+					</View>
+
+					<View
+						style={{
+							width: '100%',
+							flexDirection: 'row',
+							justifyContent: 'space-between',
+							alignItems: 'flex-start',
+							paddingVertical: sizes.s16,
+							paddingHorizontal: sizes.s16,
+							opacity: loading || error || !loaded ? 0 : 1,
+						}}>
+						<IconView style={styles.logoAds} />
 						<View
 							style={{
-								flexDirection: 'row',
-								alignItems: 'center',
+								flexGrow: 1,
+								flexShrink: 1,
+								paddingHorizontal: 6,
 							}}>
-							<StoreView
+							<HeadlineView
 								style={{
-									fontSize: 12,
+									fontWeight: 'bold',
+									fontSize: sizes.s14,
+									color: 'rgba(29, 36, 51, 1)',
 								}}
 							/>
-							<StarRatingView
+							<TaglineView
+								numberOfLines={2}
 								style={{
-									width: 65,
-									marginLeft: 10,
+									color: 'rgba(29, 36, 51, 1)',
+									fontSize: sizes.s14,
 								}}
 							/>
+							<AdvertiserView
+								style={{
+									fontSize: sizes.s14,
+									color: 'rgba(29, 36, 51, 1)',
+								}}
+							/>
+							<View
+								style={{
+									flexDirection: 'row',
+									alignItems: 'center',
+								}}>
+								<StoreView
+									style={{
+										fontSize: 12,
+									}}
+								/>
+								<StarRatingView
+									style={{
+										width: 65,
+										marginLeft: 10,
+									}}
+								/>
+							</View>
 						</View>
 					</View>
-				</View>
-				{/* <ImageView source={images.banner} style={{ width: 50, height: 50 }} /> */}
-				{/* <TouchableOpacity onPress={() => console.log('eee')}> */}
-				<CallToActionView
-					style={styles.btnAds}
-					buttonAndroidStyle={styles.buttonStyle}
-					allCaps
-					textStyle={styles.txtBtnAds}
-				/>
-				{/* </TouchableOpacity> */}
+					{/* <ImageView source={images.banner} style={{ width: 50, height: 50 }} /> */}
+					{/* <TouchableOpacity onPress={() => console.log('eee')}> */}
+					<CallToActionView
+						style={styles.btnAds}
+						buttonAndroidStyle={styles.buttonStyle}
+						allCaps
+						textStyle={styles.txtBtnAds}
+					/>
+					{/* </TouchableOpacity> */}
 
-				{media ? <NativeMediaView /> : null}
-			</View>
+					{media ? <NativeMediaView /> : null}
+				</View>
+			)}
 		</NativeAdView>
 	);
 };
 export default React.memo(NativeAds);
 const styles = StyleSheet.create({
 	container: {
-		backgroundColor: '#D9D9D9',
+		// backgroundColor: '#D9D9D9',
 		marginHorizontal: sizes.s16,
 		marginBottom: sizes.s16,
 		borderRadius: sizes.s10,

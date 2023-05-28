@@ -99,7 +99,7 @@ android {
         applicationId "com.wallpaper4k.wallpapers.backgroundhd.phonebackground"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
+        versionCode 33
         versionName "1.0"
         multiDexEnabled true
     }

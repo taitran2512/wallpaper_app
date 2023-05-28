@@ -161,6 +161,7 @@ const Onboarding: React.FC<ScreenProps | any> = () => {
 								}}
 								onAdFailedToLoad={(error) => {
 									console.error('Advert failed to load: ', error);
+									// setHide(true);
 									if (error) {
 										setTimeout(() => {
 											setLoading(false);
