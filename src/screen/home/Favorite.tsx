@@ -58,6 +58,7 @@ const Favorite = ({ navigation }: ScreenProps) => {
 					height: 2,
 					backgroundColor: colors.white,
 				},
+				lazy: false,
 				tabBarLabel: ({ focused }) => {
 					return focused ? (
 						<Text style={styles.txtFocus}>{route.name}</Text>
