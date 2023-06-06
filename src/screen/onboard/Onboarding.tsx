@@ -2,7 +2,7 @@
 import remoteConfig from '@react-native-firebase/remote-config';
 import { images } from 'assets';
 import { Flex, Skeleton } from 'component';
-import { colors, Navigator, screenHeight, screenWidth, sizes, strings, Style } from 'core/index';
+import { Navigator, Style, colors, screenHeight, screenWidth, sizes, strings } from 'core/index';
 import { ScreenProps } from 'model';
 import React, { useEffect, useRef, useState } from 'react';
 import {

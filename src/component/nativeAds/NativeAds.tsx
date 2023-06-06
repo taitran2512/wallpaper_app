@@ -166,8 +166,7 @@ const NativeAds = ({ index, media = false, type = 'image', loadOnMount = true, k
 			onAdLoaded={onAdLoaded}
 			onAdFailedToLoad={onAdFailedToLoad}
 			onAdLeftApplication={onAdLeftApplication}
-			onAdClicked={() => console.log('hello')}
-			onAdOpened={() => console.log('hello')}
+			onAdClicked={onAdClicked}
 			onAdImpression={onAdImpression}
 			onNativeAdLoaded={onNativeAdLoaded}
 			requestNonPersonalizedAdsOnly={true}
