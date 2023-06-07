@@ -49,7 +49,7 @@ const SlideImage = forwardRef(({ data, style, index = 0, onIndexChange }: Props,
 				nestedScrollEnabled
 				pagingEnabled
 				showsHorizontalScrollIndicator={false}
-				initialNumToRender={20}
+				initialNumToRender={data.length}
 				onScroll={onScroll}
 				renderItem={({ item }) => {
 					return (

@@ -84,7 +84,7 @@ const ExampleScreen = (props: Props) => {
 			return null;
 		}
 	};
-	const keyExtractor = (item: any, index: number) => index.toString();
+	const keyExtractor = (item: any, index: number) => String(item?.id + index);
 	return <>{renderType()}</>;
 };
 

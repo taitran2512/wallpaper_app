@@ -107,7 +107,7 @@ const GridImageView: React.FC<Props> = ({ data, onEndReached, navigation }) => {
 		return <ItemImage url={url} onPress={() => detailScreen(index)} />;
 	};
 
-	const keyExtractor = (item: any, index: number) => index.toString();
+	const keyExtractor = (item: any) => String(item?.id);
 
 	return (
 		<Animated.FlatList
