@@ -1,6 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-shadow */
 import { colors, screenHeight, screenWidth } from 'core';
-import { debounce } from 'lodash';
 import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import {
 	FlatList,
