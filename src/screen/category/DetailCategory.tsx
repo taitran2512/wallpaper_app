@@ -95,7 +95,7 @@ const DetailCategory: React.FC<ScreenProps | TabScreenProps> = ({ navigation, ro
 					if (page.current === -1) {
 						return;
 					}
-					debounce(getData, 200);
+					getData();
 				}}
 				navigation={navigation}
 			/>

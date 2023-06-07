@@ -5,6 +5,7 @@ import { useHeaderHeight } from '@react-navigation/elements';
 import { incrementImageAction } from 'action/appAction';
 import { Screens } from 'common';
 import { colors, Navigator } from 'core/index';
+import { throttle } from 'lodash';
 import { ScreenProps, TabScreenProps } from 'model';
 import React, { useEffect, useRef, useState } from 'react';
 import { Animated, PixelRatio, StyleSheet } from 'react-native';
@@ -116,8 +117,8 @@ const GridImageView: React.FC<Props> = ({ data, onEndReached, navigation }) => {
 			numColumns={numColumns}
 			style={[styles.container]}
 			contentContainerStyle={{ flexGrow: 1, paddingTop: navigation ? headerHeight : 0 }}
-			onEndReached={onEndReached}
-			onEndReachedThreshold={0.5}
+			onEndReached={throttle(onEndReached, 1000)}
+			onEndReachedThreshold={1}
 			initialNumToRender={20}
 			onScroll={Animated.event(
 				[
