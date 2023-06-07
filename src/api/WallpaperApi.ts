@@ -9,6 +9,8 @@ export default class WallpaperApi {
 	static defaultParams = {
 		populate: 'deep,3',
 		sort: 'name:asc',
+		'pagination[page]': 1,
+		'pagination[pageSize]': 2000,
 	};
 
 	static getCategory = (): Promise<ResponseApi<CategoryType[]>> => {

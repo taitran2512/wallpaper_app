@@ -133,11 +133,13 @@ const Category = ({ navigation }: TabScreenProps) => {
 					resizeMode="cover">
 					<View
 						style={{
-							backgroundColor: 'rgba(34, 34, 34, 0.15)',
+							backgroundColor: 'rgba(34, 34, 34, 0.3)',
 							alignItems: 'center',
 							width: '100%',
 							height: 'auto',
 							paddingVertical: sizes.s20,
+							borderWidth: 1,
+							borderColor: 'rgba(0, 0, 0, 1)',
 						}}>
 						<Text style={styles.itemTitle}>{item.name}</Text>
 						<Text style={styles.itemSubTitle}>{item.image_count || 0} wallpapers</Text>
