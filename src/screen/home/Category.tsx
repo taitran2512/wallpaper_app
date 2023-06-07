@@ -94,7 +94,7 @@ const Category = ({ navigation }: TabScreenProps) => {
 		try {
 			const reponse = await WallpaperApi.getCategory();
 			if (reponse.data) {
-				setDataCate(reponse?.data);
+				setDataCate([...reponse?.data]);
 			}
 		} catch (error) {
 			setDataCate([]);
@@ -160,8 +160,10 @@ const Category = ({ navigation }: TabScreenProps) => {
 				renderItem={renderItem}
 				keyboardShouldPersistTaps="handled"
 				showsVerticalScrollIndicator={false}
+				onRefresh={getCategoryData}
+				refreshing={false}
 				keyExtractor={(e, index) => String(index)}
-				initialNumToRender={20}
+				// initialNumToRender={20}
 				contentContainerStyle={{ flexGrow: 1, paddingTop: headerHeight }}
 				onScroll={Animated.event(
 					[
