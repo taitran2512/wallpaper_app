@@ -23,7 +23,7 @@ interface Props {
 	navigation?: ScreenProps['navigation'] | TabScreenProps['navigation'];
 }
 
-const GridImageView: React.FC<Props> = ({ data, onEndReached, navigation }) => {
+const GridImageView: React.FC<Props> = ({ data, onEndReached = () => {}, navigation }) => {
 	const yOffset = useRef(new Animated.Value(0)).current;
 	const headerOpacity = yOffset.interpolate({
 		inputRange: [0, 200],
