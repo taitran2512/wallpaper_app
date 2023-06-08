@@ -5,7 +5,7 @@ import WallpaperApi from 'api/WallpaperApi';
 import { images } from 'assets';
 import { Screens } from 'common';
 import { ExampleScreen, Flex, Icon, ModalConfirm, Skeleton, SlideImage } from 'component';
-import { Navigator, Style, colors, screenHeight, sizes, strings } from 'core/index';
+import { colors, Navigator, screenHeight, sizes, strings, Style } from 'core/index';
 import WallpaperManageModule from 'library/wallpaper/WallpaperManager';
 import { debounce, remove } from 'lodash';
 import { ScreenProps } from 'model';
@@ -67,6 +67,7 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 			)
 		);
 	};
+
 	const hideToast = () => {
 		if (showToast) {
 			setType('');
@@ -110,9 +111,9 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 								'lock',
 								(result: any) => {
 									if (result?.status === 'success') {
+										Ads.isShowAds = true;
 										Navigator.hideLoading();
 										showToastSuccess();
-										Ads.isShowAds = true;
 									} else {
 										Navigator.hideLoading();
 									}
@@ -129,8 +130,8 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 					type,
 					(result: any) => {
 						if (result?.status === 'success') {
-							Navigator.hideLoading();
 							Ads.isShowAds = true;
+							Navigator.hideLoading();
 							showToastSuccess();
 						} else {
 							Navigator.hideLoading();
