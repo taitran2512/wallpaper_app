@@ -26,7 +26,6 @@ export default class WallpaperApi {
 			'filters[$and][0][category][name][$eq]': categoryName,
 			'pagination[page]': page,
 			'pagination[pageSize]': 15,
-			'pagination[pageCount]': 15,
 			// sort: 'download_count:desc',
 		};
 
