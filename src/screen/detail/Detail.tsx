@@ -12,6 +12,7 @@ import { ScreenProps } from 'model';
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import {
 	Alert,
+	BackHandler,
 	Image,
 	LayoutAnimation,
 	Platform,
@@ -100,46 +101,58 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 			modalRef.current.close();
 			Navigator.showLoading();
 			const item: WallpaperType = data[slideRef.current?.currentIndex];
-			if (type === 'both') {
-				WallpaperManageModule.setWallpaper(
-					{ uri: IMAGE_URL + item?.media?.url },
-					'home',
-					(result: any) => {
-						if (result?.status === 'success') {
-							WallpaperManageModule.setWallpaper(
-								{ uri: IMAGE_URL + item?.media?.url },
-								'lock',
-								(result: any) => {
-									if (result?.status === 'success') {
-										Ads.isShowAds = true;
-										Navigator.hideLoading();
-										showToastSuccess();
-									} else {
-										Navigator.hideLoading();
-									}
-								}
-							);
-						} else {
-							Navigator.hideLoading();
-						}
+			// if (type === 'both') {
+			// 	WallpaperManageModule.setWallpaper(
+			// 		{ uri: IMAGE_URL + item?.media?.url },
+			// 		'home',
+			// 		(result: any) => {
+			// 			if (result?.status === 'success') {
+			// 				WallpaperManageModule.setWallpaper(
+			// 					{ uri: IMAGE_URL + item?.media?.url },
+			// 					'lock',
+			// 					(result: any) => {
+			// 						if (result?.status === 'success') {
+			// 							Ads.isShowAds = true;
+			// 							Navigator.hideLoading();
+			// 							showToastSuccess();
+			// 						} else {
+			// 							Navigator.hideLoading();
+			// 						}
+			// 					}
+			// 				);
+			// 			} else {
+			// 				Navigator.hideLoading();
+			// 			}
+			// 		}
+			// 	);
+			// } else {
+			// 	WallpaperManageModule.setWallpaper(
+			// 		{ uri: IMAGE_URL + item?.media?.url },
+			// 		type,
+			// 		(result: any) => {
+			// 			if (result?.status === 'success') {
+			// 				Ads.isShowAds = true;
+			// 				Navigator.hideLoading();
+			// 				showToastSuccess();
+			// 			} else {
+			// 				Navigator.hideLoading();
+			// 			}
+			// 		}
+			// 	);
+			// }
+			WallpaperManageModule.setWallpaper(
+				{ uri: IMAGE_URL + item?.media?.url },
+				type,
+				(result: any) => {
+					if (result?.status === 'success') {
+						Ads.isShowAds = true;
+						Navigator.hideLoading();
+						showToastSuccess();
+					} else {
+						Navigator.hideLoading();
 					}
-				);
-			} else {
-				WallpaperManageModule.setWallpaper(
-					{ uri: IMAGE_URL + item?.media?.url },
-					type,
-					(result: any) => {
-						if (result?.status === 'success') {
-							Ads.isShowAds = true;
-							Navigator.hideLoading();
-							showToastSuccess();
-						} else {
-							Navigator.hideLoading();
-						}
-					}
-				);
-			}
-
+				}
+			);
 			WallpaperApi.updateCountSetWallpaper(item?.id, item?.download_count + 1);
 			const listSetWallpaper: any[] =
 				(await Storage.getData(Storage.key.listSetWallpaper)) || [];
@@ -286,6 +299,15 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 		setHideAds1(ads1);
 		setHideAds2(ads2);
 	};
+	const handleBackButtonClick = () => {
+		return true;
+	};
+	useEffect(() => {
+		BackHandler.addEventListener('hardwareBackPress', handleBackButtonClick);
+		return () => {
+			BackHandler.removeEventListener('hardwareBackPress', handleBackButtonClick);
+		};
+	}, []);
 	return (
 		<Flex style={styles.container}>
 			<SlideImage ref={slideRef} data={data} index={index} onIndexChange={onIndexChange} />

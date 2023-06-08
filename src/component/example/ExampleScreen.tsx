@@ -15,11 +15,10 @@ const ExampleScreen = (props: Props) => {
 	const { type } = props || {};
 	const renderItem = ({ index }: any) => {
 		return (
-			<View style={styles.viewItemExample}>
+			<View style={styles.viewItemExample} key={String(index)}>
 				<ImageBackground
 					source={images.blur_view}
 					resizeMode="cover"
-					key={index}
 					imageStyle={{ borderRadius: sizes.s8, overflow: 'hidden' }}
 					style={styles.itemExample}>
 					{/* <BlurView
@@ -84,7 +83,7 @@ const ExampleScreen = (props: Props) => {
 			return null;
 		}
 	};
-	const keyExtractor = (item: any, index: number) => String(item?.id + index);
+	const keyExtractor = (item: any, index: number) => String(index);
 	return <>{renderType()}</>;
 };
 
