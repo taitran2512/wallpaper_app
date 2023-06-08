@@ -26,7 +26,8 @@ export default class WallpaperApi {
 			'filters[$and][0][category][name][$eq]': categoryName,
 			'pagination[page]': page,
 			'pagination[pageSize]': 15,
-			sort: 'download_count:desc',
+			'pagination[pageCount]': 15,
+			// sort: 'download_count:desc',
 		};
 
 		return axiosClient.get(this.URL.Wallpaper, { params });
