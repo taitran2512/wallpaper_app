@@ -70,9 +70,6 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 	const hideToast = () => {
 		if (showToast) {
 			setType('');
-
-			// setTimeout
-
 			setTimeout(() => {
 				setShowToast(false);
 				if (hideAds1) {
@@ -106,24 +103,40 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 				WallpaperManageModule.setWallpaper(
 					{ uri: IMAGE_URL + item?.media?.url },
 					'home',
-					() => {
-						WallpaperManageModule.setWallpaper(
-							{ uri: IMAGE_URL + item?.media?.url },
-							'lock',
-							() => {
-								Navigator.hideLoading();
-								showToastSuccess();
-								Ads.isShowAds = true;
-							}
-						);
+					(result: any) => {
+						if (result?.status === 'success') {
+							WallpaperManageModule.setWallpaper(
+								{ uri: IMAGE_URL + item?.media?.url },
+								'lock',
+								(result: any) => {
+									if (result?.status === 'success') {
+										Navigator.hideLoading();
+										showToastSuccess();
+										Ads.isShowAds = true;
+									} else {
+										Navigator.hideLoading();
+									}
+								}
+							);
+						} else {
+							Navigator.hideLoading();
+						}
 					}
 				);
 			} else {
-				WallpaperManageModule.setWallpaper({ uri: IMAGE_URL + item?.media?.url }, type, () => {
-					Navigator.hideLoading();
-					Ads.isShowAds = true;
-					showToastSuccess();
-				});
+				WallpaperManageModule.setWallpaper(
+					{ uri: IMAGE_URL + item?.media?.url },
+					type,
+					(result: any) => {
+						if (result?.status === 'success') {
+							Navigator.hideLoading();
+							Ads.isShowAds = true;
+							showToastSuccess();
+						} else {
+							Navigator.hideLoading();
+						}
+					}
+				);
 			}
 
 			WallpaperApi.updateCountSetWallpaper(item?.id, item?.download_count + 1);
@@ -388,14 +401,14 @@ const styles = StyleSheet.create({
 	item: {
 		alignItems: 'center',
 		justifyContent: 'center',
+		flex: 1,
+		paddingVertical: sizes.s16,
 	},
 	viewGradient: {
 		flexDirection: 'row',
 		justifyContent: 'space-around',
 		alignItems: 'center',
 		overflow: 'hidden',
-		paddingHorizontal: sizes.s8,
-		paddingVertical: sizes.s16,
 		marginHorizontal: sizes.s16,
 		marginBottom: sizes.s35,
 		backgroundColor: colors.gradient1,
