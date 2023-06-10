@@ -6,7 +6,7 @@ import WallpaperApi from 'api/WallpaperApi';
 import { images } from 'assets';
 import { Flex, GridImageView, NavigationButton, Skeleton } from 'component';
 import { colors, fonts, sizes } from 'core/index';
-import { debounce, isEmpty } from 'lodash';
+import { isEmpty } from 'lodash';
 import { ScreenProps, TabScreenProps } from 'model';
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';

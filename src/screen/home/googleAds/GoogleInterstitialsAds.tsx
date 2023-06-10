@@ -7,7 +7,7 @@ import { useInterstitialAd } from 'react-native-google-mobile-ads';
 import { data } from '../../../App';
 
 const GoogleInterstitialsAds: React.FC<ScreenProps> = ({ navigation, route }) => {
-	const { key = '' } = route.params || {};
+	const { key, goBack = false } = route.params || {};
 	const { isClosed, isLoaded, load, show, error } = useInterstitialAd(key, {
 		requestNonPersonalizedAdsOnly: true,
 	});
@@ -43,7 +43,7 @@ const GoogleInterstitialsAds: React.FC<ScreenProps> = ({ navigation, route }) =>
 	}, [isLoaded]);
 	useEffect(() => {
 		if (error) {
-			console.log(error, 'error');
+			Navigator.goBack();
 			Navigator.goBack();
 			setTimeout(() => {
 				data.isShowAds = false;
@@ -57,7 +57,12 @@ const GoogleInterstitialsAds: React.FC<ScreenProps> = ({ navigation, route }) =>
 	useEffect(() => {
 		if (isClosed) {
 			load();
-			Navigator.goBack();
+			if (goBack) {
+				Navigator.goBack();
+			} else {
+				Navigator.goBack();
+				Navigator.goBack();
+			}
 			setTimeout(() => {
 				data.isShowAds = false;
 			}, 500);

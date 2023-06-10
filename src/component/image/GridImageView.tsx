@@ -80,6 +80,7 @@ const GridImageView: React.FC<Props> = ({ data, onEndReached = () => {}, navigat
 				Navigator.navigate(Screens.GoogleInterstitialsAds, {
 					key: keyInterstitialOpenImageHigh,
 					type: 'image_high',
+					goBack: true,
 				});
 				return;
 			}
@@ -87,6 +88,7 @@ const GridImageView: React.FC<Props> = ({ data, onEndReached = () => {}, navigat
 				Navigator.navigate(Screens.GoogleInterstitialsAds, {
 					key: keyInterstitialOpenImage,
 					type: 'image_high',
+					goBack: true,
 				});
 				return;
 			}
