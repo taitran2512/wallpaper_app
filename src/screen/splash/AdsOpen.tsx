@@ -14,29 +14,13 @@ const AdsOpen: React.FC<ScreenProps | any> = () => {
 		keywords: [],
 	});
 	const onboardRef = useRef<any>(null);
-	let timeout: any;
 	Storage.getMultiData([Storage.key.language, Storage.key.onboarding]).then((data) => {
 		const [lang, onboard] = data;
 		const appLanguage = lang || 'en';
 		strings.setLanguage(appLanguage);
 		onboardRef.current = onboard;
 	});
-	const handleTimeOut = () => {
-		timeout = setTimeout(() => {
-			if (onboardRef.current) {
-				setTimeout(() => {
-					clearTimeout(timeout);
-					Navigator.goHome();
-				}, 1000);
-			} else {
-				setTimeout(() => {
-					clearTimeout(timeout);
-					Navigator.replace(Stacks.LanguageSplash);
-				}, 1000);
-				return;
-			}
-		}, 5000);
-	};
+
 	appOpenAd.addAdEventsListener(({ type }) => {
 		if (type === 'loaded') {
 			appOpenAd.show();
@@ -45,12 +29,10 @@ const AdsOpen: React.FC<ScreenProps | any> = () => {
 		if (type === 'closed') {
 			if (onboardRef.current) {
 				setTimeout(() => {
-					clearTimeout(timeout);
 					Navigator.goHome();
 				}, 1000);
 			} else {
 				setTimeout(() => {
-					clearTimeout(timeout);
 					Navigator.replace(Stacks.LanguageSplash);
 				}, 1000);
 				return;
@@ -58,7 +40,6 @@ const AdsOpen: React.FC<ScreenProps | any> = () => {
 			return;
 		}
 		if (type === 'error') {
-			clearTimeout(timeout);
 			Navigator.replace(Stacks.GoogleInterstitialsAdsSplash);
 			return;
 		}
@@ -66,7 +47,6 @@ const AdsOpen: React.FC<ScreenProps | any> = () => {
 
 	useEffect(() => {
 		appOpenAd.load();
-		handleTimeOut();
 	}, []);
 
 	return (

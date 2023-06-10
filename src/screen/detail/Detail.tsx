@@ -27,7 +27,7 @@ import { Device, Storage } from 'utils';
 import { keyBanner_home, keyInterstitialApply, keyInterstitialApplyHigh } from 'utils/GoogleAds';
 import { IMAGE_URL } from 'utils/Https';
 import { data as Ads } from '../.././App';
-const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
+const Detail: React.FC<ScreenProps | any> = ({ navigation, route }) => {
 	const { data, index } = route?.params || {};
 	const [like, setLike] = useState<boolean>(false);
 	const [loading, setLoading] = useState<boolean>(true);
@@ -76,7 +76,7 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 				setShowToast(false);
 				if (hideAds1) {
 					Ads.isShowAds = true;
-					Navigator.navigate(Screens.GoogleInterstitialsAds, {
+					navigation.navigate(Screens.GoogleInterstitialsAds, {
 						key: keyInterstitialApplyHigh,
 						type: 'apply_high',
 					});
@@ -84,7 +84,7 @@ const Detail: React.FC<ScreenProps> = ({ navigation, route }) => {
 				}
 				if (hideAds2) {
 					Ads.isShowAds = true;
-					Navigator.navigate(Screens.GoogleInterstitialsAds, {
+					navigation.navigate(Screens.GoogleInterstitialsAds, {
 						key: keyInterstitialApply,
 						type: 'apply_high',
 					});

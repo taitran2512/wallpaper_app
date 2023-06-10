@@ -4,7 +4,7 @@ import remoteConfig from '@react-native-firebase/remote-config';
 import { useHeaderHeight } from '@react-navigation/elements';
 import { incrementImageAction } from 'action/appAction';
 import { Screens } from 'common';
-import { colors, Navigator } from 'core/index';
+import { colors } from 'core/index';
 import { throttle } from 'lodash';
 import { ScreenProps, TabScreenProps } from 'model';
 import React, { useEffect, useRef, useState } from 'react';
@@ -20,7 +20,7 @@ interface Props {
 	data: WallpaperType[];
 	onPress?: any;
 	onEndReached?: any;
-	navigation?: ScreenProps['navigation'] | TabScreenProps['navigation'];
+	navigation?: ScreenProps['navigation'] | TabScreenProps['navigation'] | any;
 }
 
 const GridImageView: React.FC<Props> = ({ data, onEndReached = () => {}, navigation }) => {
@@ -74,10 +74,10 @@ const GridImageView: React.FC<Props> = ({ data, onEndReached = () => {}, navigat
 	};
 	const detailScreen = (index: number) => {
 		dispatch(incrementImageAction());
-		Navigator.navigate(Screens.Detail, { data: data, index });
+		navigation.navigate(Screens.Detail, { data: data, index });
 		if (count % 2 !== 0) {
 			if (hideAds1) {
-				Navigator.navigate(Screens.GoogleInterstitialsAds, {
+				navigation.navigate(Screens.GoogleInterstitialsAds, {
 					key: keyInterstitialOpenImageHigh,
 					type: 'image_high',
 					goBack: true,
@@ -85,7 +85,7 @@ const GridImageView: React.FC<Props> = ({ data, onEndReached = () => {}, navigat
 				return;
 			}
 			if (hideAds2) {
-				Navigator.navigate(Screens.GoogleInterstitialsAds, {
+				navigation.navigate(Screens.GoogleInterstitialsAds, {
 					key: keyInterstitialOpenImage,
 					type: 'image_high',
 					goBack: true,
