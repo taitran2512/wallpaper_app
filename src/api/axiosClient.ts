@@ -34,12 +34,12 @@ axiosClient.interceptors.request.use(
 		if (token !== '') {
 			config.headers.Authorization = 'Bearer ' + token;
 		}
-		console.log(
-			config.method?.toUpperCase(),
-			config.url,
-			`\nbody: ${JSON.stringify(config?.data)}`,
-			`\nparams: ${JSON.stringify(config?.params)}`
-		);
+		// console.log(
+		// 	config.method?.toUpperCase(),
+		// 	config.url,
+		// 	`\nbody: ${JSON.stringify(config?.data)}`,
+		// 	`\nparams: ${JSON.stringify(config?.params)}`
+		// );
 
 		return config;
 	},
@@ -51,7 +51,7 @@ axiosClient.interceptors.request.use(
 // Add a response interceptor
 axiosClient.interceptors.response.use(
 	function (response: AxiosResponse) {
-		LogUtil.i(response.data, `RESPONSE API: ${response.config.url} `);
+		// LogUtil.i(response.data, `RESPONSE API: ${response.config.url} `);
 		return response.data;
 	},
 	function (error: AxiosError) {
