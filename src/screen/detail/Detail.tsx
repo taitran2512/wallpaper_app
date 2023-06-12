@@ -5,7 +5,7 @@ import WallpaperApi from 'api/WallpaperApi';
 import { images } from 'assets';
 import { Screens } from 'common';
 import { ExampleScreen, Flex, Icon, ModalConfirm, Skeleton, SlideImage } from 'component';
-import { colors, Navigator, screenHeight, sizes, strings, Style } from 'core/index';
+import { Navigator, Style, colors, screenHeight, sizes, strings } from 'core/index';
 import WallpaperManageModule from 'library/wallpaper/WallpaperManager';
 import { debounce, remove } from 'lodash';
 import { ScreenProps } from 'model';

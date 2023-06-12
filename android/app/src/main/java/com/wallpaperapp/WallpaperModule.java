@@ -232,6 +232,7 @@ public class WallpaperModule extends ReactContextBaseJavaModule {
     }
 
     private CustomTarget<Bitmap> getCustomTarget(final String source, final String type) {
+        Log.d("NATIVE",source);
         return new CustomTarget<Bitmap>(1080, 1920) {
             @Override
             public void onResourceReady(Bitmap bitmap, Transition<? super Bitmap> transition) {
@@ -247,6 +248,7 @@ public class WallpaperModule extends ReactContextBaseJavaModule {
                     } else {
                         wallpaperManager.setBitmap(bitmap);
                     }
+                    Log.d("NATIVE","HERE");
                     sendMessage("success", "Set Wallpaper Success", source);
                 } catch (Exception e) {
                     sendMessage("error", "Exception in SimpleTarget：" + e.getMessage(), source);
