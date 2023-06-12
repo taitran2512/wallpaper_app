@@ -58,12 +58,12 @@ public class WallpaperModule extends ReactContextBaseJavaModule {
         return "WallpaperManageModule";
     }
 
-    public void sendMessage(String status, String msg, String url) {
+    public void sendMessage(String status, String msg) {
         if (rctCallback != null) {
             WritableMap map = Arguments.createMap();
             map.putString("status", status);
             map.putString("msg", msg);
-            map.putString("url", url);
+//            map.putString("url", url);
             rctCallback.invoke(map);
             rctCallback = null;
         }
@@ -94,7 +94,7 @@ public class WallpaperModule extends ReactContextBaseJavaModule {
         mCurrentActivity = getCurrentActivity();
 
         if (mCurrentActivity == null) {
-            sendMessage("error", "CurrentActivity is null", source);
+            sendMessage("error", "CurrentActivity is null");
         }
 
         //handle base64
@@ -110,7 +110,7 @@ public class WallpaperModule extends ReactContextBaseJavaModule {
                                 .load(Base64.decode(source.replaceAll("data:image\\/.*;base64,", ""), Base64.DEFAULT))
                                 .into(customTarget);
                     } catch (Exception e) {
-                        sendMessage("error", "Exception in Glide：" + e.getMessage(), source);
+                        sendMessage("error", "Exception in Glide：");
                     }
                 }
             });
@@ -154,15 +154,20 @@ public class WallpaperModule extends ReactContextBaseJavaModule {
                     } else {
                         wallpaperManager.setBitmap(mBitmap);
                     }
-                    sendMessage("success", "Set Wallpaper Success", source);
+                    Log.d("NATIVE", "success");
+                    sendMessage("success", "Set Wallpaper Success");
                 } catch (Exception e) {
-                    sendMessage("error", "Exception in SimpleTarget：" + e.getMessage(), source);
+                    Log.d("NATIVE", "error");
+                    sendMessage("error", "Exception in SimpleTarget：");
                     return;
                 }
+                Log.d("NATIVE", "out function");
                 return;
             }
-
+            Log.d("NATIVE", "out try function");
             mUri = is.getUri();
+            Log.d("NATIVE", "mUri");
+
             mCurrentActivity.runOnUiThread(new Runnable() {
                 public void run() {
                     Util.assertMainThread();
@@ -174,7 +179,7 @@ public class WallpaperModule extends ReactContextBaseJavaModule {
                                 .load(mUri)
                                 .into(customTarget);
                     } catch (Exception e) {
-                        sendMessage("error", "Exception in Glide：" + e.getMessage(), source);
+                        sendMessage("error", "Exception in Glide：");
                     }
                 }
             });
@@ -190,7 +195,7 @@ public class WallpaperModule extends ReactContextBaseJavaModule {
                                 .load(mUri)
                                 .into(customTarget);
                     } catch (Exception e) {
-                        sendMessage("error", "Exception in Glide：" + e.getMessage(), source);
+                        sendMessage("error", "Exception in Glide：");
                     }
                 }
             });
@@ -218,7 +223,7 @@ public class WallpaperModule extends ReactContextBaseJavaModule {
                                 .load(new GlideUrl(mUri.toString(), lazyHeaders.build()))
                                 .into(customTarget);
                     } catch (Exception e) {
-                        sendMessage("error", "Exception in Glide：" + e.getMessage(), source);
+                        sendMessage("error", "Exception in Glide：");
                     }
                 }
             });
@@ -248,10 +253,12 @@ public class WallpaperModule extends ReactContextBaseJavaModule {
                     } else {
                         wallpaperManager.setBitmap(bitmap);
                     }
-                    Log.d("NATIVE","HERE");
-                    sendMessage("success", "Set Wallpaper Success", source);
+                    Log.d("NATIVE","SET IMAGE");
+                    sendMessage("success", "Set Wallpaper Success");
+                    Log.d("NATIVE", "success");
                 } catch (Exception e) {
-                    sendMessage("error", "Exception in SimpleTarget：" + e.getMessage(), source);
+                    Log.d("NATIVE", "error");
+                    sendMessage("error", "Exception in SimpleTarget：");
                     return;
                 }
             }
@@ -268,7 +275,7 @@ public class WallpaperModule extends ReactContextBaseJavaModule {
                 if(errorDrawable != null) {
                     errorMessage = "Set Wallpaper Failed：" + errorDrawable.toString();
                 }
-                sendMessage("error", errorMessage, source);
+                sendMessage("error", errorMessage);
             }
         };
     }

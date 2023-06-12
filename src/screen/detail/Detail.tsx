@@ -103,12 +103,16 @@ const Detail: React.FC<ScreenProps | any> = ({ navigation, route }) => {
 			const item: WallpaperType = data[slideRef.current?.currentIndex];
 			if (type === 'both') {
 				WallpaperManageModule.setWallpaper(
-					{ uri: IMAGE_URL + item?.media?.url },
+					{
+						uri: IMAGE_URL + item?.media?.url,
+					},
 					'lock',
 					(res: any) => {
 						if (res?.status === 'success') {
 							WallpaperManageModule.setWallpaper(
-								{ uri: IMAGE_URL + item?.media?.url },
+								{
+									uri: IMAGE_URL + item?.media?.url,
+								},
 								'home',
 								(result: any) => {
 									if (result?.status === 'success') {
@@ -127,7 +131,9 @@ const Detail: React.FC<ScreenProps | any> = ({ navigation, route }) => {
 				);
 			} else {
 				WallpaperManageModule.setWallpaper(
-					{ uri: IMAGE_URL + item?.media?.url },
+					{
+						uri: IMAGE_URL + item?.media?.url,
+					},
 					type,
 					(result: any) => {
 						if (result?.status === 'success') {
@@ -140,19 +146,7 @@ const Detail: React.FC<ScreenProps | any> = ({ navigation, route }) => {
 					}
 				);
 			}
-			// WallpaperManageModule.setWallpaper(
-			// 	{ uri: IMAGE_URL + item?.media?.url },
-			// 	type,
-			// 	(result: any) => {
-			// 		if (result?.status === 'success') {
-			// 			Ads.isShowAds = true;
-			// 			Navigator.hideLoading();
-			// 			showToastSuccess();
-			// 		} else {
-			// 			Navigator.hideLoading();
-			// 		}
-			// 	}
-			// );
+
 			WallpaperApi.updateCountSetWallpaper(item?.id, item?.download_count + 1);
 			const listSetWallpaper: any[] =
 				(await Storage.getData(Storage.key.listSetWallpaper)) || [];
