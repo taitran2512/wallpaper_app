@@ -43,8 +43,12 @@ const GoogleInterstitialsAds: React.FC<ScreenProps> = ({ navigation, route }) =>
 	}, [isLoaded]);
 	useEffect(() => {
 		if (error) {
-			Navigator.goBack();
-			Navigator.goBack();
+			if (goBack) {
+				Navigator.goBack();
+			} else {
+				Navigator.goBack();
+				Navigator.goBack();
+			}
 			setTimeout(() => {
 				data.isShowAds = false;
 			}, 500);

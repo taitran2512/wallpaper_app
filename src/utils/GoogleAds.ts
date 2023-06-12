@@ -1,5 +1,7 @@
 // import { TestIds } from 'react-native-google-mobile-ads';
 
+import { TestIds } from 'react-native-google-mobile-ads';
+
 // KEY DEV
 // export const keyAdsOpenApp: string | any = TestIds.APP_OPEN;
 // export const keyBanner_onboarding: string | any = TestIds.BANNER;
@@ -16,19 +18,41 @@
 // export const keyOnAppResume: string | any = TestIds.APP_OPEN;
 
 /// Key PRODUCTION
-export const keyAdsOpenApp: string | any = 'ca-app-pub-6548166688052880/4282287871';
-export const keyBanner_onboarding: string | any = 'ca-app-pub-6548166688052880/8900189737';
+export const keyAdsOpenApp: string | any = __DEV__
+	? TestIds.APP_OPEN
+	: 'ca-app-pub-6548166688052880/4282287871';
+export const keyBanner_onboarding: string | any = __DEV__
+	? TestIds.BANNER
+	: 'ca-app-pub-6548166688052880/8900189737';
 export const keyNative_onboarding: string | any = 'ca-app-pub-6548166688052880/8131685939';
-export const keyBanner_home: string | any = 'ca-app-pub-6548166688052880/8029961195';
-export const keyBanner_category: string | any = 'ca-app-pub-6548166688052880/3647863050';
-export const keyInterstitialSplash = 'ca-app-pub-6548166688052880/9444767609';
-export const keyInterstitialApplyHigh = 'ca-app-pub-6548166688052880/5999280959';
-export const keyInterstitialApply = 'ca-app-pub-6548166688052880/1021699710';
-export const keyInterstitialOpenImageHigh: string = 'ca-app-pub-6548166688052880/1368359669';
-export const keyInterstitialOpenImage: string = 'ca-app-pub-6548166688052880/3994523008';
-export const keyInterstitialOpenCateHigh: string = 'ca-app-pub-6548166688052880/9598999633';
-export const keyInterstitialOpenCate: string = 'ca-app-pub-6548166688052880/5738849518';
-export const keyOnAppResume = 'ca-app-pub-6548166688052880/5721145011';
+export const keyBanner_home: string | any = __DEV__
+	? TestIds.BANNER
+	: 'ca-app-pub-6548166688052880/8029961195';
+export const keyBanner_category: string | any = __DEV__
+	? TestIds.BANNER
+	: 'ca-app-pub-6548166688052880/3647863050';
+export const keyInterstitialSplash = __DEV__
+	? TestIds.INTERSTITIAL
+	: 'ca-app-pub-6548166688052880/9444767609';
+export const keyInterstitialApplyHigh = __DEV__
+	? TestIds.INTERSTITIAL
+	: 'ca-app-pub-6548166688052880/5999280959';
+export const keyInterstitialApply = __DEV__
+	? TestIds.INTERSTITIAL
+	: 'ca-app-pub-6548166688052880/1021699710';
+export const keyInterstitialOpenImageHigh: string = __DEV__
+	? TestIds.INTERSTITIAL
+	: 'ca-app-pub-6548166688052880/1368359669';
+export const keyInterstitialOpenImage: string = __DEV__
+	? TestIds.INTERSTITIAL
+	: 'ca-app-pub-6548166688052880/3994523008';
+export const keyInterstitialOpenCateHigh: string = __DEV__
+	? TestIds.INTERSTITIAL
+	: 'ca-app-pub-6548166688052880/9598999633';
+export const keyInterstitialOpenCate: string = __DEV__
+	? TestIds.INTERSTITIAL
+	: 'ca-app-pub-6548166688052880/5738849518';
+export const keyOnAppResume = __DEV__ ? TestIds.APP_OPEN : 'ca-app-pub-6548166688052880/5721145011';
 
 // LINK WEB
 export const urlPolicy: string =
