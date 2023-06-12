@@ -104,21 +104,25 @@ const Detail: React.FC<ScreenProps | any> = ({ navigation, route }) => {
 			if (type === 'both') {
 				WallpaperManageModule.setWallpaper(
 					{ uri: IMAGE_URL + item?.media?.url },
-					'home',
-					() => {
-						WallpaperManageModule.setWallpaper(
-							{ uri: IMAGE_URL + item?.media?.url },
-							'lock',
-							(result: any) => {
-								if (result?.status === 'success') {
-									Ads.isShowAds = true;
-									Navigator.hideLoading();
-									showToastSuccess();
-								} else {
-									Navigator.hideLoading();
+					'lock',
+					(res: any) => {
+						if (res?.status === 'success') {
+							WallpaperManageModule.setWallpaper(
+								{ uri: IMAGE_URL + item?.media?.url },
+								'home',
+								(result: any) => {
+									if (result?.status === 'success') {
+										Ads.isShowAds = true;
+										Navigator.hideLoading();
+										showToastSuccess();
+									} else {
+										Navigator.hideLoading();
+									}
 								}
-							}
-						);
+							);
+						} else {
+							Navigator.hideLoading();
+						}
 					}
 				);
 			} else {
