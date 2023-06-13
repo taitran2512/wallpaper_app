@@ -13,12 +13,12 @@ import React, { memo, useEffect, useRef, useState } from 'react';
 import {
 	ActivityIndicator,
 	Animated,
-	ImageBackground,
 	StyleSheet,
 	Text,
 	TouchableOpacity,
 	View,
 } from 'react-native';
+import FastImage from 'react-native-fast-image';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { countCategory } from 'selector/appSelector';
@@ -125,10 +125,15 @@ const Category = ({ navigation }: TabScreenProps) => {
 	};
 
 	const renderItem = ({ item }: { item: CategoryType }) => {
+		FastImage.preload([
+			{
+				uri: IMAGE_URL + item?.thumbnail?.url,
+			},
+		]);
 		return (
 			<TouchableOpacity activeOpacity={0.8} onPress={() => detailCategory(item)}>
-				<ImageBackground
-					source={imageSource(IMAGE_URL + item?.thumbnail?.url)}
+				<FastImage
+					source={imageSource(item?.thumbnail?.url)}
 					style={styles.itemCategory}
 					resizeMode="cover">
 					<View
@@ -144,7 +149,7 @@ const Category = ({ navigation }: TabScreenProps) => {
 						<Text style={styles.itemTitle}>{item.name}</Text>
 						<Text style={styles.itemSubTitle}>{item.image_count || 0} wallpapers</Text>
 					</View>
-				</ImageBackground>
+				</FastImage>
 			</TouchableOpacity>
 		);
 	};

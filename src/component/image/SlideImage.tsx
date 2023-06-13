@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { imageSource } from 'utils';
+import { IMAGE_URL } from 'utils/Https';
 
 interface Props {
 	data: WallpaperType[];
@@ -23,7 +24,6 @@ interface Props {
 const SlideImage = forwardRef(({ data, style, index = 0, onIndexChange }: Props, ref: any) => {
 	const listRef = useRef<FlatList>();
 	const [idx, setIdx] = useState<number>(index);
-
 	useEffect(() => {
 		if (index) {
 			listRef?.current?.scrollToOffset({ animated: false, offset: screenWidth * index });
@@ -39,6 +39,7 @@ const SlideImage = forwardRef(({ data, style, index = 0, onIndexChange }: Props,
 	const onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
 		setIdx(Math.round(e.nativeEvent.contentOffset.x / screenWidth));
 	};
+
 	return (
 		<View style={style}>
 			<FlatList
@@ -52,9 +53,16 @@ const SlideImage = forwardRef(({ data, style, index = 0, onIndexChange }: Props,
 				initialNumToRender={data.length}
 				onScroll={onScroll}
 				renderItem={({ item }) => {
+					FastImage.preload([
+						{
+							uri: IMAGE_URL + item?.media?.url,
+						},
+					]);
+
 					return (
 						<FastImage
-							source={imageSource(item?.media?.formats?.large?.url || item?.media?.url)}
+							source={imageSource(item?.media?.url)}
+							resizeMode={FastImage.resizeMode.cover}
 							style={[
 								{
 									width: screenWidth,

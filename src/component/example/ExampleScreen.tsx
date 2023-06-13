@@ -111,6 +111,7 @@ const styles = StyleSheet.create({
 		height: itemWidth,
 		marginVertical: sizes.s16,
 		overflow: 'hidden',
+		// borderRadius: sizes.s8,
 	},
 	itemExample2: {
 		width: screenWidth * 0.9,

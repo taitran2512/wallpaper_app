@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { BlurView } from '@react-native-community/blur';
 import { colors, sizes, Style } from 'core/index';
 import React, { forwardRef, memo, useImperativeHandle, useState } from 'react';
 import { Modal, StyleSheet, Text, View } from 'react-native';
@@ -33,6 +34,14 @@ const ModalConfirm: React.FC<Props> = forwardRef((props: Props, ref: any) => {
 			onRequestClose={() => close()}>
 			<View style={styles.container}>
 				<View style={styles.modal}>
+					<BlurView
+						style={[StyleSheet.absoluteFill]}
+						blurType="light"
+						blurAmount={10}
+						blurRadius={25}
+						overlayColor="transparent"
+						reducedTransparencyFallbackColor="white"
+					/>
 					<Text style={styles.title}>{props?.title}</Text>
 					{props?.content ? <Text style={styles.subTitle}>{props?.content}</Text> : null}
 					{props?.children}
@@ -54,6 +63,7 @@ const styles = StyleSheet.create({
 		borderRadius: sizes.s16,
 		paddingVertical: sizes.s16,
 		paddingHorizontal: sizes.s16,
+		overflow: 'hidden',
 	},
 	title: {
 		...Style.txt14_white,

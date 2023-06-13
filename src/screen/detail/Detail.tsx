@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable react-hooks/exhaustive-deps */
+import { BlurView } from '@react-native-community/blur';
 import remoteConfig from '@react-native-firebase/remote-config';
 import WallpaperApi from 'api/WallpaperApi';
 import { images } from 'assets';
 import { Screens } from 'common';
 import { ExampleScreen, Flex, Icon, ModalConfirm, Skeleton, SlideImage } from 'component';
-import { Navigator, Style, colors, screenHeight, sizes, strings } from 'core/index';
+import { colors, Navigator, screenHeight, sizes, strings, Style } from 'core/index';
 import WallpaperManageModule from 'library/wallpaper/WallpaperManager';
 import { debounce, remove } from 'lodash';
 import { ScreenProps } from 'model';
@@ -32,7 +33,6 @@ const Detail: React.FC<ScreenProps | any> = ({ navigation, route }) => {
 	const [like, setLike] = useState<boolean>(false);
 	const [loading, setLoading] = useState<boolean>(true);
 	const [loadingDetail, setLoadingDetail] = useState<boolean>(true);
-
 	const slideRef = useRef<any>();
 	const [hideBanner, setHideBanner] = useState<boolean>(false);
 	const [hideAds1, setHideAds1] = useState<boolean>(false);
@@ -45,7 +45,7 @@ const Detail: React.FC<ScreenProps | any> = ({ navigation, route }) => {
 	const [type, setType] = useState<string>('');
 	const [showToast, setShowToast] = useState<boolean>(false);
 	const modalRef = useRef<any>();
-
+	const [showBottom, setShowBottom] = useState(false);
 	const initScreen = () => {
 		navigation.setOptions({
 			headerShown: false,
@@ -163,12 +163,22 @@ const Detail: React.FC<ScreenProps | any> = ({ navigation, route }) => {
 
 	useLayoutEffect(() => {
 		initScreen();
+
 		setLoadingDetail(false);
 	}, []);
 
 	useEffect(() => {
 		hideToast();
 	}, [showToast]);
+
+	useEffect(() => {
+		const timeout = setTimeout(() => {
+			setShowBottom(true);
+		}, 1000);
+		return () => {
+			clearTimeout(timeout);
+		};
+	}, []);
 
 	const onPressLike = async () => {
 		const newValue = !like;
@@ -197,18 +207,30 @@ const Detail: React.FC<ScreenProps | any> = ({ navigation, route }) => {
 			setLike(false);
 		}
 	}, 100);
-
+	const goBack = () => {
+		setShowBottom(false);
+		LayoutAnimation.configureNext(
+			LayoutAnimation.create(
+				300,
+				LayoutAnimation.Types.easeInEaseOut,
+				LayoutAnimation.Properties.opacity
+			)
+		);
+		setTimeout(() => {
+			navigation.goBack();
+		}, 500);
+	};
 	const setHeader = () => (
 		<View style={[styles.header]}>
-			<TouchableOpacity style={styles.button} onPress={() => navigation.goBack()}>
-				{/* <BlurView
+			<TouchableOpacity style={styles.button} onPress={goBack}>
+				<BlurView
 					style={[StyleSheet.absoluteFill]}
 					blurType="light"
 					blurAmount={10}
 					blurRadius={25}
 					overlayColor="transparent"
 					reducedTransparencyFallbackColor="white"
-				/> */}
+				/>
 				<Image source={images.ic_back_arrow} style={Style.icon16} />
 			</TouchableOpacity>
 			<TouchableOpacity onPress={onPressLike}>
@@ -220,6 +242,14 @@ const Detail: React.FC<ScreenProps | any> = ({ navigation, route }) => {
 	const renderToastNotify = () => {
 		return (
 			<View style={styles.viewGradientToast}>
+				<BlurView
+					style={[StyleSheet.absoluteFill]}
+					blurType="light"
+					blurAmount={10}
+					blurRadius={25}
+					overlayColor="transparent"
+					reducedTransparencyFallbackColor="white"
+				/>
 				<Image source={images.ic_success} style={Style.icon24} />
 				<Text style={styles.txtSuccess}>{strings.success}</Text>
 			</View>
@@ -237,13 +267,14 @@ const Detail: React.FC<ScreenProps | any> = ({ navigation, route }) => {
 	const renderButtonBottom = () => {
 		return (
 			<View style={styles.viewGradient}>
-				{/* <BlurView
+				<BlurView
 					style={[StyleSheet.absoluteFill]}
 					blurType="light"
 					blurAmount={10}
+					blurRadius={25}
 					overlayColor="transparent"
 					reducedTransparencyFallbackColor="white"
-				/> */}
+				/>
 				<TouchableOpacity
 					style={styles.item}
 					activeOpacity={0.8}
@@ -306,9 +337,9 @@ const Detail: React.FC<ScreenProps | any> = ({ navigation, route }) => {
 		<Flex style={styles.container}>
 			<SlideImage ref={slideRef} data={data} index={index} onIndexChange={onIndexChange} />
 			{setHeader()}
-			<ExampleScreen type={type} />
+			{showBottom && <ExampleScreen type={type} />}
 			{showToast ? renderToastNotify() : null}
-			{renderButtonBottom()}
+			{showBottom && renderButtonBottom()}
 			{loadingDetail && <Skeleton style={StyleSheet.absoluteFill} />}
 			{hideBanner && (
 				<View style={styles.viewBanner}>
@@ -438,6 +469,7 @@ const styles = StyleSheet.create({
 	viewGradientToast: {
 		flexDirection: 'row',
 		alignItems: 'center',
+		overflow: 'hidden',
 		paddingHorizontal: sizes.s24,
 		paddingVertical: sizes.s16,
 		marginHorizontal: sizes.s16,
@@ -462,6 +494,7 @@ const styles = StyleSheet.create({
 	},
 	itemOption: {
 		paddingVertical: sizes.s2,
+		overflow: 'hidden',
 	},
 	txtOption: {
 		...Style.txt16_bold,

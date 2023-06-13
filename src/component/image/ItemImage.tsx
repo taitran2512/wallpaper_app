@@ -4,13 +4,18 @@ import React, { useState } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { imageSource } from 'utils';
+import { IMAGE_URL } from 'utils/Https';
 
 const numColumns = 3;
 const imageWidth = (screenWidth - sizes.s4) / numColumns;
 
 const ItemImage = ({ onPress, url }: any) => {
 	const [loading, setLoading] = useState<boolean>(true);
-
+	FastImage.preload([
+		{
+			uri: IMAGE_URL + url,
+		},
+	]);
 	return (
 		<View
 			style={{

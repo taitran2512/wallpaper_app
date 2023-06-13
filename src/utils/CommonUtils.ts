@@ -1,5 +1,6 @@
 import { throttle } from 'lodash';
 import { Alert, LayoutAnimation, Linking } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import { IMAGE_URL } from './Https';
 
 export const showAlert = (
@@ -31,7 +32,11 @@ export const imageSource = (image?: string) => {
 	if (image?.includes('https://') || image?.includes('http://') || image?.includes('file://')) {
 		return { uri: image };
 	}
-	return { uri: IMAGE_URL + image };
+	return {
+		uri: IMAGE_URL + image,
+		headers: { Authorization: 'Bearer your_token' },
+		priority: FastImage.priority.high,
+	};
 };
 
 export const layoutAnimation = throttle(() => {
