@@ -19,63 +19,73 @@ interface Props {
 	style?: StyleProp<ViewStyle>;
 	index: number;
 	onIndexChange?: (index: number) => void;
+	isShowSingleImage: boolean;
 }
 
-const SlideImage = forwardRef(({ data, style, index = 0, onIndexChange }: Props, ref: any) => {
-	const listRef = useRef<FlatList>();
-	const [idx, setIdx] = useState<number>(index);
-	useEffect(() => {
-		if (index) {
-			listRef?.current?.scrollToOffset({ animated: false, offset: screenWidth * index });
-		}
-	}, [index]);
+const SlideImage = forwardRef(
+	({ data, isShowSingleImage, style, index = 0, onIndexChange }: Props, ref: any) => {
+		const listRef = useRef<FlatList>();
+		const [idx, setIdx] = useState<number>(index);
+		useEffect(() => {
+			if (index) {
+				listRef?.current?.scrollToOffset({ animated: false, offset: screenWidth * index });
+			}
+		}, [index]);
 
-	useEffect(() => {
-		onIndexChange?.(idx);
-	}, [idx]);
+		useEffect(() => {
+			onIndexChange?.(idx);
+		}, [idx]);
 
-	useImperativeHandle(ref, () => ({ currentIndex: idx }));
+		useImperativeHandle(ref, () => ({ currentIndex: idx }));
 
-	const onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
-		setIdx(Math.round(e.nativeEvent.contentOffset.x / screenWidth));
-	};
+		const onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+			setIdx(Math.round(e.nativeEvent.contentOffset.x / screenWidth));
+		};
 
-	return (
-		<View style={style}>
-			<FlatList
-				ref={listRef as any}
-				data={data}
-				keyExtractor={(item, index) => 'key_' + index}
-				horizontal
-				nestedScrollEnabled
-				pagingEnabled
-				showsHorizontalScrollIndicator={false}
-				initialNumToRender={data.length}
-				onScroll={onScroll}
-				renderItem={({ item }) => {
-					FastImage.preload([
+		const renderItem = ({ item }: any) => {
+			FastImage?.preload([
+				{
+					uri: IMAGE_URL + item?.media?.url,
+				},
+			]);
+
+			return (
+				<FastImage
+					source={imageSource(item?.media?.url)}
+					resizeMode={FastImage.resizeMode.cover}
+					style={[
 						{
-							uri: IMAGE_URL + item?.media?.url,
+							width: screenWidth,
+							height: screenHeight,
+							backgroundColor: colors.backgroundApp,
 						},
-					]);
+					]}
+				/>
+			);
+		};
 
-					return (
-						<FastImage
-							source={imageSource(item?.media?.url)}
-							resizeMode={FastImage.resizeMode.cover}
-							style={[
-								{
-									width: screenWidth,
-									height: screenHeight,
-									backgroundColor: colors.backgroundApp,
-								},
-							]}
-						/>
-					);
-				}}
-			/>
-		</View>
-	);
-});
+		return (
+			<View style={style}>
+				{isShowSingleImage ? (
+					renderItem({ item: data?.[index] || {} })
+				) : (
+					<FlatList
+						ref={listRef as any}
+						data={data}
+						keyExtractor={(item, index) => 'key_' + index}
+						horizontal
+						scrollEnabled={false}
+						nestedScrollEnabled
+						pagingEnabled
+						showsHorizontalScrollIndicator={false}
+						initialNumToRender={data.length}
+						onScroll={onScroll}
+						renderItem={renderItem}
+					/>
+				)}
+			</View>
+		);
+	}
+);
 
 export default SlideImage;

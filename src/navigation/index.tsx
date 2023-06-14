@@ -26,9 +26,9 @@ const screenOptionsNativeStack: NativeStackNavigationOptions = {
 	customAnimationOnGesture: true,
 	fullScreenGestureEnabled: true,
 	gestureEnabled: false,
-	animationTypeForReplace: 'pop',
-	animation: 'slide_from_right',
-	presentation: Platform.OS === 'android' ? 'modal' : undefined,
+	animationTypeForReplace: 'push',
+	// animation: 'fade',
+	// presentation: Platform.OS === 'android' ? 'modal' : undefined,
 };
 
 const AppStack: React.FC = () => {

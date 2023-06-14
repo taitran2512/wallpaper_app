@@ -29,6 +29,7 @@ import { keyBanner_home, keyInterstitialApply, keyInterstitialApplyHigh } from '
 import { IMAGE_URL } from 'utils/Https';
 import { data as Ads } from '../.././App';
 const Detail: React.FC<ScreenProps | any> = ({ navigation, route }) => {
+	const isShowSingleImage = true;
 	const { data, index } = route?.params || {};
 	const [like, setLike] = useState<boolean>(false);
 	const [loading, setLoading] = useState<boolean>(true);
@@ -335,7 +336,13 @@ const Detail: React.FC<ScreenProps | any> = ({ navigation, route }) => {
 	}, []);
 	return (
 		<Flex style={styles.container}>
-			<SlideImage ref={slideRef} data={data} index={index} onIndexChange={onIndexChange} />
+			<SlideImage
+				isShowSingleImage={isShowSingleImage}
+				ref={slideRef}
+				data={data}
+				index={index}
+				onIndexChange={onIndexChange}
+			/>
 			{setHeader()}
 			{showBottom && <ExampleScreen type={type} />}
 			{showToast ? renderToastNotify() : null}
