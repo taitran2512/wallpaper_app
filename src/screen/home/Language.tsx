@@ -24,6 +24,7 @@ import { data } from '../../App';
 
 const Language: React.FC<ScreenProps | any> = ({ navigation }) => {
 	const [language, setLanguage] = useState<string>('');
+
 	const [optionsNativeAds, setOptionsNativeAds] = useState<boolean>(false);
 	useEffect(() => {
 		navigation.setOptions({

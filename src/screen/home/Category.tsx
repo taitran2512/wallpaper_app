@@ -6,7 +6,7 @@ import { useHeaderHeight } from '@react-navigation/elements';
 import { incrementCategoryAction } from 'action/appAction';
 import WallpaperApi from 'api/WallpaperApi';
 import { Screens } from 'common';
-import { Flex } from 'component';
+import { Flex, Skeleton } from 'component';
 import { colors, fonts, Navigator, sizes, strings, Style } from 'core/index';
 import { TabScreenProps } from 'model';
 import React, { memo, useEffect, useRef, useState } from 'react';
@@ -31,7 +31,7 @@ const Category = ({ navigation }: TabScreenProps) => {
 	const dispatch = useDispatch();
 	const [hideAds1, setHideAds1] = useState<boolean>(false);
 	const [hideAds2, setHideAds2] = useState<boolean>(false);
-
+	const [loading, setLoading] = useState<boolean>(true);
 	const [dataCate, setDataCate] = useState<CategoryType[]>([]);
 	const yOffset = useRef(new Animated.Value(0)).current;
 	const headerOpacity = yOffset.interpolate({
@@ -127,14 +127,16 @@ const Category = ({ navigation }: TabScreenProps) => {
 	const renderItem = ({ item }: { item: CategoryType }) => {
 		FastImage.preload([
 			{
-				uri: IMAGE_URL + item?.thumbnail?.url,
+				uri: IMAGE_URL + item?.thumbnail?.formats?.large?.url,
 			},
 		]);
 		return (
 			<TouchableOpacity activeOpacity={0.8} onPress={() => detailCategory(item)}>
+				{loading ? <Skeleton style={StyleSheet.absoluteFill} /> : null}
 				<FastImage
-					source={imageSource(item?.thumbnail?.url)}
+					source={imageSource(item?.thumbnail?.formats?.large?.url)}
 					style={styles.itemCategory}
+					onLoadEnd={() => setLoading(false)}
 					resizeMode="cover">
 					<View
 						style={{
@@ -170,7 +172,6 @@ const Category = ({ navigation }: TabScreenProps) => {
 				onRefresh={getCategoryData}
 				refreshing={false}
 				keyExtractor={(e, index) => String(index)}
-				// initialNumToRender={20}
 				contentContainerStyle={{ flexGrow: 1, paddingTop: headerHeight }}
 				onScroll={Animated.event(
 					[

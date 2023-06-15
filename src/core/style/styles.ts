@@ -18,7 +18,6 @@ export const Style = StyleSheet.create({
 	txtCenter: {
 		textAlign: 'center',
 	},
-	//
 	h1: {
 		fontSize: sizes.s48,
 		lineHeight: sizes.s56,
