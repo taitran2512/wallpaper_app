@@ -75,7 +75,7 @@ const GridImageView: React.FC<Props> = ({ data, onEndReached = () => {}, navigat
 	const detailScreen = (index: number) => {
 		dispatch(incrementImageAction());
 		Navigator.navigate(Screens.Detail, { data: data, index });
-		if (count % 3 !== 0) {
+		if (count % 3 === 0) {
 			if (hideAds1) {
 				Navigator.navigate(Screens.GoogleInterstitialsAds, {
 					key: keyInterstitialOpenImageHigh,

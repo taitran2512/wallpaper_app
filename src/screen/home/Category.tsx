@@ -7,7 +7,7 @@ import { incrementCategoryAction } from 'action/appAction';
 import WallpaperApi from 'api/WallpaperApi';
 import { Screens } from 'common';
 import { Flex, Skeleton } from 'component';
-import { colors, fonts, Navigator, sizes, strings, Style } from 'core/index';
+import { Navigator, Style, colors, fonts, sizes, strings } from 'core/index';
 import { TabScreenProps } from 'model';
 import React, { memo, useEffect, useRef, useState } from 'react';
 import {
@@ -104,7 +104,7 @@ const Category = ({ navigation }: TabScreenProps) => {
 	const detailCategory = (item: CategoryType) => {
 		dispatch(incrementCategoryAction());
 		Navigator.push(Screens.DetailCategory, { categoryName: item?.name });
-		if (count % 3 !== 0) {
+		if (count % 3 === 0) {
 			if (hideAds1) {
 				data.isShowAds = true;
 				Navigator.navigate(Screens.GoogleInterstitialsAds, {

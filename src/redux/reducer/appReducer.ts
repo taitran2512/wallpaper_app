@@ -8,8 +8,8 @@ export interface AppState {
 }
 
 const initialState: AppState = {
-	countShowAds: 0,
-	countShowAdsHome: 0,
+	countShowAds: 1,
+	countShowAdsHome: 1,
 	config: null,
 };
 
