@@ -171,7 +171,7 @@ const NativeAds = ({ index, media = false, type = 'image', loadOnMount = true, k
 			onNativeAdLoaded={onNativeAdLoaded}
 			requestNonPersonalizedAdsOnly={true}
 			refreshInterval={60000 * 2}
-			style={[styles.container, !hideNative ? { backgroundColor: '#D9D9D9' } : null]}
+			style={[styles.container, !hideNative ? { backgroundColor: colors.gradient } : null]}
 			videoOptions={{
 				customControlsRequested: true,
 			}}
