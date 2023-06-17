@@ -110,6 +110,7 @@ const Category = ({ navigation }: TabScreenProps) => {
 				Navigator.navigate(Screens.GoogleInterstitialsAds, {
 					key: keyInterstitialOpenCateHigh,
 					type: 'category_high',
+					goBack: true,
 				});
 				return;
 			}
@@ -118,6 +119,7 @@ const Category = ({ navigation }: TabScreenProps) => {
 				Navigator.navigate(Screens.GoogleInterstitialsAds, {
 					key: keyInterstitialOpenCate,
 					type: 'category_high',
+					goBack: true,
 				});
 				return;
 			}
