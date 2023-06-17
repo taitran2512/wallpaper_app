@@ -43,12 +43,6 @@ const SlideImage = forwardRef(
 		};
 
 		const renderItem = ({ item }: any) => {
-			FastImage?.preload([
-				{
-					uri: IMAGE_URL + item?.media?.url,
-				},
-			]);
-
 			return (
 				<FastImage
 					source={imageSource(item?.media?.url)}

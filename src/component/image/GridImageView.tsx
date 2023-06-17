@@ -4,15 +4,17 @@ import remoteConfig from '@react-native-firebase/remote-config';
 import { useHeaderHeight } from '@react-navigation/elements';
 import { incrementImageAction } from 'action/appAction';
 import { Screens } from 'common';
-import { colors, Navigator } from 'core/index';
+import { colors, Navigator, sizes } from 'core/index';
 import { throttle } from 'lodash';
 import { ScreenProps, TabScreenProps } from 'model';
 import React, { useEffect, useRef, useState } from 'react';
-import { Animated, PixelRatio, StyleSheet } from 'react-native';
+import { ActivityIndicator, Animated, PixelRatio, StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { countImageHomeSelector } from 'selector/appSelector';
 import { keyInterstitialOpenImage, keyInterstitialOpenImageHigh } from 'utils/GoogleAds';
 import ItemImage from './ItemImage';
+import FastImage from 'react-native-fast-image';
+import { IMAGE_URL } from 'utils/Https';
 
 const numColumns = 3;
 
@@ -106,6 +108,12 @@ const GridImageView: React.FC<Props> = ({ data, onEndReached = () => {}, navigat
 			url += item?.media?.formats?.large?.url || item?.media?.formats?.thumbnail?.url;
 		}
 
+		FastImage?.preload([
+			{
+				uri: IMAGE_URL + item?.media?.url,
+			},
+		]);
+
 		return <ItemImage url={url} onPress={() => detailScreen(index)} />;
 	};
 
@@ -121,6 +129,11 @@ const GridImageView: React.FC<Props> = ({ data, onEndReached = () => {}, navigat
 			contentContainerStyle={{ flexGrow: 1, paddingTop: navigation ? headerHeight : 0 }}
 			onEndReached={throttle(onEndReached, 1000)}
 			onEndReachedThreshold={0.5}
+			ListFooterComponent={
+				<View style={{ marginVertical: sizes.s8, alignItems: 'center' }}>
+					<ActivityIndicator color={colors.blue} size="small" />
+				</View>
+			}
 			initialNumToRender={20}
 			onScroll={Animated.event(
 				[
