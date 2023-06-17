@@ -108,13 +108,19 @@ const GridImageView: React.FC<Props> = ({ data, onEndReached = () => {}, navigat
 			url += item?.media?.formats?.large?.url || item?.media?.formats?.thumbnail?.url;
 		}
 
-		FastImage?.preload([
-			{
-				uri: IMAGE_URL + item?.media?.url,
-			},
-		]);
-
-		return <ItemImage url={url} onPress={() => detailScreen(index)} />;
+		return (
+			<ItemImage
+				url={url}
+				onPress={() => {
+					FastImage?.preload([
+						{
+							uri: IMAGE_URL + item?.media?.url,
+						},
+					]);
+					detailScreen(index);
+				}}
+			/>
+		);
 	};
 
 	const keyExtractor = (item: any) => String(item?.id);
