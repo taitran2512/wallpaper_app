@@ -171,7 +171,7 @@ const NativeAds = ({ index, media = false, type = 'image', loadOnMount = true, k
 			onNativeAdLoaded={onNativeAdLoaded}
 			requestNonPersonalizedAdsOnly={true}
 			refreshInterval={60000 * 2}
-			style={[styles.container, !hideNative ? { backgroundColor: colors.gradient } : null]}
+			style={[styles.container]}
 			videoOptions={{
 				customControlsRequested: true,
 			}}
@@ -182,15 +182,18 @@ const NativeAds = ({ index, media = false, type = 'image', loadOnMount = true, k
 						width: '100%',
 						alignItems: 'center',
 					}}>
+					<View style={styles.tag}>
+						<Text style={{ fontSize: sizes.s8 }}>Ad</Text>
+					</View>
 					<View
 						style={{
 							width: '100%',
 							height: '100%',
-							backgroundColor: '#f0f0f0',
+							backgroundColor: '#D9D9D9',
 							position: 'absolute',
 							justifyContent: 'center',
 							alignItems: 'center',
-							opacity: !loading && !error && loaded ? 0 : 1,
+							opacity: !loading && !error && loaded ? 0.6 : 0.6,
 							zIndex: !loading && !error && loaded ? 0 : 10,
 						}}>
 						{loading && <ActivityIndicator size={28} color="#a9a9a9" />}
@@ -205,7 +208,7 @@ const NativeAds = ({ index, media = false, type = 'image', loadOnMount = true, k
 							alignItems: 'flex-start',
 							paddingVertical: sizes.s16,
 							paddingHorizontal: sizes.s16,
-							opacity: loading || error || !loaded ? 0 : 1,
+							// opacity: loading || error || !loaded ? 0 : 1,
 						}}>
 						<IconView style={styles.logoAds} />
 						<View
@@ -253,7 +256,7 @@ const NativeAds = ({ index, media = false, type = 'image', loadOnMount = true, k
 							</View>
 						</View>
 					</View>
-					{/* <ImageView source={images.banner} style={{ width: 50, height: 50 }} /> */}
+					{/* <ImageView style={{ width: '80%', height: 50, marginBottom: sizes.s20 }} /> */}
 
 					<CallToActionView
 						style={styles.btnAds}
@@ -262,7 +265,7 @@ const NativeAds = ({ index, media = false, type = 'image', loadOnMount = true, k
 						textStyle={styles.txtBtnAds}
 					/>
 
-					{/* {media ? <NativeMediaView /> : null} */}
+					{/* {media ? <NativeMediaView onVideoStart={() => {}} /> : null} */}
 				</View>
 			)}
 		</NativeAdView>
@@ -291,13 +294,23 @@ const styles = StyleSheet.create({
 
 	buttonStyle: {
 		borderRadius: sizes.s16,
-		backgroundColor: colors.background_black,
+		backgroundColor: '#e7e7e7',
 	},
 	txtBtnAds: {
 		fontSize: sizes.s16,
 		textAlign: 'center',
-		color: colors.white,
+		color: colors.black1,
 		marginBottom: sizes.s12,
 		fontWeight: 'bold',
+	},
+	tag: {
+		position: 'absolute',
+		top: 0,
+		left: 2,
+		padding: sizes.s4,
+		backgroundColor: colors.blue,
+		zIndex: 999,
+		borderTopLeftRadius: sizes.s15,
+		borderBottomRightRadius: sizes.s15,
 	},
 });

@@ -4,7 +4,7 @@ export const colors = {
 	background_black: '#333333',
 	tranparent: 'transparent',
 	bgTransparent: '#00000030',
-
+	black1: '#000000',
 	blue: '#1890FF',
 	blue2: '#E8F4FF',
 
