@@ -16,7 +16,6 @@ import { Provider } from 'react-redux';
 import { Device, Storage } from 'utils';
 import { keyOnAppResume } from 'utils/GoogleAds';
 import store from './redux/store';
-
 export let data = {
 	isShowAds: false,
 };
