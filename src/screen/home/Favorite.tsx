@@ -15,7 +15,9 @@ const Favorite = ({ navigation }: ScreenProps) => {
 	const [likedData, setLikedData] = useState<WallpaperType[]>([]);
 	const [wallpaperData, setWallpaperData] = useState<WallpaperType[]>([]);
 	const isFocused = useIsFocused();
+
 	const getData = async () => {
+		// get list liked and list had set wallpaper data
 		const [data1, data2] = await Storage.getMultiData([
 			Storage.key.likedImageArray,
 			Storage.key.listSetWallpaper,

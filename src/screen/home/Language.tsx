@@ -30,10 +30,11 @@ const Language: React.FC<ScreenProps | any> = ({ navigation }) => {
 		navigation.setOptions({
 			headerShown: false,
 		});
+		// get app language
 		Storage.getData(Storage.key.language).then((lang) => {
-			const appLanguage = lang || 'en';
-			strings.setLanguage(appLanguage || 'en');
-			setLanguage(appLanguage || 'en');
+			const appLanguage = lang || 'en'; // if null set default language is en
+			strings.setLanguage(appLanguage);
+			setLanguage(appLanguage);
 		});
 		data.isShowAds = true;
 	}, []);
@@ -45,12 +46,15 @@ const Language: React.FC<ScreenProps | any> = ({ navigation }) => {
 	};
 
 	const onSetLang = () => {
+		// go to home screen
 		Navigator.replace(Stacks.HomeStack);
 	};
 	useEffect(() => {
+		// hide bottom navigation bar android
 		SystemNavigationBar.stickyImmersive();
 		getConfigRemote();
 	}, [optionsNativeAds]);
+
 	const getConfigRemote = () => {
 		remoteConfig()
 			.setDefaults({

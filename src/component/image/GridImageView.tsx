@@ -60,6 +60,7 @@ const GridImageView: React.FC<Props> = ({ data, onEndReached = () => {}, navigat
 		getConfigRemote();
 	}, [headerOpacity, navigation]);
 
+	// get config ads
 	const getConfigRemote = () => {
 		remoteConfig()
 			.setDefaults({
@@ -74,9 +75,11 @@ const GridImageView: React.FC<Props> = ({ data, onEndReached = () => {}, navigat
 		setHideAds1(ads1);
 		setHideAds2(ads2);
 	};
+
 	const detailScreen = (index: number) => {
 		dispatch(incrementImageAction());
 		Navigator.navigate(Screens.Detail, { data: data, index });
+		// show ads when third click see detail image
 		if (count % 3 === 0) {
 			if (hideAds1) {
 				Navigator.navigate(Screens.GoogleInterstitialsAds, {
@@ -99,6 +102,7 @@ const GridImageView: React.FC<Props> = ({ data, onEndReached = () => {}, navigat
 
 	const renderItem = ({ item, index }: { item: WallpaperType; index: number }) => {
 		let url = '';
+		// render image size by ratio small midium large phone
 		const pixelRatio = PixelRatio.get();
 		if (pixelRatio < 2) {
 			url += item?.media?.formats?.small?.url || item?.media?.formats?.thumbnail?.url;
@@ -112,6 +116,7 @@ const GridImageView: React.FC<Props> = ({ data, onEndReached = () => {}, navigat
 			<ItemImage
 				url={url}
 				onPress={() => {
+					// reload image to fast render 4k detail image
 					FastImage?.preload([
 						{
 							uri: IMAGE_URL + item?.media?.url,
@@ -136,11 +141,13 @@ const GridImageView: React.FC<Props> = ({ data, onEndReached = () => {}, navigat
 			onEndReached={throttle(onEndReached, 1000)}
 			onEndReachedThreshold={0.5}
 			ListFooterComponent={
+				// loading get more item
 				<View style={{ marginVertical: sizes.s8, alignItems: 'center' }}>
 					<ActivityIndicator color={colors.blue} size="small" />
 				</View>
 			}
 			initialNumToRender={20}
+			// animated scroll for blur header
 			onScroll={Animated.event(
 				[
 					{

@@ -70,6 +70,7 @@ const DetailCategory: React.FC<ScreenProps | TabScreenProps> = ({ navigation, ro
 
 	const getData = async () => {
 		try {
+			// get 10 item of list for 1 called
 			page.current += 1;
 			const response = await WallpaperApi.getListWallpaperByCategory(categoryName, page.current);
 			const newData = response?.data.filter((e) => !isEmpty(e.media));

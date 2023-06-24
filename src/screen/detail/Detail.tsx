@@ -147,8 +147,9 @@ const Detail: React.FC<ScreenProps | any> = ({ navigation, route }) => {
 					}
 				);
 			}
-
+			// update that image has set wallpaper for popular list
 			WallpaperApi.updateCountSetWallpaper(item?.id, item?.download_count + 1);
+			// set image to list you had set wallpaper
 			const listSetWallpaper: any[] =
 				(await Storage.getData(Storage.key.listSetWallpaper)) || [];
 			if (listSetWallpaper.find((e) => e.id === item.id)) {
@@ -188,12 +189,14 @@ const Detail: React.FC<ScreenProps | any> = ({ navigation, route }) => {
 
 		const likedImageArray: any[] = (await Storage.getData(Storage.key.likedImageArray)) || [];
 		if (newValue) {
+			// save image to list liked
 			if (likedImageArray.find((e) => e.id === item.id)) {
 				return;
 			}
 			const newLikedImageArray = [item, ...likedImageArray];
 			Storage.setData(Storage.key.likedImageArray, newLikedImageArray);
 		} else {
+			// remove image from list liked
 			remove(likedImageArray, (e) => e?.id === item?.id);
 			Storage.setData(Storage.key.likedImageArray, likedImageArray);
 		}
@@ -201,6 +204,7 @@ const Detail: React.FC<ScreenProps | any> = ({ navigation, route }) => {
 
 	const onIndexChange = debounce(async (idx: number) => {
 		const item: WallpaperType = data[idx];
+		// get list image liked and check this image liked or not
 		const likedImageArray: any[] = (await Storage.getData(Storage.key.likedImageArray)) || [];
 		if (likedImageArray.find((e) => e.id === item.id)) {
 			setLike(true);
@@ -208,6 +212,7 @@ const Detail: React.FC<ScreenProps | any> = ({ navigation, route }) => {
 			setLike(false);
 		}
 	}, 100);
+
 	const goBack = () => {
 		setShowBottom(false);
 		LayoutAnimation.configureNext(
@@ -221,6 +226,7 @@ const Detail: React.FC<ScreenProps | any> = ({ navigation, route }) => {
 			navigation.goBack();
 		}, 500);
 	};
+
 	const setHeader = () => (
 		<View style={[styles.header]}>
 			<TouchableOpacity style={styles.button} onPress={goBack}>
