@@ -6,10 +6,15 @@ import { Stacks } from 'common';
 import { colors, Navigator, strings, Style } from 'core/index';
 import React, { useEffect, useRef } from 'react';
 import { ActivityIndicator, View } from 'react-native';
+import { useInterstitialAd } from 'react-native-google-mobile-ads';
 import SystemNavigationBar from 'react-native-system-navigation-bar';
 import { Storage } from 'utils';
+import { keyInterstitialSplash } from 'utils/GoogleAds';
 
 const Splash = () => {
+	const { load } = useInterstitialAd(keyInterstitialSplash, {
+		requestNonPersonalizedAdsOnly: true,
+	});
 	const openAdsRef = useRef(true);
 	const interShowRef = useRef(true);
 	const onboardRef = useRef<any>(null);
@@ -65,6 +70,9 @@ const Splash = () => {
 			}, 500);
 		}
 	};
+	useEffect(() => {
+		load();
+	}, [load]);
 	return (
 		<View style={[Style.flex, Style.column_center, { backgroundColor: colors.backgroundApp }]}>
 			<ActivityIndicator color={colors.blue} size="large" />

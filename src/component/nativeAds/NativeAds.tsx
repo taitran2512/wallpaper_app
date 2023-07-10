@@ -14,6 +14,35 @@ import NativeAdView, {
 	StoreView,
 	TaglineView,
 } from 'react-native-admob-native-ads';
+AdManager.setRequestConfiguration({
+	tagForChildDirectedTreatment: false,
+});
+AdManager.registerRepository({
+	name: 'imageAd',
+	adUnitId: 'ca-app-pub-6548166688052880/8131685939',
+	numOfAds: 3,
+	requestNonPersonalizedAdsOnly: false,
+	videoOptions: {
+		muted: false,
+	},
+	expirationPeriod: 3600000, // in milliseconds (optional)
+	mediationEnabled: false,
+}).then((result) => {
+	console.log('registered: ', result);
+});
+AdManager.registerRepository({
+	name: 'imageAd',
+	adUnitId: 'ca-app-pub-6548166688052880/4864498922',
+	numOfAds: 3,
+	requestNonPersonalizedAdsOnly: false,
+	videoOptions: {
+		muted: false,
+	},
+	expirationPeriod: 3600000, // in milliseconds (optional)
+	mediationEnabled: false,
+}).then((result) => {
+	console.log('registered: ', result);
+});
 
 const NativeAds = ({ index, media = false, type = 'image', loadOnMount = true, keys }: any) => {
 	const nativeAdRef = useRef<any>();
